@@ -159,7 +159,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Body.h" />
+    <ClInclude Include="Body_old.h" />
     <ClInclude Include="CalculPoids.h" />
+    <ClInclude Include="modification.h" />
     <ClInclude Include="Poids.h" />
     <ClInclude Include="Prix.h" />
     <ClInclude Include="Threading.h" />

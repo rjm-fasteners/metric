@@ -458,6 +458,7 @@ public:
 	void constructeur(string tag, string titre, string numProduit, float bulk);
 	string getTag();
 	string getTitre();
+	void produit();
 
 private:
 	string souschaine[3];
@@ -469,7 +470,6 @@ private:
 	string numProduit;
 
 	void separation();
-	void produit();
 	void material();
 	void threading();
 	void grade();
@@ -710,6 +710,7 @@ inline void Ecrou::grade()
 	}
 	titre = titre + TabGradeTitre;
 }
+
 
 #pragma endregion
 

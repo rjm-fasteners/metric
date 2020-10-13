@@ -138,7 +138,8 @@ void ouverture(PRIX prix)
 					cout << "-----Pas de prix pour ce produit!-----> ";
 				}
 
-				if (choix == 'A' || choix == 'a')
+				/*++--ADD CHOICES IN MAIN BELOW--++*/
+				if (choix == 'A' || choix == 'a')			
 				{
 					if (prix4 < dernierCoutant * 1.99)
 					{
@@ -149,8 +150,6 @@ void ouverture(PRIX prix)
 
 				/******Validation que le ratio est de 85.75% à 86%******/
 
-				float prix1 = toFloat(produit[9]);
-				float dernierCoutant = toFloat(produit[10]);
 
 				if (prix1 < dernierCoutant * 7.05)
 				{
@@ -235,7 +234,6 @@ void ouverture(PRIX prix)
 					TexteATranscrire1[8] = texte;
 
 					prix.constructeur(produit[39], 'b', bulk);
-
 
 					texte = prix.getPrice();
 
@@ -440,8 +438,16 @@ void ouverture(PRIX prix)
 int main()
 {
 	cout << "Debut : " << endl;
-	cout << "	1 - Boulon \n	2 - Ecrou \n	3 - Rondelle \n	4 - Equerre \n	5 - Tige Filte \n	6 - Vis \n	7 - Autre \n	8 - Ancrage \n	9 - Goupille \n";
+	cout << "	1 - Boulon \n	2 - Ecrou \n	3 - Rondelle \n	4 - Equerre \n	5 - Tige Filte \n	6 - Vis \n	7 - Autre \n	8 - Ancrage \n	9 - Goupille \n   10 - Liste produits \n";
 	cin >> reponse;
+
+	/*CODE BY ALEXIS STARTER HERE - SORTING (10-07)*/
+	/*
+	if (reponse == 10) {
+		Ecrou::produit()
+	}
+	*/
+
 	PRIX prix;
 
 	cout << "	1 - Metric \n	2 - Inch \n";

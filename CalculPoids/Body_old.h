@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+
 extern string photo;
 
 string body(string categorie, string numProduit, int reponse, string tag, int Met_Int)

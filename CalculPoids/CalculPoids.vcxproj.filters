@@ -33,6 +33,12 @@
     <ClInclude Include="Title.h">
       <Filter>Fichiers sources</Filter>
     </ClInclude>
+    <ClInclude Include="Body_old.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="modification.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="modification.cpp">
