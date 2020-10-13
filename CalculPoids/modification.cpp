@@ -92,7 +92,6 @@ void ouverture(PRIX prix)
 	fstream Product;
 	Product.open(FILENAME, ios::in);
 
-
 	fstream finish;
 	FILENAME = "finish.txt";
 	finish.open(FILENAME, ios::out | ios::trunc);
@@ -286,6 +285,12 @@ void ouverture(PRIX prix)
 					}
 					finish << endl;
 				}
+				// LISTING PRODUCTS
+				else if (reponse == 10)
+				{
+					// String variable isn't useful (creating a new string just for that wouldn't be good idea)
+					TexteATranscrire1[2] = body("0", "0", 0, "0", 0);
+				}
 				else
 				{
 					string texte;
@@ -438,24 +443,16 @@ void ouverture(PRIX prix)
 int main()
 {
 	cout << "Debut : " << endl;
-	cout << "	1 - Boulon \n	2 - Ecrou \n	3 - Rondelle \n	4 - Equerre \n	5 - Tige Filte \n	6 - Vis \n	7 - Autre \n	8 - Ancrage \n	9 - Goupille \n   10 - Liste produits \n";
-	cin >> reponse;
-
-	/*CODE BY ALEXIS STARTER HERE - SORTING (10-07)*/
-	/*
-	if (reponse == 10) {
-		Ecrou::produit()
-	}
-	*/
+	do {
+		cout << "	1 - Boulon \n	2 - Ecrou \n	3 - Rondelle \n	4 - Equerre \n	5 - Tige Filte \n	6 - Vis \n	7 - Autre \n	8 - Ancrage \n	9 - Goupille \n	10 - Liste produits \n";
+		cin >> reponse;
+	} while (reponse < 1 || reponse > 10);
 
 	PRIX prix;
-
-	cout << "	1 - Metric \n	2 - Inch \n";
-	cin >> Met_Int;
 
 	cout << endl << "En cours ..." << endl << endl;
 	ouverture(prix);
 
 
-	cout << "Fin";
+	cout << "Fin" << endl;
 }

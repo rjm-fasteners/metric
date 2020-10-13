@@ -687,7 +687,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 	string description[6000]
 	{
 
-#pragma region BOULONS body html - 282
+		#pragma region BOULONS body html - 282
 
 #pragma region BM - 10
 			"<table class=\"spec-table--pd\"><tbody><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Product Number</td><td class=\"divider--spec-tbl value-cell--table\">" + numProduit + "</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Head Type</td><td class=\"divider--spec-tbl value-cell--table\">Hex</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drive Style</td><td class=\"divider--spec-tbl value-cell--table\">External Hex</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">System of Measurement</td><td class=\"divider--spec-tbl value-cell--table\">Metric</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread Direction</td><td class=\"divider--spec-tbl value-cell--table\">Right Hand</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread Size</td><td class=\"divider--spec-tbl value-cell--table\">M4</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread Pitch</td><td class=\"divider--spec-tbl value-cell--table\">0.7 mm</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread Type</td><td class=\"divider--spec-tbl value-cell--table\">Metric</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread Fit</td><td class=\"divider--spec-tbl value-cell--table\">Class 6h</td></tr>" + longeur + "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Threading</td><td class=\"divider--spec-tbl value-cell--table\">Partially Threaded</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Min. Thread Length</td><td class=\"divider--spec-tbl value-cell--table\">13 mm</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread Spacing</td><td class=\"divider--spec-tbl value-cell--table\">Coarse</td></tr><tr class=\"divider--spec-tbl grouped-row--table row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Head</td><td class=\"divider--spec-tbl value-cell--table\"></td></tr><tr class=\"row--spec-tbl\"><td class=\"attr-cell--table child-attr--table\">Width</td><td class=\"value-cell--table\">7 mm</td></tr><tr class=\"grouped-row--table row--spec-tbl\"><td class=\"attr-cell--table bu child-attr--table\">Height</td><td class=\"bu value-cell--table\">2.8 mm</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Fastener Strength Grade/Class</td><td class=\"divider--spec-tbl value-cell--table\">Class 8.8</td></tr>" + material + "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Tensile Strength</td><td class=\"divider--spec-tbl value-cell--table\">110,000 psi</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Hardness</td><td class=\"divider--spec-tbl value-cell--table\">Rockwell C21</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Specifications Met</td><td class=\"divider--spec-tbl value-cell--table\">ISO 4014, DIN 931</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl TblEnd\"><td class=\"attr-cell--table bu divider--spec-tbl\">RoHS 3 (2015/863/EU)</td><td class=\"bu divider--spec-tbl value-cell--table\">Compliant</td></tr></tbody></table><br/><div class=\"CpyCntnr\"><p class=\"copy ap\">These Class<span> </span><span class=\"ah\">8.</span>8 steel screws are suitable for fastening most machinery and<span> </span><span class=\"ah\">equipment. </span>Dimensions meet ISO<span> </span><span class=\"ah\">(formerly</span><span> </span><span class=\"ah\">DIN) </span><span class=\"ah\">specifications.</span><span> </span>Length is measured from under the<span> </span><span class=\"ah\">head.</span></p><p class=\"copy\">" + texteMaterial + " screws resist corrosion in wet<span> </span><span class=\"ah\">environments.</span><span> </span>Match the thread spacing of mating<span> </span><span class=\"ah\">components.</span><span> </span>Coarse threads are the industry<span> </span><span class=\"ah\">standard :</span><span> </span>choose these screws if you don’t know the<span> </span><span class=\"ah\">pitch.</span></p></div><br /><div class=\"CpyCntnr\"></div>",
@@ -980,7 +980,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 #pragma endregion
 
-#pragma region ECROUS - 202
+		#pragma region ECROUS - 202
 
 #pragma region EM - 13
 		"<table class=\"spec-table--pd\"><tbody><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Product Number</td><td class=\"divider--spec-tbl value-cell--table\">" + numProduit + "</td></tr>" + material + "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Fastener Strength Grade/Class</td><td class=\"divider--spec-tbl value-cell--table\">Class 8</td></tr><tr class=\"divider--spec-tbl grouped-row--table row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread</td><td class=\"divider--spec-tbl value-cell--table\"></td></tr><tr class=\"row--spec-tbl\"><td class=\"attr-cell--table child-attr--table\">Size</td><td class=\"value-cell--table\">M4</td></tr><tr class=\"row--spec-tbl\"><td class=\"attr-cell--table child-attr--table\">Pitch</td><td class=\"value-cell--table\">0.7 mm</td></tr><tr class=\"row--spec-tbl\"><td class=\"attr-cell--table child-attr--table\">Type</td><td class=\"value-cell--table\">Metric</td></tr><tr class=\"row--spec-tbl\"><td class=\"attr-cell--table child-attr--table\">Spacing</td><td class=\"value-cell--table\">Coarse</td></tr><tr class=\"row--spec-tbl\"><td class=\"attr-cell--table child-attr--table\">Fit</td><td class=\"value-cell--table\">Class 6H</td></tr><tr class=\"grouped-row--table row--spec-tbl\"><td class=\"attr-cell--table bu child-attr--table\">Direction</td><td class=\"bu value-cell--table\">Right Hand</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Width</td><td class=\"divider--spec-tbl value-cell--table\">7 mm</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Height</td><td class=\"divider--spec-tbl value-cell--table\">3.2 mm</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Specifications Met</td><td class=\"divider--spec-tbl value-cell--table\">DIN 934</td></tr><tr class=\"bs divider--spec-tbl row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drive Style</td><td class=\"divider--spec-tbl value-cell--table\">External Hex</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Nut Type</td><td class=\"divider--spec-tbl value-cell--table\">Hex</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Hex Nut Profile</td><td class=\"divider--spec-tbl value-cell--table\">Standard</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">System of Measurement</td><td class=\"divider--spec-tbl value-cell--table\">Metric</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl TblEnd\"><td class=\"attr-cell--table bu divider--spec-tbl\">RoHS</td><td class=\"bu divider--spec-tbl value-cell--table\">RoHS 3 (2015/863/EU) compliant</td></tr></tbody></table><br/><div class=\"CpyCntnr\"><p class=\"copy ap\">Class 8 nuts are comparable in strength to Class<span> </span><span class=\"ah\">8.</span>8 bolts and are suitable for fastening most machinery and<span> </span><span class=\"ah\">equipment.</span></p><p class=\"copy\">" + texteMaterial + " nuts resist corrosion in wet<span> </span><span class=\"ah\">environments.</span></p></div>",
@@ -1253,7 +1253,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 #pragma endregion
 
-#pragma region WASHERS - 35
+		#pragma region WASHERS - 35
 
 #pragma region R - 17
 			"<table class=\"spec-table--pd\"><tbody><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Product Number</td><td class=\"divider--spec-tbl value-cell--table\">" + numProduit + "</td></tr>" + material + "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">For Screw Size</td><td class=\"divider--spec-tbl value-cell--table\">No. 4</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">ID</td><td class=\"divider--spec-tbl value-cell--table\">0.151\"</td></tr>" + longeur + "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thickness</td><td class=\"divider--spec-tbl value-cell--table\">0.036\"-0.065\"</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Washer Type</td><td class=\"divider--spec-tbl value-cell--table\">Flat</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">System of Measurement</td><td class=\"divider--spec-tbl value-cell--table\">Inch</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Hardness</td><td class=\"divider--spec-tbl value-cell--table\">Not Rated</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Specifications Met</td><td class=\"divider--spec-tbl value-cell--table\">USS Standards</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl TblEnd\"><td class=\"attr-cell--table bu divider--spec-tbl\">RoHS</td><td class=\"bu divider--spec-tbl value-cell--table\">RoHS 3 (2015/863/EU) compliant</td></tr></tbody></table><br/><div class=\"CpyCntnr\"><p class=\"copy ap\"><span class=\"ah\">USS washers</span><span> </span>generally have a larger ID and OD than SAE<span> </span><span class=\"ah\">washers.</span></p><p class=\"copy\">" + texteMaterial + " washers are corrosion resistant in wet<span> </span><span class=\"ah\">environments.</span></p></div>",
@@ -1647,7 +1647,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 #pragma endregion
 
-#pragma region VIS - 298
+		#pragma region VIS - 298
 
 #pragma region VPB - 9
 		"<table class=\"spec-table--pd\"><tbody><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Product Number</td><td class=\"divider--spec-tbl value-cell--table\">" + numProduit + "</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread Size</td><td class=\"divider--spec-tbl value-cell--table\">4-40</td></tr>" + longeur + "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Threading</td><td class=\"divider--spec-tbl value-cell--table\">Fully Threaded</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Head Diameter</td><td class=\"divider--spec-tbl value-cell--table\">0.213\"</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Head Height</td><td class=\"divider--spec-tbl value-cell--table\">0.059\"</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drive Style</td><td class=\"divider--spec-tbl value-cell--table\">Hex</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drive Size</td><td class=\"divider--spec-tbl value-cell--table\"><span class=\"af\">1/16</span>\"</td></tr>" + material + "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Hardness</td><td class=\"divider--spec-tbl value-cell--table\">Rockwell C37</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Tensile Strength</td><td class=\"divider--spec-tbl value-cell--table\">120,000 psi</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Screw Size Decimal Equivalent</td><td class=\"divider--spec-tbl value-cell--table\">0.112\"</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread Type</td><td class=\"divider--spec-tbl value-cell--table\">UNC</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread Spacing</td><td class=\"divider--spec-tbl value-cell--table\">Coarse</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread Fit</td><td class=\"divider--spec-tbl value-cell--table\">Class 3A</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread Direction</td><td class=\"divider--spec-tbl value-cell--table\">Right Hand</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Head Type</td><td class=\"divider--spec-tbl value-cell--table\">Rounded</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Rounded Head Style</td><td class=\"divider--spec-tbl value-cell--table\">Button</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Rounded Head Profile</td><td class=\"divider--spec-tbl value-cell--table\">Standard</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">System of Measurement</td><td class=\"divider--spec-tbl value-cell--table\">Inch</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Specifications Met</td><td class=\"divider--spec-tbl value-cell--table\">ASME B18.3, ASTM F835</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl TblEnd\"><td class=\"attr-cell--table bu divider--spec-tbl\">RoHS</td><td class=\"bu divider--spec-tbl value-cell--table\">Compliant</td></tr></tbody></table><br/><div class=\"CpyCntnr\"><p class=\"copy ap\">Made from " + texteMaterial + ",</span><span> </span>these screws are nearly twice as strong as stainless steel button head<span> </span><span class=\"ah\">screws.</span><span> </span>Length is measured from under the<span> </span><span class=\"ah\">head.</span></p><p class=\"copy\">" + texteMaterial + " screws are mildly corrosion resistant in dry<span> </span><span class=\"ah\">environments.</span></p></div>",
@@ -2438,7 +2438,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 #pragma endregion
 
-#pragma region Equerre
+		#pragma region Equerre
 
 #pragma region EZ - 7
 			"EZ01",
@@ -2453,7 +2453,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 #pragma endregion
 
-#pragma region Tige Filter
+		#pragma region Tige Filter
 
 #pragma region TI - 13
 					"<table class=\"spec-table--pd\"><tbody><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Product Number</td><td class=\"divider--spec-tbl value-cell--table\">" + numProduit + "</td></tr>" + material + "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread Size</td><td class=\"divider--spec-tbl value-cell--table\">8-32</td></tr>" + longeur + "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Tensile Strength</td><td class=\"divider--spec-tbl value-cell--table\">50,000 psi</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Hardness</td><td class=\"divider--spec-tbl value-cell--table\">Rockwell B61</td></tr><tr class=\"divider--spec-tbl grouped-row--table row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Thread</td><td class=\"divider--spec-tbl value-cell--table\"></td></tr><tr class=\"row--spec-tbl\"><td class=\"attr-cell--table child-attr--table\">Direction</td><td class=\"value-cell--table\">Right Hand</td></tr><tr class=\"row--spec-tbl\"><td class=\"attr-cell--table child-attr--table\">Type</td><td class=\"value-cell--table\">UNC</td></tr><tr class=\"row--spec-tbl\"><td class=\"attr-cell--table child-attr--table\">Spacing</td><td class=\"value-cell--table\">Coarse</td></tr><tr class=\"grouped-row--table row--spec-tbl\"><td class=\"attr-cell--table bu child-attr--table\">Fit (External)</td><td class=\"bu value-cell--table\">Class 1A</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Threading</td><td class=\"divider--spec-tbl value-cell--table\">Fully Threaded</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">System of Measurement</td><td class=\"divider--spec-tbl value-cell--table\">Inch</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl TblEnd\"><td class=\"attr-cell--table bu divider--spec-tbl\">RoHS 3 (2015/863/EU)</td><td class=\"bu divider--spec-tbl value-cell--table\">Compliant</td></tr></tbody></table><div class=\"CpyCntnr\"><br/><p class=\"copy\">About half the strength of medium-strength steel threaded<span> </span><span class=\"ah\">rods,</span><span> </span>use these for light duty<span> </span><span class=\"ah\">hanging,</span><span class=\"ah\">mounting,</span><span> </span>and<span> </span><span class=\"ah\">fastening.</span></p></div>",
@@ -2608,7 +2608,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 	string TabCategorie[6000]
 	{
 
-	#pragma region BOULONS code catégorie  - 282
+		#pragma region BOULONS code catégorie  - 282
 
 #pragma region BM - 10
 			"BM04", "BM05", "BM06", "BM07", "BM08",
@@ -2790,7 +2790,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 	#pragma endregion
 
-	#pragma region ECROUS - 202
+		#pragma region ECROUS - 202
 
 #pragma region EM - 13
 			"EM04", "EM05", "EM06", "EM07", "EM08",
@@ -2949,7 +2949,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 	#pragma endregion
 
-	#pragma region WASHERS - 35
+		#pragma region WASHERS - 35
 
 	#pragma region R - 17
 			"R004", "R006", "R01", "R02", "R04",
@@ -3142,7 +3142,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 #pragma endregion
 
-	#pragma region VIS - 290
+		#pragma region VIS - 290
 
 	#pragma region VPB - 9
 				"VPB004", "VPB006", "VPB007", "VPB008", "VPB01",
@@ -3584,7 +3584,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 	#pragma endregion
 
-	#pragma region Equerre
+		#pragma region Equerre
 
 	#pragma region EZ - 7
 			"EZ01","EZ03","EZ08","EZ10","EZ20",
@@ -3593,7 +3593,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 	#pragma endregion
 
-	#pragma region Tige Filter
+		#pragma region Tige Filter
 
 	#pragma region TI - 13
 				"TI007","TI008","TI01","TI02","TI03",
@@ -3674,7 +3674,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 	string TabPhoto[6000]
 	{
 
-#pragma region BOULONS photo  - 282
+		#pragma region BOULONS photo  - 282
 
 #pragma region BM - 10
 		"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/Hex_Gr8.8_PT.PNG?v=1577121791", 
@@ -3960,7 +3960,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 #pragma endregion
 
-#pragma region ECROUS - 202
+		#pragma region ECROUS - 202
 
 #pragma region EM - 13
 	"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/hex_gr8.8.png?v=1581541246",
@@ -4229,7 +4229,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 #pragma endregion
 
-#pragma region WASHERS
+		#pragma region WASHERS
 
 #pragma region R
 			"https://cdn2.shopify.com/s/files/1/0025/7674/4483/files/washer.png?1727",
@@ -4616,7 +4616,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 #pragma endregion
 
-#pragma region VIS
+		#pragma region VIS
 
 #pragma region VPB - 9
 	"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/VPB.png?1879",
@@ -5397,7 +5397,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 #pragma endregion
 
-#pragma region Equerre
+		#pragma region Equerre
 
 #pragma region EZ - 7
 				"EZ01",
@@ -5412,7 +5412,7 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 #pragma endregion
 
-#pragma region Tige Filter
+		#pragma region Tige Filter
 
 #pragma region TI - 13
 				"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/Threaded_Rod.png?1781",
@@ -5564,15 +5564,80 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 
 	i = 0;
 	trouver = false;
-	while (trouver == false)
+	// CONDITION POUR SAVOIR SI LISTING OU RECHERCHE
+	if (categorie == "0" && numProduit == "0" && reponse == 0 && tag == "0" && Met_Int == 0) 
 	{
-		if (categorie == TabCategorie[i])
+		// FICHIER POUR LISTING DE PRODUITS
+		string FILENAME = "listing.txt";
+		fstream ListedProducts;
+		ListedProducts.open(FILENAME, ios::out);
+
+			// POSSIBLE OPTIMIZATION
+				// Could optimize for loop (still passes through empty "", it just doesn't get displayed)
+		// LISTING
+		for (const string& prd : TabCategorie)
 		{
-			trouver = true;
+			if (prd != "")
+			{
+				// TITLES AND COUNTS
+				/*
+				// int cpt = 0;
+				if (prd.at(0) == 'B' && cpt == 0) 
+				{
+					cout << "------------BOULONS------------" << endl;
+				}
+				else if (prd.at(0) == 'E' && cpt == 0)
+				{
+					cout << "BOULONS(" << cpt << ")" << endl << endl;
+					cout << "------------ECROUS------------" << endl;
+					cpt = 0;
+				}
+				else if (prd.at(0) == 'R' && cpt == 0)
+				{
+					cout << "ECROUS(" << cpt << ")" << endl << endl;
+					cout << "------------WASHERS------------" << endl;
+					cpt = 0;
+				}
+				else if (prd.at(0) == 'V' && cpt == 0)
+				{
+					cout << "WASHERS(" << cpt << ")" << endl << endl;
+					cout << "------------VIS------------" << endl;
+					cpt = 0;
+				}
+				else if (prd.at(0) == 'E' && cpt == 0)
+				{
+					cout << "VIS(" << cpt << ")" << endl << endl;
+					cout << "------------EQUERRE------------" << endl;
+					cpt = 0;
+				}
+				else if (prd.at(0) == 'T' && cpt == 0)
+				{
+					cout << "EQUERRE(" << cpt << ")" << endl << endl;
+					cout << "------------TIGE FILTER------------" << endl;
+					cpt = 0;
+				}
+				cpt++;
+				*/
+
+				cout << prd << endl;
+				ListedProducts << prd << endl;
+			}
 		}
-		else
+
+		ListedProducts.close();
+	}
+	else 
+	{
+		while (trouver == false)
 		{
-			i++;
+			if (categorie == TabCategorie[i])
+			{
+				trouver = true;
+			}
+			else
+			{
+				i++;
+			}
 		}
 	}
 

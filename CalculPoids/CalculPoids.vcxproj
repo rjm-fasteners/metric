@@ -23,7 +23,7 @@
     <ProjectGuid>{3A395469-7147-4B15-B544-A556EE40FD57}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CalculPoids</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>CalculPoids_metrique</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -161,7 +161,6 @@
     <ClInclude Include="Body.h" />
     <ClInclude Include="Body_old.h" />
     <ClInclude Include="CalculPoids.h" />
-    <ClInclude Include="modification.h" />
     <ClInclude Include="Poids.h" />
     <ClInclude Include="Prix.h" />
     <ClInclude Include="Threading.h" />
