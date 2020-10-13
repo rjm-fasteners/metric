@@ -2757,11 +2757,6 @@ string body(string categorie, string numProduit, int reponse, string tag, int Me
 				"BMFF12",
 #pragma endregion
 
-#pragma region BO - 3
-				"BO01", "BO02", "BO03",
-
-#pragma endregion
-
 #pragma region BMEST - 1
 			"BMEST08",
 #pragma endregion
