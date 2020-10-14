@@ -285,7 +285,7 @@ void ouverture(PRIX prix)
 					}
 					finish << endl;
 				}
-				// LISTING PRODUCTS
+				// LISTING PRODUCTS IF REPONSE == 10
 				else if (reponse == 10)
 				{
 					// String variable isn't useful (creating a new string just for that wouldn't be good idea)
@@ -443,10 +443,12 @@ void ouverture(PRIX prix)
 int main()
 {
 	cout << "Debut : " << endl;
+	// Added verification for the reponse (between 1 and 10 included)
 	do {
+		cout << "Les Equerres ne sont plus disponibles pour l'instant " << endl;
 		cout << "	1 - Boulon \n	2 - Ecrou \n	3 - Rondelle \n	4 - Equerre \n	5 - Tige Filte \n	6 - Vis \n	7 - Autre \n	8 - Ancrage \n	9 - Goupille \n	10 - Liste produits \n";
 		cin >> reponse;
-	} while (reponse < 1 || reponse > 10);
+	} while (reponse < 1 || reponse > 10 || reponse == 4);
 
 	PRIX prix;
 
