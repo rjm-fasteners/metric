@@ -12,7 +12,8 @@ using namespace std;
 
 int main()
 {
-    string deleteline;
+    setlocale(LC_ALL, "");
+
     string line;
 
     ifstream read;
