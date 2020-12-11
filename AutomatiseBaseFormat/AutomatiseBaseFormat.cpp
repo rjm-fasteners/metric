@@ -18,17 +18,37 @@ int main()
 
     ifstream read;
     read.open("Format de base.csv");
+
+    ofstream ofs;
+    ofs.open("temp.csv", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
     fstream temp;
     temp.open("temp.csv");
 
     if (read.is_open()) {
         std::string line;
         while (getline(read, line)) {
-            if ((!line.find("Vis Mauricie inc.;;;;;;;;;;") || !line.find(";;;;;;;;;;") || !line.find("Analyse de l’inventaire") || !line.find("Imprim") || !line.find("N° produit;;") || !line.find(";;;;;;7 – Prix Quantité;0;;0,0000;") || !line.find(";;;;;;;;Page")))
+            // || !line.find(";;;;;;;;;;") || !line.find("Analyse de") || !line.find("Imprim") || !line.find("N° produit") || !line.find(";;;;;;7 – Prix Quantité;0;;0,0000;") || !line.find(";;;;;;;;Page")
+            if ((!line.find("Vis Mauricie inc.;;;;;;;;;;")))
+            {
                 temp << "";
-            else if (!line.empty())
-                temp << line;
-            cout << line << endl;
+                getline(read, line);
+                getline(read, line);
+                getline(read, line);
+                getline(read, line);
+                getline(read, line);
+            }
+            else if (!line.empty()) {
+                if (!line.find(";;;;;;7"))
+                    temp << "";
+                else if (!line.find(";;;;;;;;;;"))
+                    temp << "";
+                else if (!line.find(";;;;;;;;Page 1 de 1;;"))
+                    temp << "";
+                else
+                    temp << line;
+            }
+            //cout << line << endl;
         }
         if (read.eof())
         {
