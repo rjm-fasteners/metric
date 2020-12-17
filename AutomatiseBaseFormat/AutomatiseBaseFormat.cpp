@@ -10,49 +10,246 @@ using namespace std;
 #include <iostream>
 #include <string>
 
-int main()
-{
-    setlocale(LC_ALL, "");
+ifstream read;
+fstream temp;
 
-    string line;
-
-    ifstream read;
-    read.open("Format de base.csv");
-    fstream temp;
-    temp.open("temp.csv");
-
+void formatFromAcomba() {
     if (read.is_open()) {
         std::string line;
         while (getline(read, line)) {
-            if ((!line.find("Vis Mauricie inc.;;;;;;;;;;") || !line.find(";;;;;;;;;;") || !line.find("Analyse de l’inventaire") || !line.find("Imprim") || !line.find("N° produit;;") || !line.find(";;;;;;7 – Prix Quantité;0;;0,0000;") || !line.find(";;;;;;;;Page")))
+            if ((!line.find("Vis Mauricie inc.;;;;;;;;;;")))
+            {
                 temp << "";
-            else if (!line.empty())
-                temp << line;
-            cout << line << endl;
+                getline(read, line);
+                getline(read, line);
+                getline(read, line);
+                getline(read, line);
+                getline(read, line);
+            }
+            else if (!line.empty()) {
+                if (!line.find(";;;;;;7"))
+                    temp << "";
+                else if (!line.find(";;;;;;;;;;"))
+                    temp << "";
+                else if (!line.find(";;;;;;;;Page 1 de 1;;"))
+                    temp << "";
+                else
+                    temp << line;
+            }
         }
         if (read.eof())
         {
             read.seekg(EOF);
             temp.unget();
-            //char a = temp.seekp(temp.end);
 
         }
+        cout << "Formatting DONE. You can close the console. Formatted file is in temp.csv" << endl;
     }
     else {
         std::cerr << "Error: coudn't open file\n";
-        /* additional handle */
     }
+}
+
+void formatFromMcMaster() {
+    if (read.is_open()) {
+        char ch = '1';
+        char ich = '1';
+        while (read.get(ch)) {
+            if (ch == ' ') {
+                ich = read.get();
+                /* CONDITION SI TROUVE class... */
+                if (ich == 'c') {
+                    ich = read.get();
+                    if (ich == 'l') {
+                        ich = read.get();
+                        if (ich == 'a') {
+                            ich = read.get();
+                            if (ich == 's') {
+                                ich = read.get();
+                                if (ich == 's') {
+                                    while (ich != '>') {
+                                        ich = read.get();
+                                        if (ich == '>') read.unget();
+                                    }
+                                }
+                                else {
+                                    read.unget();
+                                }
+                            }
+                            else {
+                                read.unget();
+                            }
+                        }
+                        else {
+                            read.unget();
+                        }
+                    }
+                    else {
+                        read.unget();
+                    }
+                }
+
+                /* CONDITION SI TROUVE data-mce... */
+                else if (ich == 'd') {
+                    ich = read.get();
+                    if (ich == 'a') {
+                        ich = read.get();
+                        if (ich == 't') {
+                            ich = read.get();
+                            if (ich == 'a') {
+                                ich = read.get();
+                                if (ich == '-') {
+                                    ich = read.get();
+                                    if (ich == 'm') {
+                                        while (ich != '>') {
+                                            ich = read.get();
+                                            if (ich == '>') read.unget();
+                                        }
+                                    }
+                                    else {
+                                        read.unget();
+                                    }
+                                }
+                                else {
+                                    read.unget();
+                                }
+                            }
+                            else {
+                                read.unget();
+                            }
+                        }
+                        else {
+                            read.unget();
+                        }
+                    }
+                }
+                else {
+                    read.unget();
+                }
+            }
+            else {
+                temp << ch;
+            }
+            
+            if (ch == ' ') {
+                temp << ch;
+            }
+        }
+        if (read.eof())
+        {
+            read.seekg(EOF);
+            temp.unget();
+
+        }
+        cout << "Formatting DONE. You can close the console. Formatted file is in temp.csv" << endl;
+    }
+    else {
+        std::cerr << "Error: coudn't open file\n";
+    }
+}
+
+string newline = "";
+void deleteCrap(string &line, size_t position) {
+    newline = "";
+    size_t pos2 = line.find('>');
+    newline += line.substr(0, position - 1);
+    newline += line.substr(pos2, line.length());
+    line = newline;
+    temp << newline << endl;
+}
+
+void formatTester() {
+    if (read.is_open()) {
+        string line = "";
+        string delete_class = "class";
+        string delete_data_mce = "data-mce";
+        size_t pos_class = 0;
+        size_t pos_data_mce = 0;
+        while (getline(read, line)) {
+            pos_class = line.find(delete_class);
+            pos_data_mce = line.find(delete_data_mce);
+            while (pos_class != std::string::npos || pos_data_mce != std::string::npos) {
+                if (pos_class != std::string::npos) {
+                    deleteCrap(line, pos_class);
+                    /* size_t is_clean = newline.find(delete_class);
+                     if (is_clean != std::string::npos) {
+                         pos2 = line.find('>', pos2+1);
+                         newline2 += newline.substr(0, is_clean - 1);
+                         int a = newline.length();
+                         newline2 += newline.substr(pos2, 59);
+                         temp << newline2 << endl;
+                     }
+                     else {
+                         is_clean = newline.find(delete_data_mce);
+                         if (is_clean != std::string::npos) {
+                             temp << "FOUND SECOND EHHEHEHEHE" << endl;
+                         }
+                     } */
+                }
+                else if (pos_data_mce != std::string::npos) {
+                    deleteCrap(line, pos_data_mce);
+                }
+                else {
+                    temp << line << endl;
+                }
+                pos_class = newline.find(delete_class);
+                pos_data_mce = newline.find(delete_data_mce);
+            }
+
+            /*
+            pos_class = newline.find(delete_class);
+            pos_data_mce = newline.find(delete_data_mce);
+            if (pos_data_mce != std::string::npos) {
+                deleteCrap(line, pos_data_mce);
+            }*/
+        }
+        if (read.eof())
+        {
+            read.seekg(EOF);
+            temp.unget();
+
+        }
+        cout << "Formatting DONE. You can close the console. Formatted file is in temp.csv" << endl;
+    }
+    else {
+        cerr << "Error: coudn't open file\n";
+    }
+}
+
+int main()
+{
+    setlocale(LC_ALL, "");
+
+    #pragma region Clearing the file
+    ofstream ofs;
+    ofs.open("temp.csv", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+    #pragma endregion
+
+    read.open("Format de base.csv");
+    temp.open("temp.csv");
+
+    int choix = 0;
+
+    do {
+        cout << "1) Formatter les donnees d'AcombaX \n2) Formatter les donnees de McMaster \n3) TEST ONLY PURPOSES" << endl;
+        cout << "Votre choix : ";
+        cin >> choix;
+    } while (choix < 1 || choix > 3);
+
+    cout << endl << "Loading..." << endl << endl;
+
+    if (choix == 1) {
+        formatFromAcomba();
+    }
+    else if (choix == 2) {
+        formatFromMcMaster();
+    }
+    else if (choix == 3) {
+        formatTester();
+    }
+
     read.close();
     temp.close();
 }
 
-// Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
-// Déboguer le programme : F5 ou menu Déboguer > Démarrer le débogage
-
-// Astuces pour bien démarrer : 
-//   1. Utilisez la fenêtre Explorateur de solutions pour ajouter des fichiers et les gérer.
-//   2. Utilisez la fenêtre Team Explorer pour vous connecter au contrôle de code source.
-//   3. Utilisez la fenêtre Sortie pour voir la sortie de la génération et d'autres messages.
-//   4. Utilisez la fenêtre Liste d'erreurs pour voir les erreurs.
-//   5. Accédez à Projet > Ajouter un nouvel élément pour créer des fichiers de code, ou à Projet > Ajouter un élément existant pour ajouter des fichiers de code existants au projet.
-//   6. Pour rouvrir ce projet plus tard, accédez à Fichier > Ouvrir > Projet et sélectionnez le fichier .sln.
