@@ -534,8 +534,8 @@ int TabCategorie(int choix, string categorie) {
 	int i;
 	int trouver = 0;
 
-	// BOLTS VERFIED ON 03-15		|PRDS-CLEAN|		|TODOs|
-	string bolt[500]{
+	// BOLTS VERIFIED ON 03-15			|TODOs|
+	string bolt[200]{
 	#pragma region BOULONS code catégorie  - 154
 
 #pragma region BMCT - 5
@@ -727,8 +727,8 @@ int TabCategorie(int choix, string categorie) {
 #pragma endregion
 	};
 
-	// NUTS VERIFIED ON 03-15		|PRDS-CLEAN|
-	string nut[500]{
+	// NUTS VERIFIED ON 03-15			|OK|
+	string nut[200]{
 		#pragma region ECROUS - 145
 
 #pragma region EM - 13
@@ -815,7 +815,6 @@ int TabCategorie(int choix, string categorie) {
 
 #pragma region EMSFF - 2
 			"EMSFF10", "EMSFF12",
-
 #pragma endregion
 
 #pragma region EMSK - 6
@@ -883,8 +882,8 @@ int TabCategorie(int choix, string categorie) {
 	#pragma endregion
 	};
 
-	// WASHERS VERIFIED ON 03-15	|PRDS-CLEAN|		|TODOs|
-	string washer[500]{
+	// WASHERS VERIFIED ON 03-15		|TODOs|
+	string washer[100]{
 		#pragma region WASHERS - 59
 
 	#pragma region RMF - 2
@@ -936,8 +935,8 @@ int TabCategorie(int choix, string categorie) {
 #pragma endregion
 	};
 
-	// SCREWS VERIFIED ON 03-15		|PRDS-CLEAN|		|TODOs|
-	string screw[500]{
+	// SCREWS VERIFIED ON 03-15			|TODOs|
+	string screw[150]{
 		#pragma region VIS - 86
 
 #pragma region VPCM - 16
@@ -1024,8 +1023,8 @@ int TabCategorie(int choix, string categorie) {
 	#pragma endregion
 	};
 
-	// RODS VERIFIED ON 03-15		|PRDS-CLEAN|		|TODOs|
-	string tige[500]{
+	// RODS VERIFIED ON 03-15			|TODOs|
+	string tige[50]{
 		#pragma region Tige Filter - 20
 
 		#pragma region TIM - 8
@@ -1932,7 +1931,6 @@ string bodyBolt(string categorie, string numProduit, string tag, string souschai
 	};
 
 	i = TabCategorie(1, categorie);
-
 
 #pragma region Photo drive
 

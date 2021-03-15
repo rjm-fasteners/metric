@@ -1,9 +1,6 @@
 #pragma once
 // LOOK OUT FOR COPIES OF ITEMS (Same prods many times)
 
-// ALL NON-METRIC PRODUCTS REMOVED
-// NEED TO ADD NEW PRODUCTS
-
 #pragma region Boulon
 
 class Boulon
@@ -84,9 +81,11 @@ inline void Boulon::separation()
 
 inline void Boulon::produit()
 {
-	string TabProduit[900]
+	// TabProduit VERIFIED ON 03-15		|TODOs|
+	string TabProduit[100]
 	{
-		// Non desired products removed
+		/// TODO ADD MISSING CATS (Found in body but not here)
+		// BMCT, BMCST3, BMCS3, BMEN, BMFN, BMN, BMTFF8N, BMT8N, BMFF8N
 		"BM",		"BM8",		"BMTE8",	"BM9N",		"BMC", 
 		"BMCS",		"BM8N",		"BMTFF",	"0",		"BMTF",	
 		"BMFFE",	"BMTF8N",	"BMT8",		"BMTEFF8",  "BMTFFE", 
@@ -98,7 +97,7 @@ inline void Boulon::produit()
 		"BMST3",
 	};
 
-	string TabProduitTitre[900]
+	string TabProduitTitre[100]
 	{
 		"Metric Hexagonal Bolt ",										"Metric Hexagonal Bolt ",						"Metric Flanged Hexagonal Bolt Full Thread ",		"Metric Hexagonal Bolt ",									"Metric Carriage Bolt ", 
 		"Metric Carriage Bolt ",										"Metric Hexagonal Bolt ",						"Metric Hexagonal Bolt Extra Fine & Full Thread ",	"0 ",														"Metric Hexagonal Bolt Fine & Full Thread ", 
@@ -111,7 +110,7 @@ inline void Boulon::produit()
 		"Metric Hexagonal Bolt Full Thread ",
 	};
 
-	string TabTAgProduit[900]
+	string TabTAgProduit[100]
 	{
 		"bolt,hex,metric,partially_threaded,",							"bolt,hex,metric,partially_threaded,",			"bolt,hex,metric,fully_threaded,",					"bolt,hex,metric,partially_threaded,",						"bolt,carriage, metric,fully_threaded,", 
 		"bolt,carriage,metric,fully_threaded,",							"bolt,hex,metric,partially_threaded,",			"bolt,hex,metric,fully_threaded,",					"0,",														"bolt,hex,metric,fully_threaded,",
@@ -124,7 +123,7 @@ inline void Boulon::produit()
 		"bolt,hex,metric,fully_threaded,", 
 	};
 
-	char TabFineTread[900]
+	char TabFineTread[100]
 	{
 		'c',	'c',	'c',	'c',	'c',
 		'c',	'c',	'e',	'0',	'f',
@@ -531,19 +530,17 @@ inline void Ecrou::separation()
 
 inline void Ecrou::produit()
 {
-
+	// TabProduit VERIFIED ON 03-15		|OK|
 	string TabProduit[900]
 	{
-		// Non desired products removed
-		"EM",		"EM8",
-		"EM8Y",		"EMF",		"EMH",		"EMS",		"EMSH",
-		"EMSC",		"EMFE",		"EMFFY",	"EMFH",		"EMFN",
-		"0",		"0",		"EME",		"EMP",		"EMSEF",
-		"EMSF",		"EMSFF",	"EMSK",		"EMSP",		"EMSE",
+		"EM",		"EM8",		"EM8Y",		"EMF",		"EMH",		
+		"EMS",		"EMSH",		"EMSC",		"EMFE",		"EMFFY",	
+		"EMFH",		"EMFN",		"0",		"0",		"EME",		
+		"EMP",		"EMSEF",	"EMSF",		"EMSFF",	"EMSK",		
+		"EMSP",		"EMSE",		"EMSY",		"EMY",		"EMSR",	
 
-		"EMSY",		"EMY",		"EMSR",		"EMR",		"EMF8",
-		"EMFF",		"EMSFFY",	"EMYL",		"EMFFQ",	"EMFQ",
-		"EMQ8",		"EMB",
+		"EMR",		"EMF8",		"EMFF",		"EMSFFY",	"EMYL",		
+		"EMFFQ",	"EMFQ",		"EMQ8",		"EMB",
 	};
 
 	string TabProduitTitre[900]
@@ -558,6 +555,7 @@ inline void Ecrou::produit()
 		"Metric Hexagonal Nut Fine Thread ",		"Metric Hexagonal Nut Nylon Insert Fine Thread ",		"Metric Hexagonal Nut Nylon Insert ",				"Metric Conical Hexagonal LockNut Fine Thread ",	"Metric Conical Hexagonal LockNut Fine Thread ",
 		"Metric Conical Hexagonal Nut ",			"Metric Hexagonal But ",
 	};
+
 	string TabTAgProduit[900]
 	{
 		"hex, nut, metric, Metric_Coarse,",			"hex, nut, metric, Metric_Coarse,", 
@@ -797,9 +795,9 @@ inline void Washer::separation()
 
 inline void Washer::produit()
 {
+	// TabProduit VERIFIED ON 03-15		|OK|
 	string TabProduit[900]
 	{
-		// Non desired products removed
 		"0",		"0",		"0",		"0",		"0",
 		"0",		"0",		"0",		"0",		"0",
 		"0",		"0",		"0",		"0",		"0", 
@@ -1155,9 +1153,11 @@ inline void Vis::separation()
 
 inline void Vis::produit()
 {
+	// TabProduit VERIFIED ON 03-15		|TODOs|
 	string TabProduit[900]
 	{
-		// Non desired products removed
+		/// TODO ADD MISSING CATS (Found in body but not here)
+		// VMSPM, VMYPMN, VPCMSH
 		"0",		"0",		"0",		"0",		"0",
 		"0",		"0",		"0",		"0",		"0",
 		"0",		"0",		"0",		"0",		"0",
@@ -1173,8 +1173,8 @@ inline void Vis::produit()
 		"0",		"0",		"VPRFD",	"0",		"0",
 		"VPCM",		"VPCMF",	"VPCMFF",	"VPFM",		"VPRD",
 		"VPRFD",	"VPSCM",	"VPSCM3",	"0",		"0",
-		"0",		"0",		"VMFM",		"VBF",		"VMSFM",
-		"0",		"VMSPFC",	"VPSPM",	"VMT",		"VMYPM",
+		"0",		"0",		"VMFM",		"0",		"VMSFM",
+		"0",		"?VMSPFC?",	"?VPSPM?",	"?VMT?",	"0",
 		"VMYPM",	"VPBM",		"VPCMI",	"VMPM",		"VPSBM",
 	};
 
@@ -1220,6 +1220,7 @@ inline void Vis::produit()
 		"0,",																"flat_head, machine_screw,inch,fully_threaded, ",					"flat_head, machine_screw,metric,fully_threaded, ",						"truss_head, machine_screw,inch,fully_threaded, ",					"pan_head, metal_screw,metric, fully_threaded,",
 		"pan_head, metal_screw,metric, fully_threaded,",					"button_head_cap_screw,metric,pressure_screw,fully_threaded,",		"button_head_cap_screw,metric,pressure_screw,partially_threaded,",		"pan_head, machine_screw,metric, partially_threaded,",				"metric,button_head_cap_screw,pressure_screw,fully_threaded,"
 	};
+
 	char TabFineTread[900]
 	{
 			'0',	'0',	'0',	'0',	'0',
@@ -1600,29 +1601,29 @@ inline void Tige_Filte::separation()
 
 inline void Tige_Filte::produit()
 {
-	string TabProduit[900]
+	// TabProduit VERIFIED ON 03-15		|OK|
+	string TabProduit[20]
 	{
-		// Non desired products removed
 		"0",		"0",		"0",		"0",		"0",
 		"0",		"0",		"0",		"0",		"TIM",
 		"TIM8",		"TIMS",		"TIMF",		"TIM8FF",
 	};
 
-	string TabProduitTitre[900]
+	string TabProduitTitre[20]
 	{
 		"0 ",				"0 ",				"0 ",							"0 ",							"0 ",		
 		"0 ",				"0 ",				"0 ",							"0 ",							"Threaded Rod ",
 		"Threaded Rod ",	"Threaded Rod ",	"Threaded Rod Fine Thread ",	"Threaded Rod Fine Thread ",
 	};
 
-	string TabTAgProduit[900]
+	string TabTAgProduit[20]
 	{
 		"0,",					"0,",						"0,",					"0,",						"0,",
 		"0,",					"0,",						"0,",					"0,",						"tige_filete,metric,",
 		"tige_filete,metric,",	"tige_filete,metric,",		"tige_filete,metric,",	"tige_filete,metric,",
 	};
 
-	bool TabFineTread[900]
+	bool TabFineTread[20]
 	{
 		0,			0,			0,			0,			0,
 		0,			0,			0,			0,			false,
