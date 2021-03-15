@@ -1882,7 +1882,7 @@ TITRE::~TITRE()
 {
 }
 
-inline void TITRE::constructeur(string numProduit, float bulk,int reponse, string tag)
+inline void TITRE::constructeur(string numProduit, float bulk, int reponse, string tag)
 {
 	i = 0;
 	trouver = false;
