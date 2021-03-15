@@ -1,7 +1,7 @@
 #pragma once
 // LOOK OUT FOR COPIES OF ITEMS (Same prods many times)
 
-
+// ALL NON-METRIC PRODUCTS REMOVED
 // NEED TO ADD NEW PRODUCTS
 
 #pragma region Boulon
@@ -88,7 +88,7 @@ inline void Boulon::produit()
 	{
 		// Non desired products removed
 		"BM",		"BM8",		"BMTE8",	"BM9N",		"BMC", 
-		"BMCS",		"0",		"BMTFF",	"0",		"BMTF",	
+		"BMCS",		"BM8N",		"BMTFF",	"0",		"BMTF",	
 		"BMFFE",	"BMTF8N",	"BMT8",		"BMTEFF8",  "BMTFFE", 
 		"BMFF",		"BMEST",	"BMF8E",	"BMFE",		"BMTE", 
 		"BMTF8E",	"BOM",		"BOMS",		"BME",		"BMF", 
@@ -101,20 +101,20 @@ inline void Boulon::produit()
 	string TabProduitTitre[900]
 	{
 		"Metric Hexagonal Bolt ",										"Metric Hexagonal Bolt ",						"Metric Flanged Hexagonal Bolt Full Thread ",		"Metric Hexagonal Bolt ",									"Metric Carriage Bolt ", 
-		"Metric Carriage Bolt ",										"0 ",											"Metric Hexagonal Bolt Extra Fine & Full Thread ",	"0 ",														"Metric Hexagonal Bolt Fine & Full Thread ", 
+		"Metric Carriage Bolt ",										"Metric Hexagonal Bolt ",						"Metric Hexagonal Bolt Extra Fine & Full Thread ",	"0 ",														"Metric Hexagonal Bolt Fine & Full Thread ", 
 		"Metric Flanged Serrated Hexagonal Bolt Extra Fine Thread ",	"Metric Hexagonal Bolt Fine & Full Thread ",	"Metric Hexagonal Bolt Full Thread ",				"Metric Flanged Hexagonal Bolt Extra Fine & Full Thread ",	"Metric Flanged Hexagonal Bolt Extra Fine & Full Thread ",
 		"Metric Hexagonal Bolt Extra Fine Thread ",						"Metric Flanged Hexagonal Bolt Full Thread ",	"Metric Flanged Hexagonal Bolt Fine Thread ",		"Metric Flanged Hexagonal Bolt Fine Thread ",				"Metric Flanged Hexagonal Bolt Full Thread ",
 		"Metric Flanged Hexagonal Bolt Full Thread ",					"Metric Ball Joint Rod End ",					"Metric Ball Joint Rod End ",						"Metric Flanged Hexagonal Bolt ",							"Metric Hexagonal Bolt Fine Thread ", 
 		
 		"Metric Flanged Serrated Hexagonal Bolt ",						"Metric Hexagonal Bolt Fine Thread ",			"Metric Hexagonal Bolt Full Thread ",				"Metric Flanged Hexagonal Bolt Fine & Full Thread ",		"Metric Flanged Hexagonal Bolt Full Thread ", 
-		"Metric Hexagonal Bolt Fine & Full Thread ",					"Metric Hexagonal Bolt Extra Fine Thread ",		"Metric Hexagonal Bolt Full Thread ",				"Hexagonal Bolt Fine Thread ",								"Metric Hexagonal Bolt Fine & Full Thread ",
+		"Metric Hexagonal Bolt Fine & Full Thread ",					"0 ",											"Metric Hexagonal Bolt Full Thread ",				"Hexagonal Bolt Fine Thread ",								"Metric Hexagonal Bolt Fine & Full Thread ",
 		"Metric Hexagonal Bolt Full Thread ",
 	};
 
 	string TabTAgProduit[900]
 	{
 		"bolt,hex,metric,partially_threaded,",							"bolt,hex,metric,partially_threaded,",			"bolt,hex,metric,fully_threaded,",					"bolt,hex,metric,partially_threaded,",						"bolt,carriage, metric,fully_threaded,", 
-		"bolt,carriage,metric,fully_threaded,",							"0,",											"bolt,hex,metric,fully_threaded,",					"0,",														"bolt,hex,metric,fully_threaded,",
+		"bolt,carriage,metric,fully_threaded,",							"bolt,hex,metric,partially_threaded,",			"bolt,hex,metric,fully_threaded,",					"0,",														"bolt,hex,metric,fully_threaded,",
 		"bolt,hex,metric,flanged,partially_threaded,",					"bolt,hex,metric,fully_threaded,",				"bolt,hex,metric,fully_threaded,",					"bolt,hex,metric,flanged, fully_threaded,",					"bolt,hex,metric,fully_threaded,flanged,",	
 		"bolt,hex,metric,partially_threaded,",							"bolt,hex,metric,flanged,fully_threaded,",		"bolt,hex,metric,flanged,partially_threaded,",		"bolt,hex,metric,flanged,partially_threaded,",				"bolt,hex,metric,fully_threaded,flanged,",
 		"bolt,flanged,fully_threaded,metric,",							"ball_joint,metric,partially_threaded,",		"ball_joint,metric,partially_threaded,",			"bolt,hex,metric,flanged,partially_threaded,",				"bolt,hex,metric,partially_threaded,",
@@ -127,7 +127,7 @@ inline void Boulon::produit()
 	char TabFineTread[900]
 	{
 		'c',	'c',	'c',	'c',	'c',
-		'c',	'0',	'e',	'0',	'f',
+		'c',	'c',	'e',	'0',	'f',
 		'e',	'f',	'c',	'e',	'e',
 		'e',	'c',	'f',	'f',	'c',
 		'f',	'c',	'c',	'c',	'f',
@@ -1201,17 +1201,17 @@ inline void Vis::produit()
 	};
 	string TabTAgProduit[900]
 	{
-		"0,",				"0,",				"0,",				"0,",				"0,",
-		"0,",				"0,",				"0,",				"0,",				"0,",
-		"0,",				"0,",				"0,",				"0,",				"0,",
-		"0,",				"0,",				"0,",				"0,",				"0,",
-		"0,",				"0,",				"0,",				"0,",				"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
 
-		"0,",				"0,",				"0,",				"0,",				"0,",
-		"0,",				"0,",				"0,",				"0,",				"0,",
-		"0,",				"0,",				"0,",				"0,",				"0,",
-		"0,",				"0,",				"0,",				"0,",				"0,",
-		"0,",				"0,",				"0,",				"0,",				"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
 		
 		"0,",																"0,",																"flat_head_cap_screw,inch,pressure_screw,fully_threaded,dog",			"0",																"0",
 		"metric,socket_head_cap_screw,pressure_screw,partially_threaded,",	"metric,socket_head_cap_screw,pressure_screw,partially_threaded,",	"metric,socket_head_cap_screw,pressure_screw,partially_threaded,UNEF",	"metric,flat_head_cap_screw,pressure_screw,partially_threaded,",	"pressure_screw,inch,set_screw,fully_threaded,dog",

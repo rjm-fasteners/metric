@@ -446,9 +446,9 @@ int main()
 	// Added verification for the reponse (between 1 and 10 included)
 	do {
 		cout << "Les Equerres ne sont plus disponibles pour l'instant " << endl;
-		cout << "	1 - Boulon \n	2 - Ecrou \n	3 - Rondelle \n	4 - Equerre \n	5 - Tige Filte \n	6 - Vis \n	7 - Autre \n	8 - Ancrage \n	9 - Goupille \n	10 - Liste produits \n";
+		cout << "	1 - Boulon \n	2 - Ecrou \n	3 - Rondelle \n	4 - Tige \n	5 - Vis \n	6 - Autre \n	22 - Liste des produits	\n";
 		cin >> reponse;
-	} while (reponse < 1 || reponse > 10 || reponse == 4);
+	} while (reponse != 22 || (reponse < 1 & reponse > 10));
 
 	PRIX prix;
 
@@ -458,3 +458,4 @@ int main()
 
 	cout << "Fin" << endl;
 }
+

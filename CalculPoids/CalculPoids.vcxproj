@@ -160,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="Body.h" />
     <ClInclude Include="Body_old.h" />
+    <ClInclude Include="Body_old_v2.h" />
     <ClInclude Include="CalculPoids.h" />
     <ClInclude Include="Poids.h" />
     <ClInclude Include="Prix.h" />
