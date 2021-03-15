@@ -1,4 +1,8 @@
 #pragma once
+// LOOK OUT FOR COPIES OF ITEMS (Same prods many times)
+
+// ALL NON-METRIC PRODUCTS REMOVED
+// NEED TO ADD NEW PRODUCTS
 
 #pragma region Boulon
 
@@ -82,53 +86,54 @@ inline void Boulon::produit()
 {
 	string TabProduit[900]
 	{
-		"BM", "BM8", "BMTE8", "BM9N", "BMC", 
-		"BMCS", "BMFTE", "BMTFF", "BMTFF8", "BMTF",	
-		"BMFFE", "BMTF8N", "BMT8", "BMTEFF8", "BMTFFE", 
-		"BMFF", "BMEST", "BMF8E", "BMFE", "BMTE", 
-		"BMTF8E", "BOM", "BOMS", "BME", "BMF", 
+		// Non desired products removed
+		"BM",		"BM8",		"BMTE8",	"BM9N",		"BMC", 
+		"BMCS",		"BM8N",		"BMTFF",	"0",		"BMTF",	
+		"BMFFE",	"BMTF8N",	"BMT8",		"BMTEFF8",  "BMTFFE", 
+		"BMFF",		"BMEST",	"BMF8E",	"BMFE",		"BMTE", 
+		"BMTF8E",	"BOM",		"BOMS",		"BME",		"BMF", 
 		
-		"BME8", "BMF8N", "BMST", "BMTFE", "BMTE8N", 
-		"BMTFN", "BMFF8", "BMT", "BMF8", "BMTF8",
+		"BME8",		"BMF8N",	"BMST",		"BMTFE",	"BMTE8N", 
+		"BMTFN",	"0",		"BMT",		"BMF8",		"BMTF8",
 		"BMST3",
 	};
 
 	string TabProduitTitre[900]
 	{
-		"Metric Hexagonal Bolt ", "Metric Hexagonal Bolt ", "Metric Flanged Hexagonal Bolt Full Thread ", "Metric Hexagonal Bolt ", "Metric Carriage Bolt ", 
-		"Metric Carriage Bolt ", "Metric Flanged Hexagonal Bolt Full Thread ", "Metric Hexagonal Bolt Extra Fine & Full Thread ", "Metric Hexagonal Bolt Extra Fine & Full Thread ", "Metric Hexagonal Bolt Fine & Full Thread ", 
-		"Metric Flanged Serrated Hexagonal Bolt Extra Fine Thread ", "Metric Hexagonal Bolt Fine & Full Thread ", "Metric Hexagonal Bolt Full Thread ", "Metric Flanged Hexagonal Bolt Extra Fine & Full Thread ", "Metric Flanged Hexagonal Bolt Extra Fine & Full Thread ",
-		"Metric Hexagonal Bolt Extra Fine Thread ", "Metric Flanged Hexagonal Bolt Full Thread ", "Metric Flanged Hexagonal Bolt Fine Thread ", "Metric Flanged Hexagonal Bolt Fine Thread ", "Metric Flanged Hexagonal Bolt Full Thread ",
-		"Metric Flanged Hexagonal Bolt Full Thread ", "Metric Ball Joint Rod End ", "Metric Ball Joint Rod End ", "Metric Flanged Hexagonal Bolt ", "Metric Hexagonal Bolt Fine Thread ", 
+		"Metric Hexagonal Bolt ",										"Metric Hexagonal Bolt ",						"Metric Flanged Hexagonal Bolt Full Thread ",		"Metric Hexagonal Bolt ",									"Metric Carriage Bolt ", 
+		"Metric Carriage Bolt ",										"Metric Hexagonal Bolt ",						"Metric Hexagonal Bolt Extra Fine & Full Thread ",	"0 ",														"Metric Hexagonal Bolt Fine & Full Thread ", 
+		"Metric Flanged Serrated Hexagonal Bolt Extra Fine Thread ",	"Metric Hexagonal Bolt Fine & Full Thread ",	"Metric Hexagonal Bolt Full Thread ",				"Metric Flanged Hexagonal Bolt Extra Fine & Full Thread ",	"Metric Flanged Hexagonal Bolt Extra Fine & Full Thread ",
+		"Metric Hexagonal Bolt Extra Fine Thread ",						"Metric Flanged Hexagonal Bolt Full Thread ",	"Metric Flanged Hexagonal Bolt Fine Thread ",		"Metric Flanged Hexagonal Bolt Fine Thread ",				"Metric Flanged Hexagonal Bolt Full Thread ",
+		"Metric Flanged Hexagonal Bolt Full Thread ",					"Metric Ball Joint Rod End ",					"Metric Ball Joint Rod End ",						"Metric Flanged Hexagonal Bolt ",							"Metric Hexagonal Bolt Fine Thread ", 
 		
-		"Metric Flanged Serrated Hexagonal Bolt ", "Metric Hexagonal Bolt Fine Thread ", "Metric Hexagonal Bolt Full Thread ", "Metric Flanged Hexagonal Bolt Fine & Full Thread ", "Metric Flanged Hexagonal Bolt Full Thread ", 
-		"Metric Hexagonal Bolt Fine & Full Thread ", "Metric Hexagonal Bolt Extra Fine Thread ", "Metric Hexagonal Bolt Full Thread ", "Hexagonal Bolt Fine Thread ", "Metric Hexagonal Bolt Fine & Full Thread ",
+		"Metric Flanged Serrated Hexagonal Bolt ",						"Metric Hexagonal Bolt Fine Thread ",			"Metric Hexagonal Bolt Full Thread ",				"Metric Flanged Hexagonal Bolt Fine & Full Thread ",		"Metric Flanged Hexagonal Bolt Full Thread ", 
+		"Metric Hexagonal Bolt Fine & Full Thread ",					"0 ",											"Metric Hexagonal Bolt Full Thread ",				"Hexagonal Bolt Fine Thread ",								"Metric Hexagonal Bolt Fine & Full Thread ",
 		"Metric Hexagonal Bolt Full Thread ",
 	};
 
 	string TabTAgProduit[900]
 	{
-		"bolt,hex,metric,partially_threaded,", "bolt,hex,metric,partially_threaded,", "bolt,hex,metric,fully_threaded,", "bolt,hex,metric,partially_threaded,", "bolt,carriage, metric,fully_threaded,", 
-		"bolt,carriage,metric,fully_threaded,", "bolt,hex,metric,flanged, fully_threaded,", "bolt,hex,metric,fully_threaded,", "bolt,hex,metric,fully_threaded,", "bolt,hex,metric,fully_threaded,",
-		"bolt,hex,metric,flanged,partially_threaded,", "bolt,hex,metric,fully_threaded,", "bolt,hex,metric,fully_threaded,", "bolt,hex,metric,flanged, fully_threaded,", "bolt,hex,metric,fully_threaded,flanged,",	
-		"bolt,hex,metric,partially_threaded,", "bolt,hex,metric,flanged,fully_threaded,", "bolt,hex,metric,flanged,partially_threaded,", "bolt,hex,metric,flanged,partially_threaded,", "bolt,hex,metric,fully_threaded,flanged,",
-		"bolt,flanged,fully_threaded,metric,", "ball_joint,metric,partially_threaded,", "ball_joint,metric,partially_threaded,", "bolt,hex,metric,flanged,partially_threaded,", "bolt,hex,metric,partially_threaded,",
+		"bolt,hex,metric,partially_threaded,",							"bolt,hex,metric,partially_threaded,",			"bolt,hex,metric,fully_threaded,",					"bolt,hex,metric,partially_threaded,",						"bolt,carriage, metric,fully_threaded,", 
+		"bolt,carriage,metric,fully_threaded,",							"bolt,hex,metric,partially_threaded,",			"bolt,hex,metric,fully_threaded,",					"0,",														"bolt,hex,metric,fully_threaded,",
+		"bolt,hex,metric,flanged,partially_threaded,",					"bolt,hex,metric,fully_threaded,",				"bolt,hex,metric,fully_threaded,",					"bolt,hex,metric,flanged, fully_threaded,",					"bolt,hex,metric,fully_threaded,flanged,",	
+		"bolt,hex,metric,partially_threaded,",							"bolt,hex,metric,flanged,fully_threaded,",		"bolt,hex,metric,flanged,partially_threaded,",		"bolt,hex,metric,flanged,partially_threaded,",				"bolt,hex,metric,fully_threaded,flanged,",
+		"bolt,flanged,fully_threaded,metric,",							"ball_joint,metric,partially_threaded,",		"ball_joint,metric,partially_threaded,",			"bolt,hex,metric,flanged,partially_threaded,",				"bolt,hex,metric,partially_threaded,",
 		
-		"bolt,flanged,partially_threaded,metric,hex,", "bolt,hex,metric,partially_threaded,", "bolt,hex,metric,fully_threaded,", "bolt,hex,metric,flanged,fully_threaded,", "bolt,hex,metric,fully_threaded,flanged, ", 
-		"bolt,hex,metric,fully_threaded,", "bolt,hex,metric,partially_threaded,", "bolt,hex,metric,fully_threaded,", "bolt,hex,metric,partially_threaded,", "bolt,hex,metric,fully_threaded,",
+		"bolt,flanged,partially_threaded,metric,hex,",					"bolt,hex,metric,partially_threaded,",			"bolt,hex,metric,fully_threaded,",					"bolt,hex,metric,flanged,fully_threaded,",					"bolt,hex,metric,fully_threaded,flanged, ", 
+		"bolt,hex,metric,fully_threaded,",								"bolt,hex,metric,partially_threaded,",			"bolt,hex,metric,fully_threaded,",					"bolt,hex,metric,partially_threaded,",						"bolt,hex,metric,fully_threaded,",
 		"bolt,hex,metric,fully_threaded,", 
 	};
 
 	char TabFineTread[900]
 	{
-		'c','c','c','c','c',
-		'c','f','e','e','f',
-		'e','f','c','e','e',
-		'e','c','f','f','c',
-		'f','c','c','c','f',
+		'c',	'c',	'c',	'c',	'c',
+		'c',	'c',	'e',	'0',	'f',
+		'e',	'f',	'c',	'e',	'e',
+		'e',	'c',	'f',	'f',	'c',
+		'f',	'c',	'c',	'c',	'f',
 		
-		'c','f','c','f','c',
-		'f','e','c','f','f',
+		'c',	'f',	'c',	'f',	'c',
+		'f',	'e',	'c',	'f',	'f',
 		'c',
 	};
 
@@ -458,6 +463,7 @@ public:
 	void constructeur(string tag, string titre, string numProduit, float bulk);
 	string getTag();
 	string getTitre();
+	void produit();
 
 private:
 	string souschaine[3];
@@ -469,7 +475,6 @@ private:
 	string numProduit;
 
 	void separation();
-	void produit();
 	void material();
 	void threading();
 	void grade();
@@ -529,53 +534,54 @@ inline void Ecrou::produit()
 
 	string TabProduit[900]
 	{
-		"EM","EM8",
-		"EM8Y","EMF","EMH","EMS","EMSH",
-		"EMSC","EMFE","EMFFY","EMFH","EMFN",
-		"EMSC", "EMFQ8", "EME", "EMP", "EMSEF",
-		"EMSF", "EMSFF", "EMSK", "EMSP", "EMSE",
+		// Non desired products removed
+		"EM",		"EM8",
+		"EM8Y",		"EMF",		"EMH",		"EMS",		"EMSH",
+		"EMSC",		"EMFE",		"EMFFY",	"EMFH",		"EMFN",
+		"0",		"0",		"EME",		"EMP",		"EMSEF",
+		"EMSF",		"EMSFF",	"EMSK",		"EMSP",		"EMSE",
 
-		"EMSY", "EMY", "EMSR", "EMR", "EMF8",
-		"EMFF", "EMSFFY", "EMYL", "EMFFQ", "EMFQ",
-		"EMQ8", "EMB",
+		"EMSY",		"EMY",		"EMSR",		"EMR",		"EMF8",
+		"EMFF",		"EMSFFY",	"EMYL",		"EMFFQ",	"EMFQ",
+		"EMQ8",		"EMB",
 	};
 
 	string TabProduitTitre[900]
 	{
-		"Metric Hexagonal Nut ", "Metric Hexagonal Nut ",
-		"Metric Hexagonal Nut ", "Metric Hexagonal Nut Fine Thread ", "Metric Hexagonal Nut ", "Metric Hexagonal Nut ", "Metric Hexagonal Nut ",
-		"Metric Cap Nut ", "Metric Hexagonal Flange LockNut ", "Metric Hexagonal Nut ", "Metric Hexagonal Nut ", "Metric Hexagonal Nut ",
-		"Metric Cap Nut ", "Metric Conical Hexagonal Nut ", "Metric Serrated Flanged Hexagonal Nut ", "Metric Wing Nut", "Metric Hexagonal Flange Nut ",
-		"Metric Hexagonal Nut Fine Thread ", "Metric Hexagonal Nut Fine Thread ", "Metric Hexagonal LockNut External Tooth", "Metric Wing Nut", "Metric Hexagonal Flange Nut ",
+		"Metric Hexagonal Nut ",					"Metric Hexagonal Nut ",
+		"Metric Hexagonal Nut ",					"Metric Hexagonal Nut Fine Thread ",					"Metric Hexagonal Nut ",							"Metric Hexagonal Nut ",							"Metric Hexagonal Nut ",
+		"Metric Cap Nut ",							"Metric Hexagonal Flange LockNut ",						"Metric Hexagonal Nut ",							"Metric Hexagonal Nut ",							"Metric Hexagonal Nut ",
+		"0 ",										"0 ",													"Metric Serrated Flanged Hexagonal Nut ",			"Metric Wing Nut",									"Metric Hexagonal Flange Nut ",
+		"Metric Hexagonal Nut Fine Thread ",		"Metric Hexagonal Nut Fine Thread ",					"Metric Hexagonal LockNut External Tooth",			"Metric Wing Nut",									"Metric Hexagonal Flange Nut ",
 
-		"Metric Hexagonal Nut Nylon Insert ", "Metric Hexagonal Nut Nylon Insert ", "Metric Hexagonal Coupling Nut", "Metric Hexagonal Coupling Nut", "Metric Hexagonal Nut Fine Thread ",
-		"Metric Hexagonal Nut Fine Thread ", "Metric Hexagonal Nut Nylon Insert Fine Thread ", "Metric Hexagonal Nut Nylon Insert ", "Metric Conical Hexagonal LockNut Fine Thread ", "Metric Conical Hexagonal LockNut Fine Thread ",
-		"Metric Conical Hexagonal Nut ", "Metric Hexagonal But ",
+		"Metric Hexagonal Nut Nylon Insert ",		"Metric Hexagonal Nut Nylon Insert ",					"Metric Hexagonal Coupling Nut",					"Metric Hexagonal Coupling Nut",					"Metric Hexagonal Nut Fine Thread ",
+		"Metric Hexagonal Nut Fine Thread ",		"Metric Hexagonal Nut Nylon Insert Fine Thread ",		"Metric Hexagonal Nut Nylon Insert ",				"Metric Conical Hexagonal LockNut Fine Thread ",	"Metric Conical Hexagonal LockNut Fine Thread ",
+		"Metric Conical Hexagonal Nut ",			"Metric Hexagonal But ",
 	};
 	string TabTAgProduit[900]
 	{
-		"hex, nut, metric, Metric_Coarse,", "hex, nut, metric, Metric_Coarse,", 
-		"hex, nut, metric, Metric_Coarse,", "hex, nut, metric, Metric_Fine,", "hex, nut, metric, Metric_Coarse, left_thread,", "hex, nut, metric, Metric_Coarse,", "hex, nut, metric, Metric_Coarse,left_thread,",
-		"nut,metric, cap, Metric_Coarse,", "hex,nut,metric,flanged, Metric_Fine,", "hex,nut,metric, Metric_Extra_Fine,", "hex,nut,metric, Metric_Fine,left_thread,", "hex,nut,metric, Metric_Fine,",
-		"nut,metric, cap, Metric_Coarse,", "conique, nut, metric, Metric_Fine,", "nut,metric, flanged, Metric_Coarse,", "nut,metric, wing, Metric_Coarse,", "hex,nut,metric,flange, Metric_Fine,",
-		"hex,nut,metric, Metric_Fine,", "hex,nut,metric, Metric_Extra_Fine,", "hex,nut,metric, Metric_Coarse,", "nut,metric, wing, Metric_Coarse,", "hex,nut,metric,flange, Metric_Coarse,",
+		"hex, nut, metric, Metric_Coarse,",			"hex, nut, metric, Metric_Coarse,", 
+		"hex, nut, metric, Metric_Coarse,",			"hex, nut, metric, Metric_Fine,",						"hex, nut, metric, Metric_Coarse, left_thread,",	"hex, nut, metric, Metric_Coarse,",					"hex, nut, metric, Metric_Coarse,left_thread,",
+		"nut,metric, cap, Metric_Coarse,",			"hex,nut,metric,flanged, Metric_Fine,",					"hex,nut,metric, Metric_Extra_Fine,",				"hex,nut,metric, Metric_Fine,left_thread,",			"hex,nut,metric, Metric_Fine,",
+		"0",										"0",													"nut,metric, flanged, Metric_Coarse,",				"nut,metric, wing, Metric_Coarse,",					"hex,nut,metric,flange, Metric_Fine,",
+		"hex,nut,metric, Metric_Fine,",				"hex,nut,metric, Metric_Extra_Fine,",					"hex,nut,metric, Metric_Coarse,",					"nut,metric, wing, Metric_Coarse,",					"hex,nut,metric,flange, Metric_Coarse,",
 
-		"nut,metric,nylon_insert, Metric_Coarse,", "nut,metric,nylon_insert, Metric_Coarse,", "hex,nut,metric,coupling, Metric_Coarse,", "hex,nut,metric,coupling, Metric_Coarse,", "hex, nut, metric, Metric_Fine,",
-		"hex, nut, metric, Metric_Fine,", "nut, hex, nylon_insert,metric, Metric_Extra_Fine,", "nut,hex, nylon_insert,metric, Metric_Coarse,", "hex,nut,conique,metric, Metric_Extra_Fine,", "hex,nut,conique,metric, Metric_Fine,",
-		"conique, nut, metric, Metric_Coarse,", "hex, nut, metric, Metric_Coarse,",
+		"nut,metric,nylon_insert, Metric_Coarse,",	"nut,metric,nylon_insert, Metric_Coarse,",				"hex,nut,metric,coupling, Metric_Coarse,",			"hex,nut,metric,coupling, Metric_Coarse,",			"hex, nut, metric, Metric_Fine,",
+		"hex, nut, metric, Metric_Fine,",			"nut, hex, nylon_insert,metric, Metric_Extra_Fine,",	"nut,hex, nylon_insert,metric, Metric_Coarse,",		"hex,nut,conique,metric, Metric_Extra_Fine,",		"hex,nut,conique,metric, Metric_Fine,",
+		"conique, nut, metric, Metric_Coarse,",		"hex, nut, metric, Metric_Coarse,",
 	};
 
 	char TabFineTread[900]
 	{
-		'c', 'c',
-		'c', 'f', 'c', 'c', 'c',
-		'c', 'f', 'e', 'f', 'f',
-		'c', 'f', 'c', 'c', 'f',
-		'f', 'e', 'c', 'c', 'c',
+		'c',	'c',	
+		'c',	'f',	'c',	'c',	'c',
+		'c',	'f',	'e',	'f',	'f',
+		'0',	'0',	'c',	'c',	'f',
+		'f',	'e',	'c',	'c',	'c',
 
-		'c', 'c', 'c', 'c', 'f',
-		'f', 'e', 'c', 'e', 'f',
-		'c', 'c',
+		'c',	'c',	'c',	'c',	'f',
+		'f',	'e',	'c',	'e',	'f',
+		'c',	'c',	
 	};
 
 	int i = 0;
@@ -711,6 +717,7 @@ inline void Ecrou::grade()
 	titre = titre + TabGradeTitre;
 }
 
+
 #pragma endregion
 
 #pragma region Washer
@@ -792,55 +799,56 @@ inline void Washer::produit()
 {
 	string TabProduit[900]
 	{
-		"R", "R5", "R8", "RA", "RA8",
-		"RA9", "RAN", "RF", "RFY", "RG",
-		"RIB", "RLG", "RLN", "RR", "RRN", 
-		"RR8", "RR8N", "RRS", "RMF", "RB",
-		"RMS", "RN", "RMA", "RSDE", "RSDI",
+		// Non desired products removed
+		"0",		"0",		"0",		"0",		"0",
+		"0",		"0",		"0",		"0",		"0",
+		"0",		"0",		"0",		"0",		"0", 
+		"0",		"0",		"0",		"RMF",		"0",
+		"RMS",		"0",		"RMA",		"0",		"0",
 		
-		"RSF", "RMSDI", "RP", "RY", "RDE",
-		"RMA8N", "RMA8", "RRG", "RSI", "RBI",
-		"RMY", "RRM", "RRMS"
+		"0",		"RMSDI",	"0",		"0",		"0",
+		"RMA8N",	"RMA8",		"0",		"0",		"0",
+		"RMY",		"RRM",		"RRMS"
 		
 	};
 
 	string TabProduitTitre[900]
 	{
-		"Flat Washer USS ", "Flat Washer USS ", "Flat Washer USS ", "Flat Washer SAE ", "Flat Washer SAE ",
-		"Flat Washer SAE ", "Flat Washer SAE ", "Flat Washer Fender ", "Flat Washer Fender ", "Flat Washer USS ",
-		"Flat Washer USS ", "Beveled Washer ", "Beveled Washer ", "Lock Washer ", "Lock Washer ",
-		"Lock Washer ", "Lock Washer ", "Lock Washer ", "Metric Flat Washer Fender ", "Flat Washer USS ",
-		"Metric Flat Washer USS ", "Flat Washer USS ", "Metric Flat Washer SAE ", "Lock Washer External Tooth ", "Lock Washer Internal Tooth ",
+		"0 ",						"0 ",									"0 ",								"0 ",								"0 ",
+		"0 ",						"0 ",									"0 ",								"0 ",								"0 ",
+		"0 ",						"0 ",									"0 ",								"0 ",								"0 ",
+		"0 ",						"0 ",									"0 ",								"Metric Flat Washer Fender ",		"0 ",
+		"Metric Flat Washer USS ",	"0 ",									"Metric Flat Washer SAE ",			"0 ",								"0 ",
 		
-		"Flat Washer Fender ", "Metric Lock Washer Internal Tooth ", "Spring Lock Washer ", "Plastic Washer ", "Lock Washer External Tooth ",
-		"Metric Flat Washer SAE ", "Metric Flat Washer SAE ", "Lock Washer ", "Countersunk Washer ", "Countersunk Washer ", 
-		"Metric Flat Washer USS ", "Metric Lock Washer ", "Metric Lock Washer ",
+		"0 ",						"Metric Lock Washer Internal Tooth ",	"0 ",								"0 ",								"0 ",
+		"Metric Flat Washer SAE ",	"Metric Flat Washer SAE ",				"0 ",								"0 ",								"0 ", 
+		"Metric Flat Washer USS ",	"Metric Lock Washer ",					"Metric Lock Washer ",
 	};
 
 	string TabTAgProduit[900]
 	{
-		"washer,inch, uss,", "washer,inch, uss,", "washer,inch, uss,", "washer,inch, sae,", "washer,inch, sae,",
-		"washer,inch, sae,", "washer,inch, sae,", "washer,inch, fender,", "washer,inch,fender,", "washer,inch,uss,",
-		"washer,inch, uss,", "washer,inch, beveled,", "washer,inch, beveled,", "washer,inch, lock,", "washer,inch, lock,",
-		"washer,inch, lock,", "washer,inch, lock,", "washer,inch, lock,", "washer,metric, fender,", "washer,inch, uss,",
-		"washer,inch, uss,", "washer,inch, uss,", "washer,inch, sae,", "washer,inch, external_toothed", "washer,inch, internal_toothed",
+		"0,",						"0,",									"0,",								"0,",								"0,",
+		"0,",						"0,",									"0,",								"0,",								"0,",
+		"0,",						"0,",									"0,",								"0,",								"0,",
+		"0,",						"0,",									"0,",								"washer,metric, fender,",			"0,",
+		"washer,inch, uss,",		"0,",									"washer,inch, sae,",				"0,",								"0,",
 		
-		"washer,inch, fender", "washer,metric, internal_toothed", "washer,inch, spring", "washer,inch,", "washer,inch, external_toothed",
-		"washer,metric, sae,", "washer,metric, sae,", "washer,inch, lock,", "washer, inch, countersunk", "washer, inch, countersunk",
-		"washer,metric, uss,", "washer,metric, lock,", "washer,metric, lock,",
+		"0",						"washer,metric, internal_toothed",		"0",								"0",								"0",
+		"washer,metric, sae,",		"washer,metric, sae,",					"0",								"0",								"0",
+		"washer,metric, uss,",		"washer,metric, lock,",					"washer,metric, lock,",
 	};
 
 	char TabFineTread[900]
 	{
-		'c', 'c', 'c', 'c', 'c',
-		'c', 'c', 'c', 'c', 'c',
-		'c', 'c', 'c', 'c', 'c',
-		'c', 'c', 'c', 'c', 'c',
-		'c', 'c', 'c', 'c', 'c',
+		'0',	'0',	'0',	'0',	'0',
+		'0',	'0',	'0',	'0',	'0',
+		'0',	'0',	'0',	'0',	'0',
+		'0',	'0',	'0',	'c',	'0',
+		'c',	'0',	'c',	'0',	'0',
 		
-		'c', 'c', 'c', 'c', 'c',
-		'c', 'c', 'c', 'c', 'c',
-		'c', 'c', 'c',
+		'0',	'c',	'0',	'0',	'0',
+		'c',	'c',	'0',	'0',	'0',
+		'c',	'c',	'c',	
 	};
 
 	int i = 0;
@@ -1149,88 +1157,89 @@ inline void Vis::produit()
 {
 	string TabProduit[900]
 	{
-		"VPB","VPBF","VPC","VPCA","VPCF",
-		"VPF","VPFF","VPSB","VPSBF","VPSC",
-		"VPSCA","VPSCF","VPSF","VPSFF", "VPSR",
-		"VPSRF","VBFS", "VBFST", "VMBF", "VMBP",
-		"VMBR","VMESB", "VMESF", "VPRF", "VMESFU",
+		// Non desired products removed
+		"0",		"0",		"0",		"0",		"0",
+		"0",		"0",		"0",		"0",		"0",
+		"0",		"0",		"0",		"0",		"0",
+		"0",		"0",		"0",		"0",		"0",
+		"0",		"0",		"0",		"0",		"0",
 
-		"VMESH","VMESO","VMESP", "VMEST", "VMF",
-		"VMFB","VMFF", "VMFY", "VMP", "VMPF",
-		"VPR","VMPYL", "VMSF","VMSFF", "VMSFU",
-		"VMSP","VMSPF", "VMSR", "VMST", "VMSTF",
-		"VMT","VPCT", "VPCTF", "VPFTF", "VPFT",
+		"0",		"0",		"0",		"0",		"0",
+		"0",		"0",		"0",		"0",		"0",
+		"0",		"0",		"0",		"0",		"0",
+		"0",		"0",		"0",		"0",		"0",
+		"0",		"0",		"0",		"0",		"0",
 
-		"VPSCT","VPSCTF","VPRFD","VPRFK","VPRFFD",
-		"VPCM", "VPCMF", "VPCMFF", "VPFM", "VPRD",
-		"VPRFD", "VPSCM", "VPSCM3", "VMEH", "VMERBC",
-		"VMESBT", "VMESPB", "VMFM", "VBF", "VMSFM",
-		"VMSFC", "VMSPFC", "VPSPM", "VMT", "VMYPM",
-		"VMYPM", "VPBM", "VPCMI", "VMPM", "VPSBM",
+		"0",		"0",		"VPRFD",	"0",		"0",
+		"VPCM",		"VPCMF",	"VPCMFF",	"VPFM",		"VPRD",
+		"VPRFD",	"VPSCM",	"VPSCM3",	"0",		"0",
+		"0",		"0",		"VMFM",		"VBF",		"VMSFM",
+		"0",		"VMSPFC",	"VPSPM",	"VMT",		"VMYPM",
+		"VMYPM",	"VPBM",		"VPCMI",	"VMPM",		"VPSBM",
 	};
 
 	string TabProduitTitre[900]
 	{
-		"Button Head Cap Screw Full Thread ", "Button Head Cap Screw Fine & Full Thread ", "Socket Head Cap Screw ", "Square Head Screw ", "Socket Head Cap Screw Fine Thread ",
-		"Flat Head Cap Screw ", "Flat Head Cap Screw Fine Thread ", "Button Head Cap Screw Full thread ", "Button Head Cap Screw Fine & Full Thread ", "Socket Head Cap Screw ",
-		"Square Head Screw Full Thread ", "Socket Head Cap Screw Fine Thread ", "Flat Head Cap Screw ", "Flat Head Cap Screw Fine Thread ","Set Screw Full Thread ",
-		"Set Screw Fine & Full Thread ", "Flat Head Wood Screw ", "Flat Head Wood Screw [Type 17] ", "Flat Head Machine Screw Full Thread ", "Pan Head Machine Screw Full Thread ",
-		"Round Head Machine Screw Full Thread ", "Button Head Metal Screw Full Thread ", "Flat Head Metal Screw Full Thread ", "Set Screw Fine & Full Thread ", "Undercut Flat Head Metal Screw Full Thread ",
+		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
+		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
+		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
+		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
+		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
 		
-		"Flanged Hexagonal Head Metal Screw Full Thread ", "Oval Head Metal Screw Full Thread ", "Pan Head Metal Screw Full Thread ", "Truss Head Metal Screw Full Thread ", "Flat Head Machine Screw Full Thread ",
-		"Flat Head Machine Screw Full Thread ", "Flat Head Machine Screw Fine & Full Thread ", "Flat Head Machine Screw Full Thread ", "Pan Head Machine Screw Full Thread  ", "Pan Head Machine Screw Full Thread ",
-		"Set screw Full Thread ", "Pan Head Machine Screw Full Thread ", "Flat Head Machine Screw Full Thread ","Flat Head Machine Screw Full Thread ", "Undercut Flat Head Machine Screw Full Thread ",
-		"Pan Head Machine Screw Full Thread ", "Pan Head Machine Screw Full Thread ","Round Head Machine Screw Full Thread ", "Truss Head Machine Screw Full Thread ", "Truss Head Machine Screw Full Thread ",
-		"Truss Head Machine Screw Full Thread ", "Socket Head Cap Screw Full Thread ","Socket Head Cap Screw Fine & Full Thread ","Flat Head Cap Screw Fine & Full Thread ","Flat Head Cap Screw Full Thread ",
+		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
+		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
+		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
+		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
+		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
 		
-		"Socket Head Cap Screw Full Thread ", "Socket Head Cap Screw Fine & Full Thread ","Set Screw Fine & Full Thread ","Set Screw Fine & Full Thread ","Set Screw Fine & Full Thread ",
-		"Metric Socket Head Cap Screw ", "Metric Socket Head Cap Screw ", "Metric Socket Head Cap Screw Extra Fine Thread", "Metric Flat Head Cap Screw ", "Set screw Full Thread Dog Point",
-		"Set screw Full Thread Dog Point", "Metric Socket Head Cap Screw ", "Metric Socket Head Cap Screw ", "Flanged Hexagonal Head Metal Screw Full Thread ", "Round Head Metal Screw Full Thread ",
-		"Round Head Metal Screw Full Thread ", "Pan Head Metal Screw Full Thread ", "Flat Head Machine Screw Full Thread ", "Flat head Wood screw", "Flat Head Machine Screw Full Thread ",
-		"Flat Head Machine Screw Full Thread ", "Flat Head Machine Screw Fine & Full Thread ", "Metric Flat Head Machine Screw Full Thread ", "Truss Head Machine Screw Full Thread ", "Metric Pan Head Metal Screw Full Thread ",
-		"Metric Pan Head Metal Screw Full Thread ", "Metric Button Head Cap Screw Full Thread ", "Metric Low-Profile Button Head Cap Screw Partially Thread ", "Metric Pan Head Machine Screw ", "Metric Button Head Cap Screw Full thread ",
+		"0 ",										"0 ",											"Set Screw Fine & Full Thread ",								"0 ",										"0 ",
+		"Metric Socket Head Cap Screw ",			"Metric Socket Head Cap Screw ",				"Metric Socket Head Cap Screw Extra Fine Thread",				"Metric Flat Head Cap Screw ",				"Set screw Full Thread Dog Point",
+		"Set screw Full Thread Dog Point",			"Metric Socket Head Cap Screw ",				"Metric Socket Head Cap Screw ",								"0 ",										"0 ",
+		"0 ",										"0 ",											"Flat Head Machine Screw Full Thread ",							"Flat head Wood screw",						"Flat Head Machine Screw Full Thread ",
+		"0 ",										"Flat Head Machine Screw Fine & Full Thread ",	"Metric Flat Head Machine Screw Full Thread ",					"Truss Head Machine Screw Full Thread ",	"Metric Pan Head Metal Screw Full Thread ",
+		"Metric Pan Head Metal Screw Full Thread ", "Metric Button Head Cap Screw Full Thread ",	"Metric Low-Profile Button Head Cap Screw Partially Thread ",	"Metric Pan Head Machine Screw ",			"Metric Button Head Cap Screw Full thread ",
 	};
 	string TabTAgProduit[900]
 	{
-		"button_head_cap_screw,inch,pressure_screw,fully_threaded,", "button_head_cap_screw,inch,pressure_screw,fully_threaded,", "inch,socket_head_cap_screw,pressure_screw,partially_threaded,", "inch,square_screw,pressure_screw,partially_threaded,", "inch,socket_head_cap_screw,pressure_screw,partially_threaded,",
-		"inch,flat_head_cap_screw,pressure_screw,partially_threaded,", "inch,flat_head_cap_screw,pressure_screw,partially_threaded,", "inch,button_head_cap_screw,pressure_screw,fully_threaded,", "inch,button_head_cap_screw,pressure_screw,fully_threaded,", "inch,socket_head_cap_screw,pressure_screw,partially_threaded,",
-		"square_head_screw,inch,pressure_screw,fully_threaded,", "inch,socket_head_cap_screw,pressure_screw,partially_threaded,", "inch,flat_head_cap_screw,pressure_screw,partially_threaded,", "inch,flat_head_cap_screw,pressure_screw,partially_threaded,", "pressure_screw,inch,set_screw,fully_threaded,",
-		"pressure_screw,inch,set_screw,fully_threaded,", "inch,flat_head,wood_screw,partially_threaded,", "inch,flat_head_wood_screw,partially_threaded,", "inch,flat_head,machine_screw,fully_threaded,", "inch,pan_head,machine_screw,fully_threaded,",
-		"inch,round_head,machine_screw,fully_threaded,", "metal_screw,inch, button_head,fully_threaded,", "inch,flat_head,metal_screw,fully_threaded, ", "flat_head_cap_screw,inch,pressure_screw,fully_threaded,cup,", "inch,undercut_flat_head,metal_screw,fully_threaded,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
 
-		"flanged,metal_screw,inch,fully_threaded,", "oval_head, inch, metal_screw,fully_threaded, ", "pan_head, metal_screw,inch, fully_threaded,", "truss_head, metal_screw,inch, fully_threaded,", "flat_head, machine_screw,inch,fully_threaded, ",
-		"flat_head, machine_screw,inch, fully_threaded,", "flat_head, machine_screw,inch,fully_threaded,", "flat_head, machine_screw,inch, fully_threaded,", "pan_head, machine_screw,inch,fully_threaded, ", "pan_head, machine_screw,inch,fully_threaded, ",
-		"pressure_screw,inch,set_screw,fully_threaded,", "pan_head, machine_screw,inch,fully_threaded, ", "flat_head, machine_screw,inch, fully_threaded,", "flat_head, machine_screw,inch,fully_threaded, ", "undercut_flat_head, machine_screw,inch, fully_threaded,",
-		"pan_head, machine_screw,inch,fully_threaded, ","pan_head, machine_screw,inch,fully_threaded, ", "round_head, machine_screw,inch, fully_threaded,", "truss_head, machine_screw,inch, fully_threaded,", "truss_head, machine_screw,inch,fully_threaded, ",
-		"truss_head, machine_screw,inch,fully_threaded, ","inch,socket_head_cap_screw,pressure_screw,fully_threaded,","inch,socket_head_cap_screw,pressure_screw,fully_threaded,","inch,flat_head_cap_screw,pressure_screw,fully_threaded,","inch,flat_head_cap_screw,pressure_screw,fully_threaded,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
+		"0,",																"0,",																"0,",																	"0,",																"0,",
 		
-		"inch,socket_head_cap_screw,pressure_screw,fully_threaded,","inch,socket_head_cap_screw,pressure_screw,fully_threaded,","flat_head_cap_screw,inch,pressure_screw,fully_threaded,dog","flat_head_cap_screw,inch,pressure_screw,fully_threaded,knurled","flat_head_cap_screw,inch,pressure_screw,fully_threaded,full_dog",
-		"metric,socket_head_cap_screw,pressure_screw,partially_threaded,", "metric,socket_head_cap_screw,pressure_screw,partially_threaded,", "metric,socket_head_cap_screw,pressure_screw,partially_threaded,UNEF", "metric,flat_head_cap_screw,pressure_screw,partially_threaded,", "pressure_screw,inch,set_screw,fully_threaded,dog",
-		"pressure_screw,inch,set_screw,fully_threaded,dog", "metric,socket_head_cap_screw,pressure_screw,partially_threaded,", "metric,socket_head_cap_screw,pressure_screw,partially_threaded,", "flanged,metal_screw,inch,fully_threaded,", "button_head,metal_screw,inch,fully_threaded,",
-		"button_head,metal_screw,inch,fully_threaded,", "pan_head, metal_screw,inch, fully_threaded,", "flat_head, machine_screw,inch,fully_threaded, ", "flat_head, wood_screw,inch,partially_threaded, ", "flat_head, machine_screw,inch,fully_threaded, ",
-		"flat_head, machine_screw,inch,fully_threaded, ", "flat_head, machine_screw,inch,fully_threaded, ", "flat_head, machine_screw,metric,fully_threaded, ", "truss_head, machine_screw,inch,fully_threaded, ", "pan_head, metal_screw,metric, fully_threaded,",
-		"pan_head, metal_screw,metric, fully_threaded,", "button_head_cap_screw,metric,pressure_screw,fully_threaded,", "button_head_cap_screw,metric,pressure_screw,partially_threaded,", "pan_head, machine_screw,metric, partially_threaded,", "metric,button_head_cap_screw,pressure_screw,fully_threaded,"
+		"0,",																"0,",																"flat_head_cap_screw,inch,pressure_screw,fully_threaded,dog",			"0",																"0",
+		"metric,socket_head_cap_screw,pressure_screw,partially_threaded,",	"metric,socket_head_cap_screw,pressure_screw,partially_threaded,",	"metric,socket_head_cap_screw,pressure_screw,partially_threaded,UNEF",	"metric,flat_head_cap_screw,pressure_screw,partially_threaded,",	"pressure_screw,inch,set_screw,fully_threaded,dog",
+		"pressure_screw,inch,set_screw,fully_threaded,dog",					"metric,socket_head_cap_screw,pressure_screw,partially_threaded,",	"metric,socket_head_cap_screw,pressure_screw,partially_threaded,",		"0,", "0,",
+		"0,",																"0,",																"flat_head, machine_screw,inch,fully_threaded, ",						"flat_head, wood_screw,inch,partially_threaded, ",					"flat_head, machine_screw,inch,fully_threaded, ",
+		"0,",																"flat_head, machine_screw,inch,fully_threaded, ",					"flat_head, machine_screw,metric,fully_threaded, ",						"truss_head, machine_screw,inch,fully_threaded, ",					"pan_head, metal_screw,metric, fully_threaded,",
+		"pan_head, metal_screw,metric, fully_threaded,",					"button_head_cap_screw,metric,pressure_screw,fully_threaded,",		"button_head_cap_screw,metric,pressure_screw,partially_threaded,",		"pan_head, machine_screw,metric, partially_threaded,",				"metric,button_head_cap_screw,pressure_screw,fully_threaded,"
 	};
 	char TabFineTread[900]
 	{
-			'c','f','c','c','f',
-			'c','e','c','f','c',
-			'c','f','f','e','c',
-			'f', 'c', 'c', 'c', 'c',
-			'c', 'c', 'c', 'f', 'c',
-
-			'c', 'c', 'c', 'c', 'c',
-			'c', 'e', 'c', 'c', 'f',
-			'c', 'c', 'c', 'e', 'c',
-			'c', 'f', 'c', 'c', 'f',
-			'c', 'c','f','f', 'c',
+			'0',	'0',	'0',	'0',	'0',
+			'0',	'0',	'0',	'0',	'0',
+			'0',	'0',	'0',	'0',	'0',
+			'0',	'0',	'0',	'0',	'0',
+			'0',	'0',	'0',	'0',	'0',
+			 						 		 
+			'0',	'0',	'0',	'0',	'0',
+			'0',	'0',	'0',	'0',	'0',
+			'0',	'0',	'0',	'0',	'0',
+			'0',	'0',	'0',	'0',	'0',
+			'0',	'0',	'0',	'0',	'0',
 			
-			'c', 'f', 'f', 'f', 'e',
-			'c', 'f', 'e', 'c', 'c',
-			'f', 'c', 'c', 'c', 'c',
-			'c', 'c', 'c', 'c', 'c',
-			'c', 'f', 'c', 'c', 'c',
-			'c', 'c', 'c', 'c', 'c',
+			'0',	'0',	'f',	'0',	'0',
+			'c',	'f',	'e',	'c',	'c',
+			'f',	'c',	'c',	'0',	'0',
+			'0',	'0',	'c',	'c',	'c',
+			'0',	'f',	'c',	'c',	'c',
+			'c',	'c',	'c',	'c',	'c',
 	};
 
 	int i = 0;
@@ -1593,30 +1602,31 @@ inline void Tige_Filte::produit()
 {
 	string TabProduit[900]
 	{
-		"TI", "TI8", "TIA", "TIB", "TIBF",
-		"TIF", "TIF8", "TIFS", "TIS", "TIM",
-		"TIM8", "TIMS", "TIMF", "TIM8FF",
+		// Non desired products removed
+		"0",		"0",		"0",		"0",		"0",
+		"0",		"0",		"0",		"0",		"TIM",
+		"TIM8",		"TIMS",		"TIMF",		"TIM8FF",
 	};
 
 	string TabProduitTitre[900]
 	{
-		"Threaded Rod ", "Threaded Rod ", "Threaded Rod ACME ", "Threaded Rod ", "Threaded Rod Fine Thread ",
-		"Threaded Rod Fine Thread ", "Threaded Rod Fine Thread ", "Threaded Rod Fine Thread ", "Threaded Rod ", "Threaded Rod ",
-		"Threaded Rod ", "Threaded Rod ", "Threaded Rod Fine Thread ", "Threaded Rod Fine Thread ",
+		"0 ",				"0 ",				"0 ",							"0 ",							"0 ",		
+		"0 ",				"0 ",				"0 ",							"0 ",							"Threaded Rod ",
+		"Threaded Rod ",	"Threaded Rod ",	"Threaded Rod Fine Thread ",	"Threaded Rod Fine Thread ",
 	};
 
 	string TabTAgProduit[900]
 	{
-		"tige_filete,inch,", "tige_filete,inch,", "tige_filete,acme,inch", "tige_filete,inch,", "tige_filete,inch,",
-		"tige_filete,inch,", "tige_filete,inch,", "tige_filete,inch,", "tige_filete,inch,", "tige_filete,metric,",
-		"tige_filete,metric,", "tige_filete,metric,", "tige_filete,metric,", "tige_filete,metric,",
+		"0,",					"0,",						"0,",					"0,",						"0,",
+		"0,",					"0,",						"0,",					"0,",						"tige_filete,metric,",
+		"tige_filete,metric,",	"tige_filete,metric,",		"tige_filete,metric,",	"tige_filete,metric,",
 	};
 
 	bool TabFineTread[900]
 	{
-		false, false, false, false,true,
-		true, true, true, false, false,
-		false, false, true, true,
+		0,			0,			0,			0,			0,
+		0,			0,			0,			0,			false,
+		false,		false,		true,		true,
 	};
 
 	int i = 0;
@@ -1837,311 +1847,6 @@ inline void Tige_Filte::grade()
 
 #pragma endregion
 
-#pragma region Equerre
-class Equerre
-{
-public:
-	Equerre();
-	~Equerre();
-	void constructeur(string tag, string titre, string numProduit, float bulk);
-	string getTag();
-	string getTitre();
-
-private:
-	string souschaine[2];
-	string texte;
-	bool trouver;
-	string titre;
-	string tag;
-	bool finethread;
-	string numProduit;
-
-
-	void produit();
-	void material();
-	void threading();
-	void length();
-	void grade();
-};
-
-Equerre::Equerre()
-{
-}
-
-Equerre::~Equerre()
-{
-}
-
-inline void Equerre::constructeur(string tag, string titre, string numProduit, float bulk)
-{
-	this->numProduit = numProduit;
-	this->souschaine[2] = souschaine[2];
-	this->tag = tag;
-	this->titre = titre;
-	texte = "";
-	trouver = false;
-
-	produit();
-
-	int bulksize = bulk;
-	this->titre += "[ Bulk Size : " + to_string(bulksize) + " ]";
-
-}
-
-inline string Equerre::getTag()
-{
-	return tag;
-}
-
-inline string Equerre::getTitre()
-{
-	return titre;
-}
-
-inline void Equerre::produit()
-{
-	string TabProduit[900]
-	{
-		"EZ"
-	};
-
-	string TabProduitTitre[900]
-	{
-		"Angle Bracket "
-	};
-
-	string TabTAgProduit[900]
-	{
-		"angle_bracket,inch,"
-	};
-
-	bool TabFineTread[900]
-	{
-		false
-	};
-
-	int i = 0;
-	for (int j = 0; j < souschaine[0].length(); j++)
-	{
-		texte += souschaine[0][j];
-	}
-
-	while (trouver == false)
-	{
-		if (texte == TabProduit[i])
-		{
-			trouver = true;
-		}
-		else
-		{
-			i++;
-		}
-	}
-	titre = titre + TabProduitTitre[i];
-	tag += TabTAgProduit[i];
-	finethread = TabFineTread[i];
-}
-
-inline void Equerre::material()
-{
-	int k = 0;
-	char TabMaterial[10]{ '5','8','9','S','N', 'Y','3','G' };
-	string TabMaterialTitre[10]{ "Zinc ","Yellow Zinc ", "Cadium Plated ","Stainless Steel ","Black Steel ", "White Nylon ","316 Stainless Steel ","Galvanized ","Brass " };
-	string TabTagMaterial[10]{ "zinc,","yellow_zinc,","cadium_plated,","stainless_steel,304-stainless-steel,","steel,","nylon,","stainless_steel,316-stainless-steel,","galvanized,","brass," };
-
-	for (int i = 0; i < souschaine[0].length(); i++)
-	{
-		for (int j = 0; j < 10; j++)
-		{
-			if (souschaine[0][i] == TabMaterial[j])
-			{
-				k = j;
-			}
-		}
-	}
-
-	if (souschaine[0] == "BH8" || souschaine[0] == "BHT8")
-	{
-		k = 4;
-	}
-	else if (souschaine[0] == "BS3" || souschaine[0] == "BST3")
-	{
-		k = 6;
-	}
-
-	if (souschaine[2][0] == 'Y')
-	{
-		k = 1;
-	}
-	else if (souschaine[2][0] == 'N')
-	{
-		k = 4;
-	}
-
-	tag += TabTagMaterial[k];
-	titre = titre + TabMaterialTitre[k];
-}
-
-inline void Equerre::threading()
-{
-	FINE_THREAD fine;
-	COARSE_THREAD coarse;
-
-	if (finethread == true)
-	{
-		fine.constructeur(numProduit, tag);
-		tag = fine.getTag();
-		titre = titre + fine.getThread();
-	}
-	else
-	{
-		coarse.constructeur(numProduit, tag);
-		tag = coarse.getTag();
-		titre = titre + coarse.getThread();
-	}
-}
-
-inline void Equerre::length()
-{
-	trouver = false;
-	int i = 0;
-	string TabLenght[100]
-	{
-
-		#pragma region "000A - 038A"
-		"000A", "001", "001A", "002", "002A", "003", "003A", "005", "005A", "006", "006A", "007", "007A", "008", "008A",
-		"010", "010A", "011", "011A", "012", "012A", "013", "013A", "015", "015A", "016", "016A", "017", "017A", "018", "018A",
-		"020", "020A", "021", "021A", "022", "022A", "023", "023A", "025", "025A", "026", "026A", "027", "027A", "028", "028A",
-		"030", "030A", "031", "031A", "032", "032A", "033", "033A", "035", "035A", "036", "036A", "037", "037A", "038", "038A",
-		#pragma endregion
-		//Quantité : 63
-
-		#pragma region 040 - 077
-		"040", "042", "045", "047",
-		"050", "052", "055", "057",
-		"060", "062", "065", "067",
-		"070", "072", "075", "077",
-		#pragma endregion
-		//Quantité : 79
-
-		#pragma region "080 - 115"
-		"080", "085",
-		"090", "095",
-		"100", "105",
-		"110", "115",
-		#pragma endregion
-		//Quantité : 87
-
-		#pragma region 120 - 200
-		"120",
-		"130",
-		"140",
-		"150",
-		"160",
-		"170",
-		"180",
-		"190",
-		"200",
-		#pragma endregion
-
-	};
-	string TabLenghtTitre[100]
-	{
-		"* 1/16\"\" ", "* 1/8\"\" ", "* 3/16\"\" ", "* 1/4\"\" ", "* 5/16\"\" ", "* 3/8\"\" ", "* 7/16\"\" ", "* 1/2\"\" ", "* 9/16\"\" ", "* 5/8\"\" ", "* 11/16\"\" ", "* 3/4\"\" ", "* 13/16\"\" ", "* 7/8\"\" ", "* 15/16\"\" ",
-		"* 1\"\" ","* 1-1/16\"\" ", "* 1-1/8\"\" ", "* 1-3/16\"\" ", "* 1-1/4\"\" ", "* 1-5/16\"\" ", "* 1-3/8\"\" ", "* 1-7/16\"\" ", "* 1-1/2\"\" ", "* 1-9/16\"\" ", "* 1-5/8\"\" ", "* 1-11/16\"\" ", "* 1-3/4\"\" ", "* 1-13/16\"\" ", "* 1-7/8\"\" ", "* 1-15/16\"\" ",
-		"* 2\"\" ","* 2-1/16\"\" ", "* 2-1/8\"\" ", "* 2-3/16\"\" ", "* 2-1/4\"\" ", "* 2-5/16\"\" ", "* 2-3/8\"\" ", "* 2-7/16\"\" ", "* 2-1/2\"\" ", "* 2-9/16\"\" ", "* 2-5/8\"\" ", "* 2-11/16\"\" ", "* 2-3/4\"\" ", "* 2-13/16\"\" ", "* 2-7/8\"\" ", "* 2-15/16\"\" ",
-		"* 3\"\" ","* 3-1/16\"\" ", "* 3-1/8\"\" ", "* 3-3/16\"\" ", "* 3-1/4\"\" ", "* 3-5/16\"\" ", "* 3-3/8\"\" ", "* 3-7/16\"\" ", "* 3-1/2\"\" ", "* 3-9/16\"\" ", "* 3-5/8\"\" ", "* 3-11/16\"\" ", "* 3-3/4\"\" ", "* 3-13/16\"\" ", "* 3-7/8\"\" ", "* 3-15/16\"\" ",
-
-
-		"* 4\"\" ", "* 4-1/4\"\" ", "* 4-1/2\"\" ", "* 4-3/4\"\" ",
-		"* 5\"\" ", "* 5-1/4\"\" ", "* 5-1/2\"\" ", "* 5-3/4\"\" ",
-		"* 6\"\" ", "* 6-1/4\"\" ", "* 6-1/2\"\" ", "* 6-3/4\"\" ",
-		"* 7\"\" ", "* 7-1/4\"\" ", "* 7-1/2\"\" ", "* 7-3/4\"\" ",
-
-		"* 8\"\" ", "* 8-1/2\"\" ",
-		"* 9\"\" ", "* 9-1/2\"\" ",
-		"* 10\"\" ", "* 10-1/2\"\" ",
-		"* 11\"\" ", "* 11-1/2\"\" ",
-
-		"* 12\"\" ",
-		"* 13\"\" ",
-		"* 14\"\" ",
-		"* 15\"\" ",
-		"* 16\"\" ",
-		"* 17\"\" ",
-		"* 18\"\" ",
-		"* 19\"\" ",
-		"* 20\"\" "
-	};
-	texte = "";
-	for (int j = 2; j < souschaine[1].length(); j++)
-	{
-		texte += souschaine[1][j];
-	}
-
-	if (souschaine[1][0] == '0' && souschaine[1][1] == '0')
-	{
-		if (texte[0] != '0' && texte[0] != '1' && texte[0] != '2')
-		{
-			texte[0] = '0';
-		}
-	}
-
-	while (trouver == false)
-	{
-		if (texte == TabLenght[i])
-		{
-			trouver = true;
-		}
-		else
-		{
-			i++;
-		}
-	}
-
-
-	titre = titre + TabLenghtTitre[i];
-}
-
-inline void Equerre::grade()
-{
-	int k = 0;
-	trouver = false;
-	char TabGrade[4]{ '5','8','9','2' };
-	string TabGradeTitre[4]{ "Grade 5 ","Grade 8 ", "Grade 9 ","Grade 2 " };
-	string tabTagGrade[4]
-	{
-		"grade-5,","grade-8,","grade-9,","grade-2"
-	};
-
-	for (int i = 0; i < souschaine[0].length(); i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			if (souschaine[0][i] == TabGrade[j])
-			{
-				k = j;
-				trouver = true;
-			}
-		}
-	}
-
-	if (souschaine[0] == "BC" || souschaine[0] == "BN" || souschaine[0] == "BE" || souschaine[0] == "BT")
-	{
-		k = 3;
-		trouver = true;
-	}
-
-
-	if (trouver)
-	{
-		tag += tabTagGrade[k];
-		titre = titre + TabGradeTitre[k];
-	}
-}
-#pragma endregion
-
-
 class TITRE
 {
 public:
@@ -2204,7 +1909,7 @@ inline void TITRE::produit()
 	Ecrou nut;
 	Washer washer;
 	Vis screw;
-	Equerre equerre;
+	//Equerre equerre;
 	Tige_Filte tige;
 
 	switch (reponse)
@@ -2227,11 +1932,14 @@ inline void TITRE::produit()
 		titre = washer.getTitre();
 		break;
 
+	// PLUS D'EQUERRE POUR L'INSTANT
+	/*
 	case 4:
 		equerre.constructeur(tag, titre, numProduit, bulk);
 		tag = equerre.getTag();
 		titre = equerre.getTitre();
 		break;
+	*/
 
 	case 5:
 		tige.constructeur(tag, titre, numProduit, bulk);

@@ -1,1 +1,16 @@
 Handle;Title;Body (HTML);Tags;Published;Option1 Name;Option1 Value;Variant SKU;Variant Grams;Variant Inventory Tracker;Variant Inventory Policy;Variant Fulfillment Service;Variant Price;Variant Requires Shipping;Variant Taxable;Image Src;Gift Card;Variant Weight Unit;Cost per item
+BM8-08045-Y;"";Products have been listed into listing.txt;"";;Quantity;Unity;BM8-08045-Y;;shopify;continue;manual;0,000000;VRAI;VRAI;;1;FAUX;0,1820;
+
+
+BM8-08060-N;"";Products have been listed into listing.txt;"";;Quantity;Unity;BM8-08060-N;;shopify;continue;manual;0,000000;VRAI;VRAI;;1;FAUX;0,2019;
+
+
+BM8-08080-N;"";Products have been listed into listing.txt;"";;Quantity;Unity;BM8-08080-N;;shopify;continue;manual;0,000000;VRAI;VRAI;;1;FAUX;0,2207;
+
+
+BM8-08050;"";Products have been listed into listing.txt;"";;Quantity;Unity;BM8-08050;;shopify;continue;manual;0,000000;VRAI;VRAI;;1;FAUX;0,1520;
+
+
+BM8-08120;"";Products have been listed into listing.txt;"";;Quantity;Unity;BM8-08120;;shopify;continue;manual;0,000000;VRAI;VRAI;;1;FAUX;0,4210;
+
+

@@ -20,9 +20,13 @@ using namespace std;
 
 string tag = "\"";
 string photo;
+string photo2;					// yet optional
+string photo3;					// yet optional
+string photo4;					// yet optional
 int reponse;
-float bulk;
+float bulk;						// to be removed
 int Met_Int;
+char choix;
 
 /*****Fonction qui change la virgule pour un point*****/
 string comaToDot(std::string prix) {
@@ -42,20 +46,67 @@ float toFloat(std::string prix) {
 	return std::atof(prix.c_str());
 }
 
+string ratio(float prix1, float dernierCoutant, int reponse) {
+	string result = "";
+	if (reponse == 10)
+	{
+		if (prix1 <= dernierCoutant * 2.2)
+		{
+			result = "-----Prix 1 INFERIEUR a 55%-----> ";
+		}
+		else if (prix1 >= dernierCoutant * 2.5)
+		{
+			result = "-----Prix 1 SUPERIEUR a 60%-----> ";
+		}
+	}
+	else if (reponse == 4 || reponse == 5)
+	{
+		if (prix1 <= dernierCoutant * 4)
+		{
+			result = "-----Prix 1 INFERIEUR a 75%-----> ";
+		}
+		else if (prix1 >= dernierCoutant * 4.8)
+		{
+			result = "-----Prix 1 SUPERIEUR a 79%-----> ";
+		}
+	}
+	else
+	{
+		if (prix1 <= dernierCoutant * 7.05)
+		{
+			result = "-----Prix 1 INFERIEUR a 86%-----> ";
+		}
+		else if (prix1 >= dernierCoutant * 8.8)
+		{
+			result = "-----Prix 1 SUPERIEUR a 88,5%-----> ";
+		}
+
+	}
+	return result;
+}
+
+
 void ouverture(PRIX prix)
 {
 	string FILENAME = "produit.txt";
 	fstream Product;
 	Product.open(FILENAME, ios::in);
 
-
 	fstream finish;
 	FILENAME = "finish.txt";
 	finish.open(FILENAME, ios::out | ios::trunc);
+	const int nbrOfHeaders = 20;
+	int m = 0;
 
-	string TexteATranscrire1[19]{ "","","","","","Quantity","Unity","","","shopify","continue","manual","","VRAI","VRAI","","FAUX","lg","" }; // si on remet les bulk changer UNITY pour BULK
-	//string TexteATranscrire2[19]{"","","","","","","","","","","continue","manual","","VRAI","VRAI","","","lg",""}; ligne 2 pour petite quantité
-	//string TexteATranscrire3[19]{"","","","","","","Unity","","","","continue","manual","","VRAI","VRAI","","","lg",""}; ligne 3 anciennement qte unitaire
+	string TexteATranscrire1[nbrOfHeaders]{ "","","","","","Quantity","Unity","","","shopify","continue","manual","","VRAI","VRAI","","1","FAUX","lg","" }; // si on remet les bulk changer UNITY pour BULK
+	string TexteATranscrire2[nbrOfHeaders]{ "","","","","","","","","","","continue","manual","","VRAI","VRAI","","","","lg","" }; //ligne 2 pour petite quantité
+	string TexteATranscrire3[nbrOfHeaders]{ "","","","","","Quantity","manual","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; // si on remet les bulk changer UNITY pour BULK
+	string TexteATranscrire4[nbrOfHeaders]{ "","","","","","","","","","","","","","","","","2","","","" }; //2e image
+
+	string TexteATranscrire5[nbrOfHeaders]{ "","","","","","Color","White Painted Head [100 units]","","","shopify","continue","manual","","VRAI","VRAI","","3","FAUX","lg","" }; //au 100 variante couleur blanche
+	string TexteATranscrire6[nbrOfHeaders]{ "","","","","","Color","White Painted Head [1000 units]","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; //au 1000 variante couleur blanche
+	string TexteATranscrire7[nbrOfHeaders]{ "","","","","","Color","Black Painted Head [100 units]","","","shopify","continue","manual","","VRAI","VRAI","","4","FAUX","lg","" }; //au 100 variante couleur blanche
+	string TexteATranscrire8[nbrOfHeaders]{ "","","","","","Color","Black Painted Head [1000 units]","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; //au 1000 variante couleur blanche
 
 	if (finish.is_open())
 	{
@@ -67,11 +118,18 @@ void ouverture(PRIX prix)
 			while (!Product.eof())
 			{
 				string produit[65];
+				string calculatedRatio = "";
+
+
 				for (int i = 0; i < 60; i++)
 				{
 					getline(Product, produit[i], ';');
 					//cout << i << " : " << produit[i] << endl;
 				}
+
+				float prix1 = toFloat(produit[9]);
+				float prix4 = toFloat(produit[39]);
+				float dernierCoutant = toFloat(produit[10]);
 
 				/*******Valide si prix à zéro******/
 				if (produit[39] == "0,0000" || produit[39] == "0.0000")
@@ -79,10 +137,18 @@ void ouverture(PRIX prix)
 					cout << "-----Pas de prix pour ce produit!-----> ";
 				}
 
+				/*++--ADD CHOICES IN MAIN BELOW--++*/
+				if (choix == 'A' || choix == 'a')			
+				{
+					if (prix4 < dernierCoutant * 1.99)
+					{
+						cout << m << " : " << produit[0] << " Prix 4 INFERIEUR a 50%" << endl;
+						m++;
+					}
+				}
+
 				/******Validation que le ratio est de 85.75% à 86%******/
 
-				float prix1 = toFloat(produit[9]);
-				float dernierCoutant = toFloat(produit[10]);
 
 				if (prix1 < dernierCoutant * 7.05)
 				{
@@ -168,7 +234,6 @@ void ouverture(PRIX prix)
 
 					prix.constructeur(produit[39], 'b', bulk);
 
-
 					texte = prix.getPrice();
 
 					texte = dotToComa(texte);
@@ -219,6 +284,12 @@ void ouverture(PRIX prix)
 						finish << TexteATranscrire1[j] << ";";
 					}
 					finish << endl;
+				}
+				// LISTING PRODUCTS IF REPONSE == 10
+				else if (reponse == 10)
+				{
+					// String variable isn't useful (creating a new string just for that wouldn't be good idea)
+					TexteATranscrire1[2] = body("0", "0", 0, "0", 0);
 				}
 				else
 				{
@@ -372,16 +443,19 @@ void ouverture(PRIX prix)
 int main()
 {
 	cout << "Debut : " << endl;
-	cout << "	1 - Boulon \n	2 - Ecrou \n	3 - Rondelle \n	4 - Equerre \n	5 - Tige Filte \n	6 - Vis \n	7 - Autre \n	8 - Ancrage \n	9 - Goupille \n";
-	cin >> reponse;
-	PRIX prix;
+	// Added verification for the reponse (between 1 and 10 included)
+	do {
+		cout << "Les Equerres ne sont plus disponibles pour l'instant " << endl;
+		cout << "	1 - Boulon \n	2 - Ecrou \n	3 - Rondelle \n	4 - Tige \n	5 - Vis \n	6 - Autre \n	22 - Liste des produits	\n";
+		cin >> reponse;
+	} while (reponse != 22 || (reponse < 1 & reponse > 10));
 
-	cout << "	1 - Metric \n	2 - Inch \n";
-	cin >> Met_Int;
+	PRIX prix;
 
 	cout << endl << "En cours ..." << endl << endl;
 	ouverture(prix);
 
 
-	cout << "Fin";
+	cout << "Fin" << endl;
 }
+
