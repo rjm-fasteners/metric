@@ -528,11 +528,11 @@ string TabTexte[10]
 };
 
 int TabCategorie(int choix, string categorie) {
-	int i;
-	bool trouver = false;
-
 	string FILENAME = "listing.txt";
 	fstream ListedProducts;
+
+	int i;
+	int trouver = 0;
 
 	// BOLTS VERFIED ON 03-15		|PRDS-CLEAN|		|TODOs|
 	string bolt[500]{
