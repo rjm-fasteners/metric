@@ -107,17 +107,17 @@ inline void CALCUL_POIDS::choix()
 		poid = washer.getpoid();
 		switch (type)
 		{
-		case 'a':
-			poid = poid * bulk;
-			poids = to_string(poid);
-			break;
-		case 'b':
-			poid = poid * qte;
-			poids = to_string(poid);
-			break;
-		case 'c':
-			poids = to_string(poid);
-			break;
+			case 'a':
+				poid = poid * bulk;
+				poids = to_string(poid);
+				break;
+			case 'b':
+				poid = poid * qte;
+				poids = to_string(poid);
+				break;
+			case 'c':
+				poids = to_string(poid);
+				break;
 		}
 		break;
 

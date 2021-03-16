@@ -1063,6 +1063,7 @@ int TabCategorie(int choix, string categorie) {
 				trouver = 1;
 				return i;
 			}
+			else i++;
 		}
 		break;
 	case 2:
@@ -1072,6 +1073,7 @@ int TabCategorie(int choix, string categorie) {
 				trouver = 1;
 				return i;
 			}
+			else i++;
 		}
 		break;
 	case 3:
@@ -1081,6 +1083,7 @@ int TabCategorie(int choix, string categorie) {
 				trouver = 1;
 				return i;
 			}
+			else i++;
 		}
 		break;
 	case 4:
@@ -1090,6 +1093,7 @@ int TabCategorie(int choix, string categorie) {
 				trouver = 1;
 				return i;
 			}
+			else i++;
 		}
 		break;
 	case 5:
@@ -1099,6 +1103,7 @@ int TabCategorie(int choix, string categorie) {
 				trouver = 1;
 				return i;
 			}
+			else i++;
 		}
 		break;
 	case 22:
@@ -4077,4 +4082,6 @@ string body(string categorie, string numProduit, int reponse, string tag)
 	*/
 		return "Products have been listed into listing.txt";
 	}
+
+	return description;
 }

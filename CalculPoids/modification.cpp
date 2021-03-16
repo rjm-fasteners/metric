@@ -358,9 +358,8 @@ void ouverture(PRIX prix)
 							TexteATranscrire1[5] = "Unity";
 							TexteATranscrire1[6] = "1";
 
-
 							TexteATranscrire1[1] = "\"" + titre + "\"";
-							body(produit[2], produit[0], reponse, tag);
+							TexteATranscrire1[2] = body(produit[2], produit[0], reponse, tag);
 							TexteATranscrire1[7] = produit[0];
 
 							texte = dotToComa(texte);
