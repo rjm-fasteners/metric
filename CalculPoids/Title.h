@@ -1275,8 +1275,12 @@ inline void Vis::grade() {
 			titre += "Grade 8.8 ";
 		} 
 		else if (texte == "10") {
-			tags += "grade_10,";
-			titre += "Grade 10 ";
+			tags += "grade_10.9,";
+			titre += "Grade 10.9 ";
+		}
+		else {
+			tags += "grade_12.9,";
+			titre += "Grade 12.9 ";
 		}
 	}
 	else {
