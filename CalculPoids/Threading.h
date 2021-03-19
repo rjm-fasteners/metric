@@ -6,13 +6,13 @@ class COARSE_THREAD
 public:
 	COARSE_THREAD();
 	~COARSE_THREAD();
-	void constructeur(string numProduit, string tag);
-	string getTag();
+	void constructeur(string numProduit);
+	string getTags();
 	string getThread();
 private:
 	string texte;
 	string souschaine[2];
-	string tag;
+	string tags;
 	void separation();
 	string numProduit;
 	int i;
@@ -89,20 +89,19 @@ COARSE_THREAD::~COARSE_THREAD()
 {
 }
 
-inline void COARSE_THREAD::constructeur(string numProduit, string tag)
+inline void COARSE_THREAD::constructeur(string numProduit)
 {
 	this->numProduit = numProduit;
-	this->tag = tag;
 	i = 0;
 	trouver = false;
-	this->tag += "metric_coarse,";
+	tags = "metric_coarse,";
 	separation();
 	threading();
 }
 
-inline string COARSE_THREAD::getTag()
+inline string COARSE_THREAD::getTags()
 {
-	return tag;
+	return tags;
 }
 
 inline string COARSE_THREAD::getThread()
@@ -128,23 +127,18 @@ inline void COARSE_THREAD::threading()
 		texte += souschaine[1][1];
 		texte += souschaine[1][2];
 	}
-	else
-	{
+	else {
 		texte += souschaine[1][0];
 		texte += souschaine[1][1];
 	}
-	while (trouver == false)
-	{
-		if (texte == TabThread[i])
-		{
+	while (trouver == false) {
+		if (texte == TabThread[i]) {
 			trouver = true;
+			break;
 		}
-		else
-		{
-			i++;
-		}
+		i++;
 	}
-	tag += TabTagTitreC[i];
+	tags += TabTagTitreC[i];
 }
 #pragma endregion
 
@@ -155,13 +149,13 @@ class FINE_THREAD
 public:
 	FINE_THREAD();
 	~FINE_THREAD();
-	void constructeur(string numProduit, string tag);
-	string getTag();
+	void constructeur(string numProduit);
+	string getTags();
 	string getThread();
 private:
 	string texte;
 	string souschaine[2];
-	string tag;
+	string tags;
 	void separation();
 	string numProduit;
 	int i;
@@ -169,7 +163,6 @@ private:
 
 	string TabThread[100]
 	{
-
 		"01","012","014","016","018",
 		"02","022","025","03","035","04",
 		"05","06","07","08","09","10","11",
@@ -177,13 +170,10 @@ private:
 		"27","30","33","36","39","42" "45",
 		"48","52","56","60","64","68","72",
 		"80","90","100",
-		
-
 	};
 
 	string TabThreadTitreF[100]
 	{
-
 		"M1 * 0.2 ","M1.2 * 0.2 ","M1.4 * 0.2 ","M1.6 * 0.2 ","M1.8 * 0.2 ",
 		"M2 * 0.25 ","M2.2 * 0.25 ","M2.5 * 0.35 ","M3 * 0.35 ","M3.5 * 0.35 ","M4 * 0.5 ",
 		"M5 * 0.5 ","M6 * 0.75 ","M7 * 0.75 ","M8 * 1 ", "M9 * 1 ","M10 * 1.25 ","M11 * 1 ",
@@ -191,15 +181,11 @@ private:
 		"M27 * 2 ", "M30 * 2 ","M33 * 3 ", "M36 * 3 ", "M39 * 3 ", "M42 * 4 ", "M45 * 4 ",
 		"M48 * 4 ", "M52 * 4 ", "M56 * 4 ", "M60 * 4 ", "M64 * 4 ","M68 * 4 ", "M72 * 4 ",
 		"M80 * 4 ", "M90 * 4 ","M100 * 4 ",
-		
-		
-
 	};
 
 
 	string TabTagThreadF[100]
 	{
-
 		"thread_size_m1_0-2,", "thread_size_m1-2_0-2,", "thread_size_m1-4_0-2,", "thread_size_m1-6_0-2,", "thread_size_m1-8_0-2,",
 		"thread_size_m2_0-25,", "thread_size_m2-2_0-25,", "thread_size_m2-5_0-35,", "thread_size_m3_0-35,", "thread_size_m3-5_0-35,", "thread_size_m4_0-5,",
 		"thread_size_m5_0-5,", "thread_size_m6_0-75,", "thread_size_m7_0-75,", "thread_size_m8_1,", "thread_size_m9_1,", "thread_size_m10_1-25,", "thread_size_m11_1,",
@@ -207,7 +193,6 @@ private:
 		"thread_size_m27_2,", "thread_size_m30_2,", "thread_size_m33_3,", "thread_size_m36_3,", "thread_size_m39_3,", "thread_size_m42_4,", "thread_size_m45_4,",
 		"thread_size_m48_4,", "thread_size_m52_4,", "thread_size_m56_4,", "thread_size_m60_4,", "thread_size_m64_4,", "thread_size_m68_4,", "thread_size_m72_4,",
 		"thread_size_m80_4,", "thread_size_m90_4,", "thread_size_m100_4,",
-
 	};
 
 	void threading();
@@ -222,20 +207,19 @@ FINE_THREAD::~FINE_THREAD()
 {
 }
 
-inline void FINE_THREAD::constructeur(string numProduit, string tag)
+inline void FINE_THREAD::constructeur(string numProduit)
 {
 	this->numProduit = numProduit;
-	this->tag = tag;
 	i = 0;
 	trouver = false;
-	this->tag += "metric_fine,";
+	tags = "metric_fine,";
 	separation();
 	threading();
 }
 
-inline string FINE_THREAD::getTag()
+inline string FINE_THREAD::getTags()
 {
-	return tag;
+	return tags;
 }
 
 inline string FINE_THREAD::getThread()
@@ -277,7 +261,7 @@ inline void FINE_THREAD::threading()
 			i++;
 		}
 	}
-	tag += TabTagThreadF[i];
+	tags += TabTagThreadF[i];
 }
 #pragma endregion
 
@@ -287,13 +271,13 @@ class EXTRA_FINE_THREAD
 public:
 	EXTRA_FINE_THREAD();
 	~EXTRA_FINE_THREAD();
-	void constructeur(string numProduit, string tag);
-	string getTag();
+	void constructeur(string numProduit);
+	string getTags();
 	string getThread();
 private:
 	string texte;
 	string souschaine[2];
-	string tag;
+	string tags;
 	void separation();
 	string numProduit;
 	int i;
@@ -347,20 +331,19 @@ EXTRA_FINE_THREAD::~EXTRA_FINE_THREAD()
 {
 }
 
-inline void EXTRA_FINE_THREAD::constructeur(string numProduit, string tag)
+inline void EXTRA_FINE_THREAD::constructeur(string numProduit)
 {
 	this->numProduit = numProduit;
-	this->tag = tag;
 	i = 0;
 	trouver = false;
-	this->tag += "metric_extra_fine,";
+	tags = "metric_extra_fine,";
 	separation();
 	threading();
 }
 
-inline string EXTRA_FINE_THREAD::getTag()
+inline string EXTRA_FINE_THREAD::getTags()
 {
-	return tag;
+	return tags;
 }
 
 inline string EXTRA_FINE_THREAD::getThread()
@@ -402,7 +385,7 @@ inline void EXTRA_FINE_THREAD::threading()
 			i++;
 		}
 	}
-	tag += TabTagThreadFF[i];
+	tags += TabTagThreadFF[i];
 }
 #pragma endregion
 
@@ -412,13 +395,13 @@ class EXTRA_EXTRA_FINE_THREAD
 public:
 	EXTRA_EXTRA_FINE_THREAD();
 	~EXTRA_EXTRA_FINE_THREAD();
-	void constructeur(string numProduit, string tag);
-	string getTag();
+	void constructeur(string numProduit);
+	string getTags();
 	string getThread();
 private:
 	string texte;
 	string souschaine[2];
-	string tag;
+	string tags;
 	void separation();
 	string numProduit;
 	int i;
@@ -470,20 +453,19 @@ EXTRA_EXTRA_FINE_THREAD::~EXTRA_EXTRA_FINE_THREAD()
 {
 }
 
-inline void EXTRA_EXTRA_FINE_THREAD::constructeur(string numProduit, string tag)
+inline void EXTRA_EXTRA_FINE_THREAD::constructeur(string numProduit)
 {
 	this->numProduit = numProduit;
-	this->tag = tag;
 	i = 0;
 	trouver = false;
-	this->tag += "metric_extra_extra_fine,";
+	tags = "metric_extra_extra_fine,";
 	separation();
 	threading();
 }
 
-inline string EXTRA_EXTRA_FINE_THREAD::getTag()
+inline string EXTRA_EXTRA_FINE_THREAD::getTags()
 {
-	return tag;
+	return tags;
 }
 
 inline string EXTRA_EXTRA_FINE_THREAD::getThread()
@@ -525,7 +507,7 @@ inline void EXTRA_EXTRA_FINE_THREAD::threading()
 			i++;
 		}
 	}
-	tag += TabTagThreadEFF[i];
+	tags += TabTagThreadEFF[i];
 }
 #pragma endregion
 

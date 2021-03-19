@@ -1019,6 +1019,17 @@ int TabCategorie(int choix, string categorie) {
 			"VPSBM08", "VPSBM10", "VPSBM12",
 #pragma endregion
 
+#pragma region VPCM88Z - 4
+			"VPCM88Z05", "VPCM88Z06", "VPCM88Z08", "VPCM88Z10",
+#pragma endregion
+
+#pragma region VPCMI88Z - 1
+			"VPCMI88Z06",
+#pragma endregion
+
+#pragma region VPCMT88Z - 4
+			"VPCMT88Z06", "VPCMT88Z08", "VPCMT88Z10",
+#pragma endregion
 
 	#pragma endregion
 	};
@@ -3196,14 +3207,6 @@ string bodyScrew(string categorie, string numProduit, string tag, string souscha
 	{
 		k = 7;
 	}
-	else if (souschaine[0] == "BM8")
-	{
-		k = 0;
-	}
-	else if (souschaine[0] == "BS3" || souschaine[0] == "BST3")
-	{
-		k = 5;
-	}
 
 	if (souschaine[2][0] == 'Y')
 	{
@@ -3605,8 +3608,7 @@ string bodyScrew(string categorie, string numProduit, string tag, string souscha
 #pragma endregion
 	};
 
-	i = TabCategorie(1, categorie);
-
+	i = TabCategorie(6, categorie);
 
 #pragma region Photo drive
 
@@ -4011,75 +4013,22 @@ string body(string categorie, string numProduit, int reponse, string tag)
 	string souschaine[3];
 	string description = "";
 
-
-	for (int j = 0; j < 3; j++)
-	{
+	for (int j = 0; j < 3; j++) 
 		getline(ss, souschaine[j], '-');
-	}
-	if (reponse == 1)
-	{
+
+	if (reponse == 1) 
 		description = bodyBolt(categorie, numProduit, tag, souschaine);
-	}
-	else if (reponse == 2)
-	{
+	else if (reponse == 2) 
 		description = bodyNut(categorie, numProduit, tag, souschaine);
-	}
-	else if (reponse == 3)
-	{
+	else if (reponse == 3) 
 		description = bodyWasher(categorie, numProduit, tag, souschaine);
-	}
-	else if (reponse == 4)
-	{
+	// Missing equerre choice
+	else if (reponse == 5) 
 		description = bodyTige(categorie, numProduit, tag, souschaine);
-	}
-	else if (reponse == 5)
-	{
+	else if (reponse == 6) 
 		description = bodyScrew(categorie, numProduit, tag, souschaine);
-	}
-	else if (reponse == 22)
-	{
+	else if (reponse == 22) {
 		description = TabCategorie(reponse, numProduit);
-
-		/*
-		if (Met_Int == 1)
-	{
-	#pragma region LENGTH - metric
-
-				for (int j = 2; j < souschaine[1].length(); j++)
-				{
-					texte += souschaine[1][j];
-				}
-
-
-				if (souschaine[1][0] == '0' && souschaine[1][1] == '0')
-				{
-					if (texte[0] != '0' && texte[0] != '1' && texte[0] != '2')
-					{
-						texte[0] = '0';
-					}
-				}
-				if (texte[0] == '5')
-				{
-					texte[0] = '0';
-				}
-
-				while (trouver == false)
-				{
-					if (texte == TabLenght[i])
-					{
-						trouver = true;
-					}
-					else
-					{
-						i++;
-					}
-				}
-
-				tag += TabTagLength[i];
-				longueur = TabLenghtDescription[i];
-	#pragma endregion
-	}
-	*/
 		return "Products have been listed into listing.txt";
 	}
 

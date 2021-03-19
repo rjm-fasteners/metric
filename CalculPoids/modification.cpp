@@ -170,8 +170,6 @@ void ouverture(PRIX prix)
 						cout << "-----Ratio inferieur a 86%-----> ";
 					}
 
-					cout << 0 << " : " << produit[0] << endl;
-
 					/*************** Valide si le prix 4 est inférieure à 50% ***************/
 					if (toupper(choix) == 'A')
 					{
@@ -199,7 +197,7 @@ void ouverture(PRIX prix)
 
 					/****************** Importation sélection B implicite *******************/
 					else {
-						if (reponse == 6)
+						/*if (reponse == 6)
 						{
 							string texte;
 
@@ -208,7 +206,7 @@ void ouverture(PRIX prix)
 							TITRE title;
 							string titre = "";
 							TexteATranscrire1[0] = produit[0];
-							title.constructeur(produit[0], bulk, reponse, tag);
+							title.constructeur(produit[0], reponse, tag);
 							titre = title.getTitre();
 							tag = title.getTag();
 
@@ -246,7 +244,8 @@ void ouverture(PRIX prix)
 							qte = 0;
 							bulk = 0;
 						}
-						else if (reponse == 9)
+						else */
+							if (reponse == 9)
 						{
 
 							string texte;
@@ -261,7 +260,7 @@ void ouverture(PRIX prix)
 							TITRE title;
 							string titre = "";
 							TexteATranscrire1[0] = produit[0];
-							title.constructeur(produit[0], bulk, reponse, tag);
+							title.constructeur(produit[0], reponse, tag);
 							titre = title.getTitre();
 							tag = title.getTag();
 							TexteATranscrire1[6] = "50";
@@ -334,7 +333,7 @@ void ouverture(PRIX prix)
 							TexteATranscrire1[2] = body("0", "0", 0, "0");
 						}
 
-						/* Boulon, Ecrou, Rondelle, Vis VP */
+						/* Boulon, Ecrou, Rondelle, Vis pression */
 						else if (reponse == 1 || reponse == 2 || reponse == 3 || (reponse == 6 && produit[0][1] == 'P'))
 						{
 							calculatedRatio = _ratio(prix1, dernierCoutant, reponse);
@@ -342,35 +341,146 @@ void ouverture(PRIX prix)
 
 							string texte = produit[4];
 							CALCUL_POIDS calcul;
-							TITRE title;
-							string titre = "";
 							float rlg = 0;
 
-							texte = dotToComa(texte);
-							TexteATranscrire1[8] = texte;
+							// Extrait les deux premiers chiffres de la deuxieme souschaine(souschaine[1]) du numéro du produit
+							// Permet de connaître le diamètre nominal et agir en fonction de celui-là pour les bulk sizes
+							string souschaine[3];
+							stringstream ss(produit[0]);
+							for (int j = 0; j < 3; j++) getline(ss, souschaine[j], '-');
+							int diamNom = ((souschaine[1][0] - 48) * 10) + ((souschaine[1][1] - 48));
 
-							TexteATranscrire1[0] = produit[0];
-							title.constructeur(produit[0], bulk, reponse, tag);
-							titre = title.getTitre();
-							tag = title.getTag();
+							/***** Si diamètre nominal <= M6 (moins que 1/4") */
+							if (diamNom <= 6) {
+							}
+
+							// M7 À VENDRE SEULEMENT À L'UNITÉ!!!!!!!
+							/***** Si diamètre nominal == M7 (1/4") */
+							if (diamNom == 7) {
+							}
+
+							/***** Si diamètre nominal == M8 ou M9 (5/16" ou 0.354") */
+							if (diamNom == 8 || diamNom == 9) {
+							#pragma region Prix par 1
+								TITRE title;
+								string titre = "";
+								title.constructeur(produit[0], reponse, tag);
+								titre = title.getTitre();
+								tag = title.getTag();
+
+								TexteATranscrire1[1] = "\"" + titre + "\"";
+								TexteATranscrire1[2] = body(produit[2], produit[0], reponse, tag);
+
+								calcul.constructeur(produit[0], 'a', reponse, rlg, 1);
+								texte = calcul.getPoids();
+
+								TexteATranscrire1[0] = produit[0];
+								TexteATranscrire1[7] = produit[0];
+
+								texte = dotToComa(texte);
+
+								TexteATranscrire1[8] = texte;
+
+								TexteATranscrire1[12] = produit[9]; // prix 1
+								TexteATranscrire1[19] = produit[10];
+								TexteATranscrire1[16] = "";
+							#pragma endregion
+
+							#pragma region Prix par 100
+								calcul.constructeur(produit[0], 'b', reponse, rlg, 100);
+								texte = calcul.getPoids();
+
+								TexteATranscrire2[0] = produit[0];
+								TexteATranscrire2[6] = to_string(100);
+								TexteATranscrire2[7] = produit[0];
+
+								texte = dotToComa(texte);
+
+								TexteATranscrire2[8] = texte;
+
+								prix.constructeur(produit[29], 'b', 100); //prix 3
+								texte = prix.getPrice();
+								texte = dotToComa(texte);
+
+								TexteATranscrire2[12] = texte;
+								TexteATranscrire2[18] = produit[10];
+
+							#pragma endregion
+
+							#pragma region Prix par 1200
+								calcul.constructeur(produit[0], 'b', reponse, rlg, 1200);
+								texte = calcul.getPoids();
+
+								TexteATranscrire3[0] = produit[0];
+								TexteATranscrire3[6] = "Bulk [1200]";
+								TexteATranscrire3[7] = produit[0];
+
+								texte = dotToComa(texte);
+
+								TexteATranscrire3[8] = texte;
+
+								prix.constructeur(produit[39], 'b', 1200); //prix 4
+								texte = prix.getPrice();
+								texte = dotToComa(texte);
+
+								TexteATranscrire3[12] = texte;
+								TexteATranscrire3[16] = "1";
+								TexteATranscrire3[15] = photo;
+								TexteATranscrire3[18] = produit[10];
+							#pragma endregion
+							}
 
 
-							TexteATranscrire1[5] = "Unity";
-							TexteATranscrire1[6] = "1";
+							/***** Si diamètre nominal == M10 (3/8") */
+							if (diamNom == 10) {
 
-							TexteATranscrire1[1] = "\"" + titre + "\"";
-							TexteATranscrire1[2] = body(produit[2], produit[0], reponse, tag);
-							TexteATranscrire1[7] = produit[0];
-
-							texte = dotToComa(texte);
-
-							TexteATranscrire1[8] = texte;
-
-							TexteATranscrire1[12] = produit[9];
+							}
 
 
-							TexteATranscrire1[15] = photo;
-							TexteATranscrire1[18] = produit[10];
+							/***** Si diamètre nominal == M11 (7/16") */
+							if (diamNom == 11) {
+
+							}
+
+
+							/***** Si diamètre nominal == M12 (1/2") */
+							if (diamNom == 12) {
+
+							}
+
+
+							/***** Si diamètre nominal == M14 (9/16") */
+							if (diamNom == 14) {
+
+							}
+
+
+							/***** Si diamètre nominal == M16 (5/8") */
+							if (diamNom == 16) {
+								
+							}
+
+
+							/***** Si diamètre nominal == M18 ou M20 (11/16" ou ¸¸÷÷☺ 3/4") */
+							if (diamNom == 18 || diamNom == 20) {
+
+							}
+
+
+							/***** Si diamètre nominal == M22 (7/8") */
+							if (diamNom == 22) {
+
+							}
+
+
+							/***** Si diamètre nominal >= M24 (1") */
+							if (diamNom >= 24) {
+
+							}
+
+
+
+
 
 							tag += "\"";
 							TexteATranscrire1[3] = tag;
@@ -421,7 +531,7 @@ void ouverture(PRIX prix)
 							TITRE title;
 							string titre = "";
 							TexteATranscrire1[0] = produit[0];
-							title.constructeur(produit[0], bulk, reponse, tag);
+							title.constructeur(produit[0], reponse, tag);
 							titre = title.getTitre();
 							tag = title.getTag();
 
@@ -695,7 +805,7 @@ int main()
 
 		if (toupper(choix) == 'B' || toupper(choix) == 'E') {
 			do {
-				cout << "	1 - Boulon \n	2 - Ecrou \n	3 - Rondelle \n	4 - Tige \n	5 - Vis \n	6 - Autre \n	22 - Liste des produits	\n";
+				cout << "	1 - Boulon \n	2 - Ecrou \n	3 - Rondelle \n	4 - Equerre(NOT WORKING) \n	5 - Tige \n	6 - Vis \n	22 - Liste des produits	\n";
 				cin >> reponse;
 			} while (reponse < 1 || (reponse > 6 && reponse != 22));
 		}
