@@ -5,6 +5,9 @@ extern string photo;
 extern string photo2;
 extern string photo3;
 extern string photo4;
+string souschaine[3];
+
+#include "PrdSpecsAndTitle.h"
 
 
 string TabLenght[410]
@@ -1284,7 +1287,7 @@ int TabCategorie(int choix, string categorie) {
 	}
 }
 
-string bodyBolt(string categorie, string numProduit, string tag, string souschaine[3]) {
+string bodyBolt(string categorie, string numProduit, string tag) {
 	bool trouver = false;
 	int i = 0;
 	string texte;
@@ -2053,7 +2056,7 @@ string bodyBolt(string categorie, string numProduit, string tag, string souschai
 	return description[i];
 }
 
-string bodyNut(string categorie, string numProduit, string tag, string souschaine[3]) {
+string bodyNut(string categorie, string numProduit, string tag) {
 	bool trouver = false;
 	int i = 0;
 	string texte;
@@ -2784,7 +2787,7 @@ string bodyNut(string categorie, string numProduit, string tag, string souschain
 	return description[i];
 }
 
-string bodyWasher(string categorie, string numProduit, string tag, string souschaine[3]) {
+string bodyWasher(string categorie, string numProduit, string tag) {
 	bool trouver = false;
 	int i = 0;
 	string texte;
@@ -3193,102 +3196,13 @@ string bodyWasher(string categorie, string numProduit, string tag, string sousch
 	return description[i];
 }
 
-string bodyScrew(string categorie, string numProduit, string tag, string souschaine[3]) {
+string bodyScrew(string categorie, string numProduit, string tag) {
 	bool trouver = false;
 	int i = 0;
 	string texte;
 	string longeur = "";
 	string driveStyle = "";
-
-#pragma region Material
-	int k = 0;
-	string material = "";
-	string texteMaterial = "";
-	char TabMaterial[10]{ '5','8','9','S','N','3','G', 'N', 'B' };
-
-	for (i = 0; i < souschaine[0].length(); i++)
-	{
-		for (int j = 0; j < 10; j++)
-		{
-			if (souschaine[0][i] == TabMaterial[j])
-			{
-				k = j;
-			}
-		}
-	}
-
-	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P')
-	{
-		k = 7;
-	}
-
-	if (souschaine[2][0] == 'Y')
-	{
-		k = 1;
-	}
-	else if (souschaine[2][0] == 'N')
-	{
-		k = 4;
-	}
-
-	material = TabDescriptionMaterial[k];
-	texteMaterial = TabTexte[k];
-#pragma endregion
-
-
-#pragma region Drive Style
-
-	if (souschaine[2][0] == 'S')
-	{
-		driveStyle = "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drive Style</td><td class=\"divider--spec-tbl value-cell--table\">Slotted</td></tr>";
-	}
-	else if (souschaine[2][0] == 'T')
-	{
-		driveStyle = "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drive Style</td><td class=\"divider--spec-tbl value-cell--table\">Torx</td></tr>";
-	}
-	else if (souschaine[2][0] == 'A')
-	{
-		driveStyle = "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drive Style</td><td class=\"divider--spec-tbl value-cell--table\">Allen</td></tr>";
-	}
-	else if (souschaine[2][0] == 'C')
-	{
-		driveStyle = "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drive Style</td><td class=\"divider--spec-tbl value-cell--table\">Square</td></tr>";
-	}
-	else if (souschaine[2][0] == 'Q')
-	{
-		driveStyle = "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drive Style</td><td class=\"divider--spec-tbl value-cell--table\">Quadrex</td></tr>";
-	}
-	else if (souschaine[2][0] == 'K')
-	{
-
-	}
-	else if (souschaine[2][0] == 'D')
-	{
-		driveStyle = "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drive Style</td><td class=\"divider--spec-tbl value-cell--table\">Dog point</td></tr>";
-	}
-	else if (souschaine[2][0] == 'U')
-	{
-		driveStyle = "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drive Style</td><td class=\"divider--spec-tbl value-cell--table\">Non-Serrated</td></tr>";
-	}
-	else
-	{
-		driveStyle = "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drive Style</td><td class=\"divider--spec-tbl value-cell--table\">Phillips</td></tr>";
-	}
-
-
-	//if (souschaine[0] == "ABF" && souschaine[1] == "01000")
-	//{
-	//	if (souschaine[2] == "1")
-	//	{
-	//		drillbitsize = "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drill Bit Size</td><td class=\"divider--spec-tbl value-cell--table\"><span class=\"af\">3/8</span>\"</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drill Bit Size Decimal Equivalent</td><td class=\"divider--spec-tbl value-cell--table\">0.375\"</td></tr>";
-	//	}
-	//	else
-	//	{
-	//		drillbitsize = "<tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drill Bit Size</td><td class=\"divider--spec-tbl value-cell--table\"><span class=\"af\">5/16</span>\"</td></tr><tr class=\"divider--spec-tbl bs row--spec-tbl\"><td class=\"attr-cell--table divider--spec-tbl\">Drill Bit Size Decimal Equivalent</td><td class=\"divider--spec-tbl value-cell--table\">0.3125\"</td></tr>";
-	//	}
-	//}
-#pragma endregion
-
+	/*
 	string description[1000]{
 		#pragma region VIS - 298
 
@@ -3469,7 +3383,7 @@ string bodyScrew(string categorie, string numProduit, string tag, string souscha
 
 #pragma endregion
 	};
-
+	*/
 	string TabPhoto[1000]{
 		#pragma region VIS
 
@@ -3638,46 +3552,91 @@ string bodyScrew(string categorie, string numProduit, string tag, string souscha
 #pragma endregion
 	};
 
-	i = TabCategorie(6, categorie);
+	//i = TabCategorie(6, categorie);
 
-	string	headType, socketHeadProfile, headDiameter, headHeight,												// Head
-			driveStyle2, driveSize,																				// Drive
-			thrdDirection, thrdSize, thrdPitch, thrdType, thrdFit, minThrdLength, thrdSpacing, threading,		// Thread
-			sysMeasurement, length, strengthGrade, tensileStrength, hardness, material2, specsMet, rohs;		// General
+	string	headType, headProfile, headDiameter, headHeight,										// Head
+			driveSize,																				// Drive
+			thrdDirection, thrdSize, thrdType, thrdFit, minThrdLength, threading,					// Thread
+			length, strengthGrade, tensileStrength, shearStrength, materialAndPlating, specsMet;	// General
+
+	int diamNom = stoi(title_thrd.substr(1, title_thrd.find(' ')));
+
+	headType = "Socket";
+	headProfile = "Standard";
+	headDiameter = to_string(diamNom * 1.5);
+	headHeight = to_string(diamNom) + "mm";
+	driveStyle = title_drive;
+	driveSize = "0";
+	thrdDirection = "Right Hand";
+	thrdSize = title_thrd + "mm";
+	thrdType = title_thrdType;
+	thrdFit = "Class 5g6g";
+	minThrdLength = to_string(2 * diamNom + 12) + "mm";
+	threading = souschaine[0].find('T') != string::npos ? "Fully Threaded" : "Partially Threaded";
+	length = title_length;
+	strengthGrade = title_grade;
+	tensileStrength = title_tensStrength;
+	shearStrength = title_shearStrength;
+	materialAndPlating = title_materialAndPlating;
+
+	if (diamNom == 48)		{ driveSize = "36"; }
+	else if (diamNom == 42) { driveSize = "32"; }
+	else if (diamNom == 36) { driveSize = "27"; }
+	else if (diamNom == 33) { driveSize = "24"; }
+	else if (diamNom == 30) { driveSize = "22"; }
+	else if (diamNom == 27) { driveSize = "19"; }
+	else if (diamNom == 24) { driveSize = "19"; }
+	else if (diamNom == 22) { driveSize = "17"; }
+	else if (diamNom == 20) { driveSize = "17"; }
+	else if (diamNom == 18) { driveSize = "14"; }
+	else if (diamNom == 16) { driveSize = "14"; }
+	else if (diamNom == 14) { driveSize = "12"; }
+	else if (diamNom == 12) { driveSize = "10"; }
+	else if (diamNom == 10) { driveSize = "8"; headDiameter = "16"; }
+	else if (diamNom == 8)	{ driveSize = "6"; headDiameter = "13"; }
+	else if (diamNom == 7)	{ driveSize = "6"; headDiameter = "12"; }
+	else if (diamNom == 6)	{ driveSize = "5"; headDiameter = "10"; }
+	else if (diamNom == 5)	{ driveSize = "4"; headDiameter = "8.5"; }
+	else if (diamNom == 4)	{ driveSize = "3"; headDiameter = "7"; }
+	else if (diamNom == 3.5){ driveSize = "2.5"; headDiameter = "6.2"; }
+	else if (diamNom == 3)	{ driveSize = "2.5"; headDiameter = "5.5"; }
+	else if (diamNom == 2.5){ driveSize = "2"; headDiameter = "4.5"; }
+	else if (diamNom == 2)	{ driveSize = "1.5"; headDiameter	= "3.8"; }
+	else if (diamNom == 1.6){ driveSize = "1.5"; headDiameter = "3"; }
 
 	string tableHTML = 
 		"<table><tbody>"
 			"<tr><td>Product Number</td><td>"  + numProduit + "</td></tr>" +
-			"<tr><td>Head Type</td><td>" + headType + "</td></tr>" +
-			"<tr><td>Socket Head Profile</td><td>" + socketHeadProfile + "</td></tr>"  +
-			"<tr><td>Drive Style</td><td>" + driveStyle2 + "</td></tr>" +
-			"<tr><td>Drive Size</td><td>" + driveSize + "</td></tr>" +
-			"<tr><td>System of Measurement</td><td>" + sysMeasurement + "</td></tr>" +
-			"<tr><td>Thread Direction</td><td>" + thrdDirection + "</td></tr>" +
-			"<tr><td>Thread Size</td><td>" + thrdSize + "</td></tr>" +
-			"<tr><td>Thread Pitch</td><td>" + thrdPitch + "</td></tr>" +
-			"<tr><td>Thread Type</td><td>" + thrdType + "</td></tr>" +
-			"<tr><td>Thread Fit</td><td>" + thrdFit + "</td></tr>" +
+			"<tr><td>Nominal Diameter</td><td>" + thrdSize + "</td></tr>" +
 			"<tr><td>Length</td><td>" + length + "</td></tr>" +
-			"<tr><td>Threading</td><td>" + threading + "</td></tr>" +
-			"<tr><td>Min. Thread Length</td><td>" + minThrdLength + "</td></tr>" +
-			"<tr><td>Thread Spacing</td><td>" + thrdSpacing + "</td></tr>" +
-			"<tr><td>Head</td><td></td></tr>" +
-				"<tr><td>Diameter</td><td>" + headDiameter + "</td></tr>" +
-				"<tr><td>Height</td><td>" + headHeight + "</td></tr>" +
-			"<tr><td>Fastener Strength Grade/Class</td><td>" + strengthGrade + "</td></tr>" +
-			"<tr><td>Material</td><td>" + material2 + "</td></tr>" +
-			"<tr><td>Tensile Strength</td><td>" + tensileStrength + "</td></tr>" +
-			"<tr><td>Hardness</td><td>" + hardness + "</td></tr>" +
-			"<tr><td>Specifications Met</td><td>" + specsMet + "</td></tr>" +
-			"<tr><td>RoHS</td><td>" + rohs + "</td></tr>" +
+			"<tr><td>Material & Plating</td><td>" + materialAndPlating + "</td></tr>" +
+			"<tr><td>System of Measurement</td><td>Metric</td></tr>" +
+			"<tr><td><u>Thread Specifications</u></td><td></td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Threading</td><td>" + threading + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Type</td><td>" + thrdType + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Direction</td><td>" + thrdDirection + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Size</td><td>" + thrdSize + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Min. Length</td><td>" + minThrdLength + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Fit</td><td>" + thrdFit + "</td></tr>" +
+			"<tr><td><u>Head Specifications</u></td><td></td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Head Type</td><td>" + headType + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Head Profile</td><td>" + headProfile + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Drive Style</td><td>" + driveStyle + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Drive Size</td><td>" + driveSize + "mm</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Diameter</td><td>" + headDiameter + "mm</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Height</td><td>" + headHeight + "</td></tr>" +
+			"<tr><td><u>Strength Specifications</u></td><td></td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Strength Grade/Class</td><td>" + strengthGrade + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Tensile Strength | Hardness</td><td>" + tensileStrength + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Shear Strength</td><td>" + shearStrength + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Classification</td><td>DIN 912</td></tr>" +
 		"</tbody></table>"
 
 		"<br/>"
 		
 		"<div>"
 			"<p> With a tensile strength of " + tensileStrength + "psi. Length is measured from under the head.</p>"
-			"<p>" + texteMaterial + " screws are mildly corrosion resistant in dry environments.</p>"
+			"<p>" + "txtMat" + " screws are mildly corrosion resistant in dry environments.</p>"
 			"<p>Coarse threads are the industry standard: choose these screws if you don’t know the pitch or threads per inch. Screws that meet ASME B18.3, ASME B18.3M, ISO 21269, and ISO 4762 (formerly DIN 912) comply with specifications for dimensional standards. </p>"
 		"</div>";
 
@@ -3774,10 +3733,11 @@ string bodyScrew(string categorie, string numProduit, string tag, string souscha
 
 #pragma endregion
 
-	return description[i];
+	// return description[i];
+	return tableHTML;
 }
 
-string bodyTige(string categorie, string numProduit, string tag, string souschaine[3]) {
+string bodyTige(string categorie, string numProduit, string tag) {
 	bool trouver = false;
 	int i = 0;
 	string texte;
@@ -4083,23 +4043,22 @@ string body(string categorie, string numProduit, int reponse, string tag)
 	string driveStyle = "";
 
 	stringstream ss(numProduit);
-	string souschaine[3];
 	string description = "";
 
 	for (int j = 0; j < 3; j++) 
 		getline(ss, souschaine[j], '-');
 
 	if (reponse == 1) 
-		description = bodyBolt(categorie, numProduit, tag, souschaine);
+		description = bodyBolt(categorie, numProduit, tag);
 	else if (reponse == 2) 
-		description = bodyNut(categorie, numProduit, tag, souschaine);
+		description = bodyNut(categorie, numProduit, tag);
 	else if (reponse == 3) 
-		description = bodyWasher(categorie, numProduit, tag, souschaine);
+		description = bodyWasher(categorie, numProduit, tag);
 	// Missing equerre choice
 	else if (reponse == 5) 
-		description = bodyTige(categorie, numProduit, tag, souschaine);
+		description = bodyTige(categorie, numProduit, tag);
 	else if (reponse == 6) 
-		description = bodyScrew(categorie, numProduit, tag, souschaine);
+		description = bodyScrew(categorie, numProduit, tag);
 	else if (reponse == 22) {
 		description = TabCategorie(reponse, numProduit);
 		return "Products have been listed into listing.txt";

@@ -13,7 +13,7 @@
 #include "Poids.h"
 #include "Threading.h"
 #include "CalculPoids.h"
-#include "Title.h"
+#include "PrdSpecsAndTitle.h"
 #include "Body.h"
 
 #include <fstream>
@@ -340,7 +340,7 @@ void ouverture(PRIX prix)
 							cout << produit[0] << calculatedRatio << endl;
 
 							string texte = produit[4];
-							CALCUL_POIDS calcul;
+							CALCUL_POIDS* calcul;
 							float rlg = 0;
 
 							// Extrait les deux premiers chiffres de la deuxieme souschaine(souschaine[1]) du numéro du produit
@@ -350,76 +350,76 @@ void ouverture(PRIX prix)
 							for (int j = 0; j < 3; j++) getline(ss, souschaine[j], '-');
 							int diamNom = ((souschaine[1][0] - 48) * 10) + ((souschaine[1][1] - 48));
 
-							/***** Si diamètre nominal <= M6 (moins que 1/4") */
-							if (diamNom <= 6) {
-							}
+							// Instead of awful code repetition, making variables to make the code flexible
+							// bulkA is considered as the unity option
+							int bulkB = 0, bulkC = 0;
 
-							// M7 À VENDRE SEULEMENT À L'UNITÉ!!!!!!!
-							/***** Si diamètre nominal == M7 (1/4") */
-							if (diamNom == 7) {
-							}
+							/***** Si diamètre nominal <= M6 (moins que 1/4") */
+							if (diamNom <= 6) { bulkB = 100; bulkC = 1200; }
 
 							/***** Si diamètre nominal == M8 ou M9 (5/16" ou 0.354") */
-							if (diamNom == 8 || diamNom == 9) {
-							#pragma region Prix par 1
-								TITRE title;
-								string titre = "";
-								title.constructeur(produit[0], reponse, tag);
-								titre = title.getTitre();
-								tag = title.getTag();
+							else if (diamNom == 8 || diamNom == 9) { bulkB = 100; bulkC = 1000; }
 
-								TexteATranscrire1[1] = "\"" + titre + "\"";
-								TexteATranscrire1[2] = body(produit[2], produit[0], reponse, tag);
+							/***** Si diamètre nominal == M10 (3/8") */
+							else if (diamNom == 10) { bulkB = 100; bulkC = 500; }
 
-								calcul.constructeur(produit[0], 'a', reponse, rlg, 1);
-								texte = calcul.getPoids();
+							/***** Si diamètre nominal == M11 (7/16") */
+							else if (diamNom == 11) { bulkB = 50; bulkC = 350; }
 
-								TexteATranscrire1[0] = produit[0];
-								TexteATranscrire1[7] = produit[0];
+							/***** Si diamètre nominal == M12 (1/2") */
+							else if (diamNom == 12) { bulkB = 50; bulkC = 250; }
 
-								texte = dotToComa(texte);
+							/***** Si diamètre nominal == M14 (9/16") */
+							else if (diamNom == 14) { bulkB = 25; bulkC = 200; }
 
-								TexteATranscrire1[8] = texte;
+							/***** Si diamètre nominal == M16 (5/8") */
+							else if (diamNom == 16) { bulkB = 25; bulkC = 150; }
 
-								TexteATranscrire1[12] = produit[9]; // prix 1
-								TexteATranscrire1[19] = produit[10];
-								TexteATranscrire1[16] = "";
-							#pragma endregion
+							/***** Si diamètre nominal == M18 ou M20 (11/16" ou 3/4") */
+							else if (diamNom == 18 || diamNom == 20) { bulkB = 25; bulkC = 100; }
 
-							#pragma region Prix par 100
-								calcul.constructeur(produit[0], 'b', reponse, rlg, 100);
-								texte = calcul.getPoids();
+							/***** Si diamètre nominal == M22 (7/8") */
+							else if (diamNom == 22) { bulkB = 25; bulkC = 75; }
+
+							/***** Si diamètre nominal >= M24 (1") */
+							else if (diamNom >= 24) { bulkB = 10; bulkC = 30; }
+
+							// M7 Vendu seulement à l'unité, c'est donc le seul pour lequel on ne fait pas les bulk B et C (prix 3 et 4)
+							/***** Diamètre nominal M7 == (1/4") */
+							if (diamNom != 7) {
+#pragma region Prix par bulkB
+								calcul = new CALCUL_POIDS(produit[0], 'b', reponse, rlg, bulkB);
+								texte = calcul->getPoids();
 
 								TexteATranscrire2[0] = produit[0];
-								TexteATranscrire2[6] = to_string(100);
+								TexteATranscrire2[6] = to_string(bulkB);
 								TexteATranscrire2[7] = produit[0];
 
 								texte = dotToComa(texte);
 
 								TexteATranscrire2[8] = texte;
 
-								prix.constructeur(produit[29], 'b', 100); //prix 3
+								prix.constructeur(produit[29], 'b', bulkB); //prix 3
 								texte = prix.getPrice();
 								texte = dotToComa(texte);
 
 								TexteATranscrire2[12] = texte;
 								TexteATranscrire2[18] = produit[10];
+#pragma endregion
 
-							#pragma endregion
-
-							#pragma region Prix par 1200
-								calcul.constructeur(produit[0], 'b', reponse, rlg, 1200);
-								texte = calcul.getPoids();
+#pragma region Prix par bulkC
+								calcul = new CALCUL_POIDS(produit[0], 'b', reponse, rlg, bulkC);
+								texte = calcul->getPoids();
 
 								TexteATranscrire3[0] = produit[0];
-								TexteATranscrire3[6] = "Bulk [1200]";
+								TexteATranscrire3[6] = "Bulk [" + to_string(bulkC) + "]";
 								TexteATranscrire3[7] = produit[0];
 
 								texte = dotToComa(texte);
 
 								TexteATranscrire3[8] = texte;
 
-								prix.constructeur(produit[39], 'b', 1200); //prix 4
+								prix.constructeur(produit[39], 'b', bulkC); //prix 4
 								texte = prix.getPrice();
 								texte = dotToComa(texte);
 
@@ -427,60 +427,33 @@ void ouverture(PRIX prix)
 								TexteATranscrire3[16] = "1";
 								TexteATranscrire3[15] = photo;
 								TexteATranscrire3[18] = produit[10];
-							#pragma endregion
+#pragma endregion
 							}
 
+#pragma region Prix par 1
+							TITRE title;
+							string titre = "";
+							title.constructeur(produit[0], reponse, tag);
+							titre = title.getTitre();
+							tag = title.getTag();
 
-							/***** Si diamètre nominal == M10 (3/8") */
-							if (diamNom == 10) {
+							TexteATranscrire1[1] = "\"" + titre + "\"";
+							TexteATranscrire1[2] = body(produit[2], produit[0], reponse, tag);
 
-							}
+							calcul = new CALCUL_POIDS(produit[0], 'a', reponse, rlg, 1);
+							texte = calcul->getPoids();
 
+							TexteATranscrire1[0] = produit[0];
+							TexteATranscrire1[7] = produit[0];
 
-							/***** Si diamètre nominal == M11 (7/16") */
-							if (diamNom == 11) {
+							texte = dotToComa(texte);
 
-							}
+							TexteATranscrire1[8] = texte;
 
-
-							/***** Si diamètre nominal == M12 (1/2") */
-							if (diamNom == 12) {
-
-							}
-
-
-							/***** Si diamètre nominal == M14 (9/16") */
-							if (diamNom == 14) {
-
-							}
-
-
-							/***** Si diamètre nominal == M16 (5/8") */
-							if (diamNom == 16) {
-								
-							}
-
-
-							/***** Si diamètre nominal == M18 ou M20 (11/16" ou ¸¸÷÷☺ 3/4") */
-							if (diamNom == 18 || diamNom == 20) {
-
-							}
-
-
-							/***** Si diamètre nominal == M22 (7/8") */
-							if (diamNom == 22) {
-
-							}
-
-
-							/***** Si diamètre nominal >= M24 (1") */
-							if (diamNom >= 24) {
-
-							}
-
-
-
-
+							TexteATranscrire1[12] = produit[9]; // prix 1
+							TexteATranscrire1[19] = produit[10];
+							TexteATranscrire1[16] = "";
+#pragma endregion
 
 							tag += "\"";
 							TexteATranscrire1[3] = tag;
@@ -489,44 +462,32 @@ void ouverture(PRIX prix)
 							photo = "";
 							qte = 0;
 
-							for (int j = 0; j < nbrOfHeaders; j++)
-							{
-								finish << TexteATranscrire1[j] << ";";
+							for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire1[j] << ";";
+							finish << endl;
+							
+							for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire2[j] << ";";
+							finish << endl;
+							
+							for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire3[j] << ";";
+							finish << endl;
+							
+							if (TexteATranscrire4[15] != "") {
+								for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire4[j] << ";";
 							}
 							finish << endl;
-							for (int j = 0; j < nbrOfHeaders; j++)
-							{
-								finish << TexteATranscrire2[j] << ";";
-							}
-							finish << endl;
-							for (int j = 0; j < nbrOfHeaders; j++)
-							{
-								finish << TexteATranscrire3[j] << ";";
-							}
-							finish << endl;
-							if (TexteATranscrire4[15] != "")
-							{
-								for (int j = 0; j < nbrOfHeaders; j++)
-								{
-									finish << TexteATranscrire4[j] << ";";
-								}
-								finish << endl;
-							}
-
 						}
 
-						else
-						{
+						else {
 							string texte;
-							CALCUL_POIDS calcul;
+							CALCUL_POIDS* calcul;
 							float rlg = 0;
 							if (produit[0][0] == 'R' && produit[0][1] == 'L' && produit[0][2] == 'G') {
 								rlg = produit[0][4] + produit[0][5];
 								//rlg = stof(produit[0]);
 							}
-							calcul.constructeur(produit[0], bulk, 'c', reponse, rlg);
-							bulk = calcul.getBulk();
-							texte = calcul.getPoids();
+							calcul = new CALCUL_POIDS(produit[0], bulk, 'c', reponse, rlg);
+							bulk = calcul->getBulk();
+							texte = calcul->getPoids();
 
 							TITRE title;
 							string titre = "";
@@ -554,9 +515,9 @@ void ouverture(PRIX prix)
 							TexteATranscrire1[18] = produit[10];
 
 							/*****Petite quantité, 2e section de prix et quantité****/
-							//calcul.constructeur(produit[0], bulk, 'b', reponse,rlg);
+							//calcul = new CALCUL_POIDS(produit[0], bulk, 'b', reponse,rlg);
 							//bulk = calcul.getBulk();
-							//texte = calcul.getPoids();
+							//texte = calcul->getPoids();
 
 							//TexteATranscrire2[0] = produit[0];
 							//TexteATranscrire2[6] = to_string(qte);
@@ -586,9 +547,9 @@ void ouverture(PRIX prix)
 
 
 							/***** Ancienne qte unitaire *****
-							calcul.constructeur(produit[0], bulk, 'c', reponse,rlg);
+							calcul = new CALCUL_POIDS(produit[0], bulk, 'c', reponse,rlg);
 							bulk = calcul.getBulk();
-							texte = calcul.getPoids();
+							texte = calcul->getPoids();
 
 							TexteATranscrire3[0] = produit[0];
 							TexteATranscrire3[7] = produit[0];
@@ -783,7 +744,7 @@ void devAccel() {
 	choix = 'B';
 
 	// Choix du produit
-	reponse = 1;
+	reponse = 6;
 }
 
 int main()
@@ -791,7 +752,7 @@ int main()
 	cout << "Faites un choix... " << endl << endl;
 
 	/* Activate only to accelerate development */
-	bool dev = false;
+	bool dev = true;
 
 	if (dev) {
 		devAccel();

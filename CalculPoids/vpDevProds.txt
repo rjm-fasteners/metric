@@ -18,6 +18,4 @@ VPRF-08010-D;;VPRF08;VIS PRESSION 6 PAN CREUX FF. NR. 3/4-16 * 1 GR.8 [SET SCREW
 VPSCM-20140;;VPSCM20;VIS CYL. 6 PAN CREUX SS. M20 * 2.5 * 140;;;1 – Régulier;0;;38,1289;5,3315;;;;;;2 – 0-500;0;;30,5031;;;;;;;3 – 500 a 2500;0;;21,4284;;;;;;;4 – 2500 a 5000;0;;15,2630;;;;;;;5 – 5000 a 7500;0;;11,6141;;;;;;;6 – 7500 et plus ;0;;9,7648
 
 
--		titre	"Metric Socket Head Cap Screw Yellow Zinc M8 * 1.25 "	std::string
-+		tags	"\"metric, pressure_screw, socket_head_cap_screw,zinc, zinc_plated,"	std::string
-+		tags	"\"metric, pressure_screw, socket_head_cap_screw,zinc, zinc_plated,metric_coarse,thread_size_m5_0-8,"	std::string
+

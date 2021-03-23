@@ -1,10 +1,22 @@
 #pragma once
 #include <map>
+#include "Threading.h"
+#include <string>
+#include <iostream>
+#include <sstream>
+using namespace std;
 
 class ProductsValuesInterface {
 public:
 	string products;
 	map<string, string> values;
+};
+
+class TypeTitleTagsInterface {
+public:
+	string type;
+	string title;
+	string tags;
 };
 
 COARSE_THREAD thread_coarse;
@@ -19,6 +31,15 @@ string materialsTags[10]{ "zinc, zinc_plated,","yellow_zinc,","cadium_plated,","
 char grades[4]{ '5', '8', '9', '2' };
 string gradesTitles[4]{ "Grade 5 ", "Grade 8 ", "Grade 9 ", "Grade 2 " };
 string gradesTags[4]{ "grade_5,", "grade_8,", "grade_9,", "grade_2" };
+
+static string title_thrd;
+static string title_thrdType;
+static string title_length;
+static string title_grade;
+static string title_tensStrength;
+static string title_shearStrength;
+static string title_drive;
+static string title_materialAndPlating;
 
 #pragma region Boulon
 
@@ -1048,6 +1069,7 @@ private:
 	void threading();
 	void length();
 	void grade();
+	void drive();
 };
 
 Vis::Vis() { }
@@ -1066,6 +1088,7 @@ inline Vis::Vis(string tags, string titre, string numProduit) {
 	threading();
 	length();
 	grade();
+	drive();
 
 	//this->titre += "[Bulk Size : " + to_string(bulksize) + "]";
 
@@ -1073,13 +1096,9 @@ inline Vis::Vis(string tags, string titre, string numProduit) {
 
 Vis::~Vis() { }
 
-inline string Vis::getTag() {
-	return tags;
-}
+inline string Vis::getTag() { return tags; }
 
-inline string Vis::getTitre() {
-	return titre;
-}
+inline string Vis::getTitre() { return titre; }
 
 inline void Vis::separation() {
 	stringstream ss(numProduit);
@@ -1136,6 +1155,7 @@ inline void Vis::material() {
 		if (!souschaine[2][0]) {
 			tags += materialsVpTags[matId];
 			titre += materialsVpTitles[matId];
+			title_materialAndPlating = materialsVpTitles[matId];
 		}
 	}
 	else {
@@ -1148,7 +1168,7 @@ inline void Vis::material() {
 		}
 
 		tags += materialsTags[matId];
-		titre = titre + materialsTitles[matId];
+		titre += materialsTitles[matId];
 	}
 }
 
@@ -1161,7 +1181,6 @@ inline void Vis::plating() {
 		string platingsVpTags[10]{ "zinc, zinc_plated,", "zinc, yellow_zinc, yellow_zinc_plated," };
 
 		int cpt = 0;
-
 		for (char plat : platingsVp) {
 			if (plat == '\0') break;
 			if (souschaine[2][0] == plat) {
@@ -1174,6 +1193,7 @@ inline void Vis::plating() {
 		if (platId != -1) {
 			tags += platingsVpTags[platId];
 			titre += platingsVpTitles[platId];
+			title_materialAndPlating += platingsVpTitles[platId];
 		}
 	}
 	else if(souschaine[2][0]) {
@@ -1190,6 +1210,7 @@ inline void Vis::plating() {
 }
 
 inline void Vis::threading() {
+	string t;
 	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'M' && souschaine[0][2] == 'E') {
 		tags += "unc,";
 
@@ -1218,18 +1239,33 @@ inline void Vis::threading() {
 					thread_coarse.constructeur(numProduit);
 					tags += thread_coarse.getTags();
 					titre += thread_coarse.getThread();
+
+					t = thread_coarse.getThread();
+					t.pop_back();
+					title_thrd = t;
+					title_thrdType = "UNC | Coarse";
 				break;
 
 			case 'f': // Fine
 					thread_fine.constructeur(numProduit);
 					tags += thread_fine.getTags();
 					titre += thread_fine.getThread();
+
+					t = thread_fine.getThread();
+					t.pop_back();
+					title_thrd = t;
+					title_thrdType = "? | Fine";
 				break;
 
 			case 'e': // Extra-thread_fine (FF)
 					thread_extra_fine.constructeur(numProduit);
 					tags += thread_extra_fine.getTags();
 					titre += thread_extra_fine.getThread();
+
+					t = thread_extra_fine.getThread();
+					t.pop_back();
+					title_thrd = t;
+					title_thrdType = "? | Extra-fine";
 				break;
 
 			default:
@@ -1261,27 +1297,55 @@ inline void Vis::length() {
 
 	tags += "length_" + texte + "mm,";
 	titre += "* " + texte + "mm ";
+	title_length = texte + "mm";
 }
 
 inline void Vis::grade() {
+	int idx = 0;
 	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P') {
-		// Created int l for readability sakes
-		// Retrieving last 2 chars of souschaine[0] to see if there's a grade specified
-		int l = souschaine[0].length();
-		texte = souschaine[0].substr(l - 2, l);
+		TypeTitleTagsInterface grades[3];
+		#pragma region grades
+		grades[0].type = "88";
+		grades[0].tags = "grade_8.8,";
+		grades[0].title = "Grade 8.8 ";
 
-		if (texte == "88") {
-			tags += "grade_8.8,";
-			titre += "Grade 8.8 ";
-		} 
-		else if (texte == "10") {
-			tags += "grade_10.9,";
-			titre += "Grade 10.9 ";
-		}
-		else {
-			tags += "grade_12.9,";
-			titre += "Grade 12.9 ";
-		}
+		grades[1].type = "10";
+		grades[1].tags = "grade_10.9,";
+		grades[1].title = "Grade 10.9 ";
+
+		grades[2].type = "";
+		grades[2].tags = "grade_12.9,";
+		grades[2].title = "Grade 12.9 ";
+		#pragma endregion
+
+		string strengths[3][3];
+		strengths[0][0] = "110,000 psi | Rockwell C21";
+		strengths[0][1] = "150,000 psi | Rockwell C32";
+		strengths[0][2] = "170,000 psi | Rockwell C39";
+		string s = to_string(int(110000 * 0.6));
+		s.insert(s.end() - 3, ',');
+		strengths[1][0] = s + " psi";
+		s = to_string(int(150000 * 0.6));
+		s.insert(s.end() - 3, ',');
+		strengths[1][1] = s + " psi";
+		s = to_string(int(170000 * 0.6));
+		s.insert(s.end() - 3, ',');
+		strengths[1][2] = s + " psi";
+
+		// Created int lgt for readability sakes
+		// Retrieving last 2 chars of souschaine[0] to see if there's a grade specified
+		int lgt = souschaine[0].length();
+		texte = souschaine[0].substr(lgt - 2, lgt);
+
+		if (texte == grades[0].type) idx = 0;
+		else if (texte == grades[1].type) idx = 1;
+		else idx = 2;
+
+		tags += grades[idx].tags;
+		titre += grades[idx].title;
+		title_grade = grades[idx].title;
+		title_tensStrength = strengths[0][idx];
+		title_shearStrength = strengths[1][idx];
 	}
 	else {
 		for (int i = 0; i < souschaine[0].length(); i++) {
@@ -1294,42 +1358,52 @@ inline void Vis::grade() {
 			}
 		}
 	}
+}
 
-	if (souschaine[2][0] == 'S') {
-		tags += "slotted,";
-		titre += "[Slotted Drive] ";
+inline void Vis::drive() {
+	int idx = 0;
+	TypeTitleTagsInterface drives[6];
+	#pragma region drives
+	drives[0].type = "S";
+	drives[0].tags = "slotted,";
+	drives[0].title = "[Slotted Drive] ";
+
+	drives[1].type = "T";
+	drives[1].tags = "torx_pin,";
+	drives[1].title = "[Torx Pin] ";
+
+	drives[2].type = "A";
+	drives[2].tags = "allen_key,";
+	drives[2].title = "[Allen Key] ";
+
+	drives[3].type = "C";
+	drives[3].tags = "square,";
+	drives[3].title = "[Square Drive] ";
+
+	drives[4].type = "Q";
+	drives[4].tags = "quadrex,";
+	drives[4].title = "[Quadrex Drive] ";
+
+	drives[5].type = "DEFAULT";
+	drives[5].tags = "phillips,";
+	drives[5].title = "[Phillips Drive] ";
+	#pragma endregion
+
+	if (souschaine[2][0] == 'S') idx = 0;
+	else if (souschaine[2][0] == 'T') idx = 1;
+	else if (souschaine[2][0] == 'A') idx = 2;
+	else if (souschaine[2][0] == 'C' && souschaine[0] != "VPSRF") idx = 3;
+	else if (souschaine[2][0] == 'Q') idx = 4;
+	else idx = 5;
+
+	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P') {
+		if (souschaine[0] == "VPSCA") idx = 3;
+		else idx = 2;
 	}
-	else if (souschaine[2][0] == 'T') {
-		tags += "torx_pin,";
-		titre += "[Torx Pin] ";
-	}
-	else if (souschaine[2][0] == 'A') {
-		tags += "allen_pin,";
-		titre += "[Allen Pin] ";
-	}
-	else if (souschaine[2][0] == 'C' && souschaine[0] != "VPSRF") {
-		tags += "square,";
-		titre += "[Square Drive] ";
-	}
-	else if (souschaine[2][0] == 'Q') {
-		tags += "quadrex,";
-		titre += "[Quadrex Drive] ";
-	}
-	else if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P')
-	{
-		if (souschaine[0] == "VPSCA") {
-			tags += "square,";
-			titre += "[Square Drive] ";
-		}
-		else {
-			tags += "allen,";
-			titre += "[Allen Drive] ";
-		}
-	}
-	else {
-		tags += "philips,";
-		titre += "[Philips Drive] ";
-	}
+
+	tags += drives[idx].tags;
+	titre += drives[idx].title;
+	title_drive = (drives[idx].title.erase(0, 1).erase(drives[idx].title.size() - 2));
 }
 
 #pragma endregion
@@ -1711,46 +1785,45 @@ inline void TITRE::produit()
 	Tige_Filte tige;
 	Vis* screw;
 
-	switch (reponse)
-	{
-	case 1:
-		bolt.constructeur(tags, titre, numProduit);
-		tags = bolt.getTag();
-		titre = bolt.getTitre();
-		break;
+	switch (reponse) {
+		case 1:
+			bolt.constructeur(tags, titre, numProduit);
+			tags = bolt.getTag();
+			titre = bolt.getTitre();
+			break;
 
-	case 2:
-		nut.constructeur(tags, titre, numProduit);
-		tags = nut.getTag();
-		titre = nut.getTitre();
-		break;
+		case 2:
+			nut.constructeur(tags, titre, numProduit);
+			tags = nut.getTag();
+			titre = nut.getTitre();
+			break;
 
-	case 3:
-		washer.constructeur(tags, titre, numProduit);
-		tags = washer.getTag();
-		titre = washer.getTitre();
-		break;
+		case 3:
+			washer.constructeur(tags, titre, numProduit);
+			tags = washer.getTag();
+			titre = washer.getTitre();
+			break;
 
-	// PLUS D'EQUERRE POUR L'INSTANT
-	/*
-	case 4:
-		equerre.constructeur(tags, titre, numProduit);
-		tags = equerre.getTag();
-		titre = equerre.getTitre();
-		break;
-	*/
+		// PLUS D'EQUERRE POUR L'INSTANT
+		/*
+		case 4:
+			equerre.constructeur(tags, titre, numProduit);
+			tags = equerre.getTag();
+			titre = equerre.getTitre();
+			break;
+		*/
 
-	case 5:
-		tige.constructeur(tags, titre, numProduit);
-		tags = tige.getTag();
-		titre = tige.getTitre();
-		break;
+		case 5:
+			tige.constructeur(tags, titre, numProduit);
+			tags = tige.getTag();
+			titre = tige.getTitre();
+			break;
 
-	case 6:
-		screw = new Vis(tags, titre, numProduit);
-		tags = screw->getTag();
-		titre = screw->getTitre();
-		break;
+		case 6:
+			screw = new Vis(tags, titre, numProduit);
+			tags = screw->getTag();
+			titre = screw->getTitre();
+			break;
 	}
 	
 }
