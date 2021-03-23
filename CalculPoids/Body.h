@@ -9,7 +9,6 @@ string souschaine[3];
 
 #include "PrdSpecsAndTitle.h"
 
-
 string TabLenght[410]
 {
 	"001", "002", "003", "004", "005", "006", "007", "008", "009", "010",
@@ -3197,11 +3196,7 @@ string bodyWasher(string categorie, string numProduit, string tag) {
 }
 
 string bodyScrew(string categorie, string numProduit, string tag) {
-	bool trouver = false;
 	int i = 0;
-	string texte;
-	string longeur = "";
-	string driveStyle = "";
 
 	/*
 	string description[1000]{
@@ -3553,90 +3548,40 @@ string bodyScrew(string categorie, string numProduit, string tag) {
 #pragma endregion
 	};
 
-	//i = TabCategorie(6, categorie);
-
-	string	headType, headProfile, headDiameter, headHeight,										// Head
-			driveSize,																				// Drive
-			thrdDirection, thrdSize, thrdType, thrdFit, minThrdLength, threading,					// Thread
-			length, strengthGrade, tensileStrength, shearStrength, materialAndPlating, specsMet;	// General
-
-	int diamNom = stoi(title_thrd.substr(1, title_thrd.find(' ')));
-
-	headType = "Socket";
-	headProfile = "Standard";
-	headDiameter = to_string(diamNom * 1.5);
-	headHeight = to_string(diamNom) + "mm";
-	driveStyle = title_drive;
-	driveSize = "0";
-	thrdDirection = "Right Hand";
-	thrdSize = title_thrd + "mm";
-	thrdType = title_thrdType;
-	thrdFit = "Class 5g6g";
-	minThrdLength = to_string(2 * diamNom + 12) + "mm";
-	threading = souschaine[0].find('T') != string::npos ? "Fully Threaded" : "Partially Threaded";
-	length = title_length;
-	strengthGrade = title_grade;
-	tensileStrength = title_tensStrength;
-	shearStrength = title_shearStrength;
-	materialAndPlating = title_materialAndPlating;
-
-	if (diamNom == 48)		{ driveSize = "36"; }
-	else if (diamNom == 42) { driveSize = "32"; }
-	else if (diamNom == 36) { driveSize = "27"; }
-	else if (diamNom == 33) { driveSize = "24"; }
-	else if (diamNom == 30) { driveSize = "22"; }
-	else if (diamNom == 27) { driveSize = "19"; }
-	else if (diamNom == 24) { driveSize = "19"; }
-	else if (diamNom == 22) { driveSize = "17"; }
-	else if (diamNom == 20) { driveSize = "17"; }
-	else if (diamNom == 18) { driveSize = "14"; }
-	else if (diamNom == 16) { driveSize = "14"; }
-	else if (diamNom == 14) { driveSize = "12"; }
-	else if (diamNom == 12) { driveSize = "10"; }
-	else if (diamNom == 10) { driveSize = "8"; headDiameter = "16"; }
-	else if (diamNom == 8)	{ driveSize = "6"; headDiameter = "13"; }
-	else if (diamNom == 7)	{ driveSize = "6"; headDiameter = "12"; }
-	else if (diamNom == 6)	{ driveSize = "5"; headDiameter = "10"; }
-	else if (diamNom == 5)	{ driveSize = "4"; headDiameter = "8.5"; }
-	else if (diamNom == 4)	{ driveSize = "3"; headDiameter = "7"; }
-	else if (diamNom == 3.5){ driveSize = "2.5"; headDiameter = "6.2"; }
-	else if (diamNom == 3)	{ driveSize = "2.5"; headDiameter = "5.5"; }
-	else if (diamNom == 2.5){ driveSize = "2"; headDiameter = "4.5"; }
-	else if (diamNom == 2)	{ driveSize = "1.5"; headDiameter	= "3.8"; }
-	else if (diamNom == 1.6){ driveSize = "1.5"; headDiameter = "3"; }
+	// i = TabCategorie(6, categorie);
 
 	string tableHTML = 
 		"<table><tbody>"
 			"<tr><td>Product Number</td><td>"  + numProduit + "</td></tr>" +
-			"<tr><td>Nominal Diameter</td><td>" + thrdSize + "</td></tr>" +
-			"<tr><td>Length</td><td>" + length + "</td></tr>" +
-			"<tr><td>Material & Plating</td><td>" + materialAndPlating + "</td></tr>" +
+			"<tr><td>Nominal Diameter</td><td>" + title_thrdSize + "</td></tr>" +
+			"<tr><td>Length</td><td>" + title_length + "</td></tr>" +
+			"<tr><td>Material & Plating</td><td>" + title_materialAndPlating + "</td></tr>" +
 			"<tr><td>System of Measurement</td><td>Metric</td></tr>" +
 			"<tr><td><u>Thread Specifications</u></td><td></td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Threading</td><td>" + threading + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Type</td><td>" + thrdType + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Direction</td><td>" + thrdDirection + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Size</td><td>" + thrdSize + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Min. Length</td><td>" + minThrdLength + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Fit</td><td>" + thrdFit + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Threading</td><td>" + title_threading + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Type</td><td>" + title_thrdType + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Direction</td><td>" + title_thrdDirection + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Size</td><td>" + title_thrdSize + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Min. Length</td><td>" + title_minThrdLength + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Fit</td><td>" + title_thrdFit + "</td></tr>" +
 			"<tr><td><u>Head Specifications</u></td><td></td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Head Type</td><td>" + headType + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Head Profile</td><td>" + headProfile + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Drive Style</td><td>" + driveStyle + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Drive Size</td><td>" + driveSize + "mm</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Diameter</td><td>" + headDiameter + "mm</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Height</td><td>" + headHeight + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Head Type</td><td>" + title_headType + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Head Profile</td><td>" + title_headProfile + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Drive Style</td><td>" + title_driveStyle + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Drive Size</td><td>" + title_driveSize + "mm</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Diameter</td><td>" + title_headDiam + "mm</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Height</td><td>" + title_headHeight + "</td></tr>" +
 			"<tr><td><u>Strength Specifications</u></td><td></td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Strength Grade/Class</td><td>" + strengthGrade + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Tensile Strength | Hardness</td><td>" + tensileStrength + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Shear Strength</td><td>" + shearStrength + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Strength Grade/Class</td><td>" + title_grade + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Tensile Strength | Hardness</td><td>" + title_tensStrength + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px;\">Shear Strength</td><td>" + title_shearStrength + "</td></tr>" +
 				"<tr><td style=\"text-indent: 25px;\">Classification</td><td>DIN 912</td></tr>" +
 		"</tbody></table>"
 
 		"<br/>"
 		
 		"<div>"
-			"<p> With a tensile strength of " + tensileStrength + "psi. Length is measured from under the head.</p>"
+			"<p> With a tensile strength of " + title_tensStrength + "psi. Length is measured from under the head.</p>"
 			"<p>" + "txtMat" + " screws are mildly corrosion resistant in dry environments.</p>"
 			"<p>Coarse threads are the industry standard: choose these screws if you don’t know the pitch or threads per inch. Screws that meet ASME B18.3, ASME B18.3M, ISO 21269, and ISO 4762 (formerly DIN 912) comply with specifications for dimensional standards. </p>"
 		"</div>";

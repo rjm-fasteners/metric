@@ -32,14 +32,27 @@ char grades[4]{ '5', '8', '9', '2' };
 string gradesTitles[4]{ "Grade 5 ", "Grade 8 ", "Grade 9 ", "Grade 2 " };
 string gradesTags[4]{ "grade_5,", "grade_8,", "grade_9,", "grade_2" };
 
-static string title_thrd;
+static string title_thrdSize;
 static string title_thrdType;
+static string title_threading;
+static string title_thrdFit;
+static string title_thrdDirection;
+static string title_minThrdLength;
 static string title_length;
 static string title_grade;
+
 static string title_tensStrength;
 static string title_shearStrength;
-static string title_drive;
+
+static string title_driveStyle;
+static string title_driveSize;
+static string title_headDiam;
+static string title_headHeight;
+static string title_headProfile;
+static string title_headType;
+
 static string title_materialAndPlating;
+static int title_diamNom;
 
 #pragma region Boulon
 
@@ -1070,6 +1083,11 @@ private:
 	void length();
 	void grade();
 	void drive();
+
+	// Section below is used for every other specifications needed by the body.h
+	void otherSpecs();
+
+	string thread;
 };
 
 Vis::Vis() { }
@@ -1089,6 +1107,7 @@ inline Vis::Vis(string tags, string titre, string numProduit) {
 	length();
 	grade();
 	drive();
+	otherSpecs();
 
 	//this->titre += "[Bulk Size : " + to_string(bulksize) + "]";
 
@@ -1123,6 +1142,9 @@ inline void Vis::produit() {
 	prods_vals[1].values["title"] = "Metric Low Head Socket Head Cap Screw ";
 	prods_vals[1].values["tags"] = "metric, pressure_screw, socket_head_cap_screw, low_head,";
 	prods_vals[1].values["thread"] = "c";
+
+	// For flexibility, to follow...
+	// if(texte.find('T'))
 
 	for (ProductsValuesInterface p_v : prods_vals) {
 		if (p_v.products.find(texte) != string::npos) {
@@ -1210,7 +1232,6 @@ inline void Vis::plating() {
 }
 
 inline void Vis::threading() {
-	string t;
 	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'M' && souschaine[0][2] == 'E') {
 		tags += "unc,";
 
@@ -1240,9 +1261,7 @@ inline void Vis::threading() {
 					tags += thread_coarse.getTags();
 					titre += thread_coarse.getThread();
 
-					t = thread_coarse.getThread();
-					t.pop_back();
-					title_thrd = t;
+					thread = thread_coarse.getThread();
 					title_thrdType = "UNC | Coarse";
 				break;
 
@@ -1251,10 +1270,8 @@ inline void Vis::threading() {
 					tags += thread_fine.getTags();
 					titre += thread_fine.getThread();
 
-					t = thread_fine.getThread();
-					t.pop_back();
-					title_thrd = t;
-					title_thrdType = "? | Fine";
+					thread = thread_fine.getThread();
+					title_thrdType = "UNF | Fine";
 				break;
 
 			case 'e': // Extra-thread_fine (FF)
@@ -1262,10 +1279,8 @@ inline void Vis::threading() {
 					tags += thread_extra_fine.getTags();
 					titre += thread_extra_fine.getThread();
 
-					t = thread_extra_fine.getThread();
-					t.pop_back();
-					title_thrd = t;
-					title_thrdType = "? | Extra-fine";
+					thread = thread_extra_fine.getThread();
+					title_thrdType = "UNEF | Extra-fine";
 				break;
 
 			default:
@@ -1343,6 +1358,7 @@ inline void Vis::grade() {
 
 		tags += grades[idx].tags;
 		titre += grades[idx].title;
+
 		title_grade = grades[idx].title;
 		title_tensStrength = strengths[0][idx];
 		title_shearStrength = strengths[1][idx];
@@ -1403,7 +1419,55 @@ inline void Vis::drive() {
 
 	tags += drives[idx].tags;
 	titre += drives[idx].title;
-	title_drive = (drives[idx].title.erase(0, 1).erase(drives[idx].title.size() - 2));
+	title_driveStyle = (drives[idx].title.erase(0, 1).erase(drives[idx].title.size() - 2));		// Removes square brackets
+}
+
+inline void Vis::otherSpecs() {
+	// Retrieves number(s) from after 'M' and until ' '(space)		# Nominal Diameter
+	title_diamNom = stoi(thread.substr(1, thread.find(' ')));
+
+	// Conditions for variables that cannot be calculated			# Drive Size, Head Diameter
+	if (title_diamNom == 48)	  { title_driveSize = "36"; }
+	else if (title_diamNom == 42) { title_driveSize = "32"; }
+	else if (title_diamNom == 36) { title_driveSize = "27"; }
+	else if (title_diamNom == 33) { title_driveSize = "24"; }
+	else if (title_diamNom == 30) { title_driveSize = "22"; }
+	else if (title_diamNom == 27) { title_driveSize = "19"; }
+	else if (title_diamNom == 24) { title_driveSize = "19"; }
+	else if (title_diamNom == 22) { title_driveSize = "17"; }
+	else if (title_diamNom == 20) { title_driveSize = "17"; }
+	else if (title_diamNom == 18) { title_driveSize = "14"; }
+	else if (title_diamNom == 16) { title_driveSize = "14"; }
+	else if (title_diamNom == 14) { title_driveSize = "12"; }
+	else if (title_diamNom == 12) { title_driveSize = "10"; }
+	else if (title_diamNom == 10) { title_driveSize = "8"; title_headDiam = "16"; }
+	else if (title_diamNom == 8)  { title_driveSize = "6"; title_headDiam = "13"; }
+	else if (title_diamNom == 7)  { title_driveSize = "6"; title_headDiam = "12"; }
+	else if (title_diamNom == 6)  { title_driveSize = "5"; title_headDiam = "10"; }
+	else if (title_diamNom == 5)  { title_driveSize = "4"; title_headDiam = "8.5"; }
+	else if (title_diamNom == 4)  { title_driveSize = "3"; title_headDiam = "7"; }
+	else if (title_diamNom == 3.5){ title_driveSize = "2.5"; title_headDiam = "6.2"; }
+	else if (title_diamNom == 3)  { title_driveSize = "2.5"; title_headDiam = "5.5"; }
+	else if (title_diamNom == 2.5){ title_driveSize = "2"; title_headDiam = "4.5"; }
+	else if (title_diamNom == 2)  { title_driveSize = "1.5"; title_headDiam = "3.8"; }
+	else if (title_diamNom == 1.6){ title_driveSize = "1.5"; title_headDiam = "3"; }
+	title_headDiam = to_string(title_diamNom * 1.5);
+	title_headHeight = to_string(title_diamNom) + "mm";
+
+	// Remove last space so the measure unit (mm) is next to the number		# Thread
+	thread.pop_back();						
+	title_thrdSize = thread = "mm";
+
+	// Minimum Thread Length can be calculated with... y = 2x + 12			# Minimum Thread Length
+	title_minThrdLength = to_string(2 * title_diamNom + 12) + "mm";
+
+	// Threading is either full or partial									# Threading
+	title_threading = souschaine[0].find('T') != string::npos ? "Fully Threaded" : "Partially Threaded";
+
+	title_thrdFit = "Class 5g6g";
+	title_thrdDirection = "Right Hand";
+	title_headProfile = "Standard";
+	title_headType = "Socket";
 }
 
 #pragma endregion
