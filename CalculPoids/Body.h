@@ -3202,6 +3202,7 @@ string bodyScrew(string categorie, string numProduit, string tag) {
 	string texte;
 	string longeur = "";
 	string driveStyle = "";
+
 	/*
 	string description[1000]{
 		#pragma region VIS - 298

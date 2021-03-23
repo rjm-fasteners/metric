@@ -357,6 +357,10 @@ void ouverture(PRIX prix)
 							/***** Si diamètre nominal <= M6 (moins que 1/4") */
 							if (diamNom <= 6) { bulkB = 100; bulkC = 1200; }
 
+							// M7 Vendu seulement à l'unité, c'est donc le seul pour lequel on ne fait pas les bulk B et C (prix 3 et 4)
+							/***** Si diamètre nominal == M7 (1/4") */
+							if (diamNom == 7) { bulkB = 0; bulkC = 0; }
+
 							/***** Si diamètre nominal == M8 ou M9 (5/16" ou 0.354") */
 							else if (diamNom == 8 || diamNom == 9) { bulkB = 100; bulkC = 1000; }
 
@@ -384,9 +388,32 @@ void ouverture(PRIX prix)
 							/***** Si diamètre nominal >= M24 (1") */
 							else if (diamNom >= 24) { bulkB = 10; bulkC = 30; }
 
-							// M7 Vendu seulement à l'unité, c'est donc le seul pour lequel on ne fait pas les bulk B et C (prix 3 et 4)
-							/***** Diamètre nominal M7 == (1/4") */
-							if (diamNom != 7) {
+#pragma region Prix par 1
+							TITRE title;
+							string titre = "";
+							title.constructeur(produit[0], reponse, tag);
+							titre = title.getTitre();
+							tag = title.getTag();
+
+							TexteATranscrire1[1] = "\"" + titre + "[Bulk Size: " + to_string(bulkC) + "]\"";
+							TexteATranscrire1[2] = body(produit[2], produit[0], reponse, tag);
+
+							calcul = new CALCUL_POIDS(produit[0], 'a', reponse, rlg, 1);
+							texte = calcul->getPoids();
+
+							TexteATranscrire1[0] = produit[0];
+							TexteATranscrire1[7] = produit[0];
+
+							texte = dotToComa(texte);
+
+							TexteATranscrire1[8] = texte;
+
+							TexteATranscrire1[12] = produit[9]; // prix 1
+							TexteATranscrire1[19] = produit[10];
+							TexteATranscrire1[16] = "";
+#pragma endregion
+
+							if (bulkB != 0 && bulkC != 0) {
 #pragma region Prix par bulkB
 								calcul = new CALCUL_POIDS(produit[0], 'b', reponse, rlg, bulkB);
 								texte = calcul->getPoids();
@@ -429,31 +456,6 @@ void ouverture(PRIX prix)
 								TexteATranscrire3[18] = produit[10];
 #pragma endregion
 							}
-
-#pragma region Prix par 1
-							TITRE title;
-							string titre = "";
-							title.constructeur(produit[0], reponse, tag);
-							titre = title.getTitre();
-							tag = title.getTag();
-
-							TexteATranscrire1[1] = "\"" + titre + "\"";
-							TexteATranscrire1[2] = body(produit[2], produit[0], reponse, tag);
-
-							calcul = new CALCUL_POIDS(produit[0], 'a', reponse, rlg, 1);
-							texte = calcul->getPoids();
-
-							TexteATranscrire1[0] = produit[0];
-							TexteATranscrire1[7] = produit[0];
-
-							texte = dotToComa(texte);
-
-							TexteATranscrire1[8] = texte;
-
-							TexteATranscrire1[12] = produit[9]; // prix 1
-							TexteATranscrire1[19] = produit[10];
-							TexteATranscrire1[16] = "";
-#pragma endregion
 
 							tag += "\"";
 							TexteATranscrire1[3] = tag;
