@@ -3,36 +3,33 @@
 #pragma region Calcul Poids
 class CALCUL_POIDS {
 public:
-	CALCUL_POIDS(string numproduit, float bulk, char type, int reponse, float rlg);
+	CALCUL_POIDS(string productNumber, int userInput_prdType, int quantity);
 	CALCUL_POIDS();
 	~CALCUL_POIDS();
 	string getPoids();
-	float getBulk();
 
 private:
 	BOULON boulon;
 	ECROU ecrou;
 	WASHER washer;
-	double poid;
-	string poids;
-	string numproduit;
+	PressureScrew* pressScrew;
+
+	double number_wgt;
+	string string_wgt;
+	string prdNbr;
 	float bulk, poidsProduit;
-	char type;
-	int reponse;
-	float rlg;
+	int prdType;
+	int qty;
 
 	void choix();
 };
 
-CALCUL_POIDS::CALCUL_POIDS(string numproduit, float bulk, char type, int reponse, float rlg) {
-	this->numproduit = numproduit;
-	this->bulk = bulk;
-	this->type = type;
-	this->reponse = reponse;
-	this->poidsProduit = poidsProduit;
-	this->rlg = rlg;
+CALCUL_POIDS::CALCUL_POIDS(string productNumber, int userInput_prdType, int quantity) {
+	this->prdNbr = productNumber;
+	this->prdType = userInput_prdType;
+	this->qty = quantity;
 
-	poid = 0;
+	number_wgt = 0;
 
 	choix();
 }
@@ -41,43 +38,29 @@ CALCUL_POIDS::CALCUL_POIDS() { }
 
 CALCUL_POIDS::~CALCUL_POIDS() { }
 
-inline string CALCUL_POIDS::getPoids() { return poids; }
-
-inline float CALCUL_POIDS::getBulk() { return bulk; }
+inline string CALCUL_POIDS::getPoids() { return string_wgt; }
 
 inline void CALCUL_POIDS::choix() {
-	if (reponse == 1 || reponse == 5 || reponse == 6) {
-		boulon.constructeur(numproduit, bulk);
+	if (prdType == 1 || prdType == 5) {
+		boulon.constructeur(prdNbr, bulk);
 		bulk = boulon.getbulk();
-		poid = boulon.getpoid();
+		number_wgt = boulon.getpoid();
 	}
-	else if (reponse == 2) {
-		ecrou.constructeur(numproduit, bulk);
+	else if (prdType == 2) {
+		ecrou.constructeur(prdNbr, bulk);
 		bulk = ecrou.getbulk();
-		poid = ecrou.getpoid();
+		number_wgt = ecrou.getpoid();
 	}
-	else if (reponse == 3) {
-		washer.constructeur(numproduit, bulk, rlg);
+	else if (prdType == 3) {
+		//washer.constructeur(numproduit, bulk, rlg);
 		bulk = washer.getbulk();
-		poid = washer.getpoid();
+		number_wgt = washer.getpoid();
 	}
-	else if (reponse == 4) poid = 0;
-
-
-	switch (type) {
-		case 'a':
-			poid = poid * bulk;
-			poids = to_string(poid);
-		break;
-
-		case 'b':
-			poid = poid * qte;
-			poids = to_string(poid);
-		break;
-
-		case 'c':
-			poids = to_string(poid);
-		break;
+	else if (prdType == 4) number_wgt = 0;
+	else if (prdType == 6) {
+		pressScrew = new PressureScrew(prdNbr, bulk);
+		bulk = pressScrew->getBulk();
+		number_wgt = pressScrew->getPoids();
 	}
 }
 #pragma endregion

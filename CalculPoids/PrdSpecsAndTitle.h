@@ -1068,7 +1068,7 @@ public:
 
 private:
 	string souschaine[3];
-	string texte;
+	string text;
 	bool trouver;
 	string titre;
 	string tags;
@@ -1096,7 +1096,7 @@ inline Vis::Vis(string tags, string titre, string numProduit) {
 	this->numProduit = numProduit;
 	this->tags = tags;
 	this->titre = titre;
-	texte = "";
+	text = "";
 	trouver = false;
 
 	separation();
@@ -1130,30 +1130,52 @@ inline void Vis::separation() {
 }
 
 inline void Vis::produit() {
-	texte = souschaine[0];
+	text = souschaine[0];
 
-	ProductsValuesInterface prods_vals[10];
-	prods_vals[0].products = "VPCM, VPCMT, VPCM88, VPCMT88, VPCM10, VPSCM";
-	prods_vals[0].values["title"] = "Metric Socket Head Cap Screw ";
-	prods_vals[0].values["tags"] = "metric, pressure_screw, socket_head_cap_screw,";
-	prods_vals[0].values["thread"] = "c";
+	//ProductsValuesInterface prods_vals[10];
+	//prods_vals[0].products = "VPCM, VPCMT, VPCM88, VPCMT88, VPCM10, VPSCM";
+	//prods_vals[0].values["title"] = "Metric Socket Head Cap Screw ";
+	//prods_vals[0].values["tags"] = "metric, pressure_screw, socket_head_cap_screw,";
+	//prods_vals[0].values["thread"] = "c";
 
-	prods_vals[1].products = "VPCMI, VPCMTI, VPCMTI88, VPCMTI10";
-	prods_vals[1].values["title"] = "Metric Low Head Socket Head Cap Screw ";
-	prods_vals[1].values["tags"] = "metric, pressure_screw, socket_head_cap_screw, low_head,";
-	prods_vals[1].values["thread"] = "c";
+	//prods_vals[1].products = "VPCMI, VPCMTI, VPCMTI88, VPCMTI10";
+	//prods_vals[1].values["title"] = "Metric Low Head Socket Head Cap Screw ";
+	//prods_vals[1].values["tags"] = "metric, pressure_screw, socket_head_cap_screw, low_head,";
+	//prods_vals[1].values["thread"] = "c";
 
-	// For flexibility, to follow...
-	// if(texte.find('T'))
+	titre = "Metric Socket Head Cap Screw ";
+	tags = "metric, pressure_screw, socket_head_cap_screw,";
+	fineThread = 'c';
 
-	for (ProductsValuesInterface p_v : prods_vals) {
-		if (p_v.products.find(texte) != string::npos) {
-			titre += p_v.values["title"];
-			tags += p_v.values["tags"];
-			fineThread = p_v.values["thread"][0];
-			break;
-		}
+	if (text.find('I') != string::npos) {
+		title_headProfile = "Low";
+		titre += "Low Head "; 
+		tags += "low_head,";
+	} 
+	else title_headProfile = "Standard";
+
+	if (text.find('T') != string::npos) {
+		titre += "Full Thread ";
+		tags += "full_thread,";
 	}
+
+	if (text.find('F') != string::npos) {
+		fineThread = 'f';
+	}
+	else if (text.find('FF') != string::npos) {
+		fineThread = 'e';
+	}
+
+	title_thrdDirection = text.find('H') != string::npos ? "Left Hand" : "Right Hand";
+
+	//for (ProductsValuesInterface p_v : prods_vals) {
+	//	if (p_v.products.find(text) != string::npos) {
+	//		titre += p_v.values["title"];
+	//		tags += p_v.values["tags"];
+	//		fineThread = p_v.values["thread"][0];
+	//		break;
+	//	}
+	//}
 }
 
 inline void Vis::material() {
@@ -1298,21 +1320,21 @@ inline void Vis::threading() {
 }
 
 inline void Vis::length() {
-	texte = "";
+	text = "";
 	for (int j = 2; j < souschaine[1].length(); j++)
-		texte += souschaine[1][j];
+		text += souschaine[1][j];
 
 	if (souschaine[1][0] == '0' && souschaine[1][1] == '0') {
-		if (texte[0] != '0' && texte[0] != '1')
-			texte[0] = '0';
+		if (text[0] != '0' && text[0] != '1')
+			text[0] = '0';
 	}
 
-	if(texte.front() == '0')
-		texte.erase(0, 1);
+	if(text.front() == '0')
+		text.erase(0, 1);
 
-	tags += "length_" + texte + "mm,";
-	titre += "* " + texte + "mm ";
-	title_length = texte + "mm";
+	tags += "length_" + text + "mm,";
+	titre += "* " + text + "mm ";
+	title_length = text + "mm";
 }
 
 inline void Vis::grade() {
@@ -1350,10 +1372,10 @@ inline void Vis::grade() {
 		// Created int lgt for readability sakes
 		// Retrieving last 2 chars of souschaine[0] to see if there's a grade specified
 		int lgt = souschaine[0].length();
-		texte = souschaine[0].substr(lgt - 2, lgt);
+		text = souschaine[0].substr(lgt - 2, lgt);
 
-		if (texte == grades[0].type) idx = 0;
-		else if (texte == grades[1].type) idx = 1;
+		if (text == grades[0].type) idx = 0;
+		else if (text == grades[1].type) idx = 1;
 		else idx = 2;
 
 		tags += grades[idx].tags;
@@ -1426,6 +1448,12 @@ inline void Vis::otherSpecs() {
 	// Retrieves number(s) from after 'M' and until ' '(space)		# Nominal Diameter
 	title_diamNom = stoi(thread.substr(1, thread.find(' ')));
 
+	// Head Diameter equals 1.5 times the nominal diameter			# Head Diameter
+	title_headDiam = to_string(int(title_diamNom * 1.5));
+
+	// Head Height is same as nominal diameter						# Head Height
+	title_headHeight = to_string(title_diamNom) + "mm";
+
 	// Conditions for variables that cannot be calculated			# Drive Size, Head Diameter
 	if (title_diamNom == 48)	  { title_driveSize = "36"; }
 	else if (title_diamNom == 42) { title_driveSize = "32"; }
@@ -1451,12 +1479,12 @@ inline void Vis::otherSpecs() {
 	else if (title_diamNom == 2.5){ title_driveSize = "2"; title_headDiam = "4.5"; }
 	else if (title_diamNom == 2)  { title_driveSize = "1.5"; title_headDiam = "3.8"; }
 	else if (title_diamNom == 1.6){ title_driveSize = "1.5"; title_headDiam = "3"; }
-	title_headDiam = to_string(title_diamNom * 1.5);
-	title_headHeight = to_string(title_diamNom) + "mm";
+	title_driveSize += "mm";
+	title_headDiam += "mm";
 
 	// Remove last space so the measure unit (mm) is next to the number		# Thread
-	thread.pop_back();						
-	title_thrdSize = thread = "mm";
+	thread.pop_back();		
+	title_thrdSize = thread + "mm";
 
 	// Minimum Thread Length can be calculated with... y = 2x + 12			# Minimum Thread Length
 	title_minThrdLength = to_string(2 * title_diamNom + 12) + "mm";
@@ -1464,9 +1492,8 @@ inline void Vis::otherSpecs() {
 	// Threading is either full or partial									# Threading
 	title_threading = souschaine[0].find('T') != string::npos ? "Fully Threaded" : "Partially Threaded";
 
+	// Those will be constant
 	title_thrdFit = "Class 5g6g";
-	title_thrdDirection = "Right Hand";
-	title_headProfile = "Standard";
 	title_headType = "Socket";
 }
 

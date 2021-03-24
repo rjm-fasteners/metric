@@ -34,9 +34,9 @@ string photo;
 string photo2;					// yet optional
 string photo3;					// yet optional
 string photo4;					// yet optional
-int reponse;
+int userInput_prdType;
 float bulk;						// to be removed
-char choix;
+char userInput_action;
 
 /*****Fonction qui change la virgule pour un point*****/
 string comaToDot(std::string prix) {
@@ -98,7 +98,7 @@ string _ratio(float prix1, float dernierCoutant, int reponse) {
 
 void ouverture(PRIX prix)
 {
-	if (toupper(choix) == 'D') int i = TabCategorie(100, "");
+	if (toupper(userInput_action) == 'D') int i = TabCategorie(100, "");
 	else {
 		string FILENAME = "produit.txt"; 
 		fstream Product;
@@ -136,7 +136,7 @@ void ouverture(PRIX prix)
 					string produitCategorie[25];
 					string calculatedRatio = "";
 
-					if (toupper(choix) == 'A' || toupper(choix) == 'B' || toupper(choix) == 'E')
+					if (toupper(userInput_action) == 'A' || toupper(userInput_action) == 'B' || toupper(userInput_action) == 'E')
 					{
 						for (int i = 0; i < 60; i++)
 						{
@@ -171,7 +171,7 @@ void ouverture(PRIX prix)
 					}
 
 					/*************** Valide si le prix 4 est inférieure à 50% ***************/
-					if (toupper(choix) == 'A')
+					if (toupper(userInput_action) == 'A')
 					{
 						if (prix4 < dernierCoutant * 1.99)
 						{
@@ -181,7 +181,7 @@ void ouverture(PRIX prix)
 					}
 
 					/***************** Validation de présence de catégorie ******************/
-					else if (toupper(choix) == 'C')
+					else if (toupper(userInput_action) == 'C')
 					{
 						int categoryFound = 0;
 						categoryFound = TabCategorie(20, produitCategorie[0]);
@@ -245,7 +245,7 @@ void ouverture(PRIX prix)
 							bulk = 0;
 						}
 						else */
-							if (reponse == 9)
+							if (userInput_prdType == 9)
 						{
 
 							string texte;
@@ -260,13 +260,13 @@ void ouverture(PRIX prix)
 							TITRE title;
 							string titre = "";
 							TexteATranscrire1[0] = produit[0];
-							title.constructeur(produit[0], reponse, tag);
+							title.constructeur(produit[0], userInput_prdType, tag);
 							titre = title.getTitre();
 							tag = title.getTag();
 							TexteATranscrire1[6] = "50";
 							bulk = 200;
 							TexteATranscrire1[1] = "\"" + titre + "\"";
-							TexteATranscrire1[2] = body(produit[2], produit[0], reponse, tag);
+							TexteATranscrire1[2] = body(produit[2], produit[0], userInput_prdType, tag);
 							TexteATranscrire1[7] = produit[0];
 
 							texte = dotToComa(texte);
@@ -327,16 +327,16 @@ void ouverture(PRIX prix)
 							finish << endl;
 						}
 						// LISTING PRODUCTS IF REPONSE == 10
-						else if (reponse == 10)
+						else if (userInput_prdType == 10)
 						{
 							// String variable isn't useful (creating a new string just for that wouldn't be good idea)
 							TexteATranscrire1[2] = body("0", "0", 0, "0");
 						}
 
 						/* Boulon, Ecrou, Rondelle, Vis pression */
-						else if (reponse == 1 || reponse == 2 || reponse == 3 || (reponse == 6 && produit[0][1] == 'P'))
+						else if (userInput_prdType == 1 || userInput_prdType == 2 || userInput_prdType == 3 || (userInput_prdType == 6 && produit[0][1] == 'P'))
 						{
-							calculatedRatio = _ratio(prix1, dernierCoutant, reponse);
+							calculatedRatio = _ratio(prix1, dernierCoutant, userInput_prdType);
 							cout << produit[0] << calculatedRatio << endl;
 
 							string texte = produit[4];
@@ -351,54 +351,58 @@ void ouverture(PRIX prix)
 							int diamNom = ((souschaine[1][0] - 48) * 10) + ((souschaine[1][1] - 48));
 
 							// Instead of awful code repetition, making variables to make the code flexible
-							// bulkA is considered as the unity option
-							int bulkB = 0, bulkC = 0;
+							// qtyOpt is considered as the unity option
+							int qtyOptSmall = 0, qtyOptMedium = 0, qtyOptBulk = 0;
 
-							/***** Si diamètre nominal <= M6 (moins que 1/4") */
-							if (diamNom <= 6) { bulkB = 100; bulkC = 1200; }
+							/****** Unité,	Petit,	Moyen,	Bulk ********/
+							/*		x1,		x25,	x100,	x1500
+									#1,		#3,		#4,		#5			*/
+							/***** Si diamètre nominal < M6 (moins que 1/4") */
+							if (diamNom < 6) { qtyOptSmall = 25; qtyOptMedium = 100; qtyOptBulk = 1500; }
 
-							// M7 Vendu seulement à l'unité, c'est donc le seul pour lequel on ne fait pas les bulk B et C (prix 3 et 4)
-							/***** Si diamètre nominal == M7 (1/4") */
-							if (diamNom == 7) { bulkB = 0; bulkC = 0; }
+							/*		x1,		x10,	x50,	Bulk
+									#1,		#3,		#4,		#5			*/
+							/***** Si diamètre nominal == M6 || M8 || M10 (1/4" || 5/16" || 3/8") */
+							if (diamNom == 6 || diamNom == 8 || diamNom == 10) { qtyOptSmall = 10; qtyOptMedium = 50; }
 
-							/***** Si diamètre nominal == M8 ou M9 (5/16" ou 0.354") */
-							else if (diamNom == 8 || diamNom == 9) { bulkB = 100; bulkC = 1000; }
+							/*		x1,		x5,		x25,	Bulk
+									#2,		#3,		#4,		#5			*/
+							/***** Si diamètre nominal == M12 || M14 || M16 (1/2" || 9/16" || 5/8") */
+							if (diamNom == 12 || diamNom == 14 || diamNom == 16) { qtyOptSmall = 5; qtyOptMedium = 25; }
 
-							/***** Si diamètre nominal == M10 (3/8") */
-							else if (diamNom == 10) { bulkB = 100; bulkC = 500; }
+							/*		x1,		N/A,	x5,		Bulk
+									#3,		N/A,	#4,		#5			*/
+							/***** Si diamètre nominal >= M18 && <= M24 (11/16" à 1") */
+							if (diamNom >= 18 && diamNom <= 24 ) { qtyOptMedium = 5; }
 
-							/***** Si diamètre nominal == M11 (7/16") */
-							else if (diamNom == 11) { bulkB = 50; bulkC = 350; }
+							/*		x1,		N/A,	N/A,	Bulk
+									#4,		N/A,	N/A,	#5			*/
+							/***** Si diamètre nominal >= M27 && <= M42 (1"+1/16" à 1"+10/16") */
+							if (diamNom >= 27 && diamNom <= 42) {  }
 
-							/***** Si diamètre nominal == M12 (1/2") */
-							else if (diamNom == 12) { bulkB = 50; bulkC = 250; }
+							/*		x1,		N/A,	N/A,	N/A
+									#4,		N/A,	N/A,	N/A			*/
+							/***** Si diamètre nominal > M42 (plus grand que 1"+5/8") */
+							if (diamNom > 42) {  }
 
-							/***** Si diamètre nominal == M14 (9/16") */
-							else if (diamNom == 14) { bulkB = 25; bulkC = 200; }
+							/*		x1,		N/A,	N/A,	N/A
+									#1,		N/A,	N/A,	N/A			*/
+							// M7, M9 ET M11 VENDUS SEULEMENT À L'UNITÉ
+							/***** Si diamètre nominal == M7 ou M9 ou M11 (0.276" ou 0.354" ou 0.433") */
+							else if (diamNom == 7 || diamNom == 9 || diamNom == 11) {  }
 
-							/***** Si diamètre nominal == M16 (5/8") */
-							else if (diamNom == 16) { bulkB = 25; bulkC = 150; }
-
-							/***** Si diamètre nominal == M18 ou M20 (11/16" ou 3/4") */
-							else if (diamNom == 18 || diamNom == 20) { bulkB = 25; bulkC = 100; }
-
-							/***** Si diamètre nominal == M22 (7/8") */
-							else if (diamNom == 22) { bulkB = 25; bulkC = 75; }
-
-							/***** Si diamètre nominal >= M24 (1") */
-							else if (diamNom >= 24) { bulkB = 10; bulkC = 30; }
 
 #pragma region Prix par 1
 							TITRE title;
 							string titre = "";
-							title.constructeur(produit[0], reponse, tag);
+							title.constructeur(produit[0], userInput_prdType, tag);
 							titre = title.getTitre();
 							tag = title.getTag();
 
-							TexteATranscrire1[1] = "\"" + titre + "[Bulk Size: " + to_string(bulkC) + "]\"";
-							TexteATranscrire1[2] = body(produit[2], produit[0], reponse, tag);
+							TexteATranscrire1[1] = "\"" + titre + "[Bulk Size: " + to_string(qtyOptMedium) + "]\"";
+							TexteATranscrire1[2] = body(produit[2], produit[0], userInput_prdType, tag);
 
-							calcul = new CALCUL_POIDS(produit[0], 'a', reponse, rlg, 1);
+							calcul = new CALCUL_POIDS(produit[0], userInput_prdType, 1);
 							texte = calcul->getPoids();
 
 							TexteATranscrire1[0] = produit[0];
@@ -413,20 +417,20 @@ void ouverture(PRIX prix)
 							TexteATranscrire1[16] = "";
 #pragma endregion
 
-							if (bulkB != 0 && bulkC != 0) {
-#pragma region Prix par bulkB
-								calcul = new CALCUL_POIDS(produit[0], 'b', reponse, rlg, bulkB);
+							if (qtyOptSmall != 0 && qtyOptMedium != 0) {
+#pragma region Prix par qtyOptB
+								calcul = new CALCUL_POIDS(produit[0], userInput_prdType, qtyOptSmall);
 								texte = calcul->getPoids();
 
 								TexteATranscrire2[0] = produit[0];
-								TexteATranscrire2[6] = to_string(bulkB);
+								TexteATranscrire2[6] = to_string(qtyOptSmall);
 								TexteATranscrire2[7] = produit[0];
 
 								texte = dotToComa(texte);
 
 								TexteATranscrire2[8] = texte;
 
-								prix.constructeur(produit[29], 'b', bulkB); //prix 3
+								prix.constructeur(produit[29], 'b', qtyOptSmall); //prix 3
 								texte = prix.getPrice();
 								texte = dotToComa(texte);
 
@@ -434,19 +438,19 @@ void ouverture(PRIX prix)
 								TexteATranscrire2[18] = produit[10];
 #pragma endregion
 
-#pragma region Prix par bulkC
-								calcul = new CALCUL_POIDS(produit[0], 'b', reponse, rlg, bulkC);
-								texte = calcul->getPoids();
+#pragma region Prix par bulk
+								texte = (new CALCUL_POIDS(produit[0], userInput_prdType, 0000))->getPoids();
+								//texte = calcul->getPoids();
 
 								TexteATranscrire3[0] = produit[0];
-								TexteATranscrire3[6] = "Bulk [" + to_string(bulkC) + "]";
+								TexteATranscrire3[6] = "Bulk [" + to_string(qtyOptMedium) + "]";
 								TexteATranscrire3[7] = produit[0];
 
 								texte = dotToComa(texte);
 
 								TexteATranscrire3[8] = texte;
 
-								prix.constructeur(produit[39], 'b', bulkC); //prix 4
+								prix.constructeur(produit[39], 'b', qtyOptMedium); //prix 4
 								texte = prix.getPrice();
 								texte = dotToComa(texte);
 
@@ -487,26 +491,25 @@ void ouverture(PRIX prix)
 								rlg = produit[0][4] + produit[0][5];
 								//rlg = stof(produit[0]);
 							}
-							calcul = new CALCUL_POIDS(produit[0], bulk, 'c', reponse, rlg);
-							bulk = calcul->getBulk();
+							calcul = new CALCUL_POIDS(produit[0], userInput_prdType, 1);
 							texte = calcul->getPoids();
 
 							TITRE title;
 							string titre = "";
 							TexteATranscrire1[0] = produit[0];
-							title.constructeur(produit[0], reponse, tag);
+							title.constructeur(produit[0], userInput_prdType, tag);
 							titre = title.getTitre();
 							tag = title.getTag();
 
 							TexteATranscrire1[1] = "\"" + titre + "\"";
-							TexteATranscrire1[2] = body(produit[2], produit[0], reponse, tag);
+							TexteATranscrire1[2] = body(produit[2], produit[0], userInput_prdType, tag);
 							TexteATranscrire1[7] = produit[0];
 
 							texte = dotToComa(texte);
 
 							TexteATranscrire1[8] = texte;
 
-							prix.constructeur(produit[39], 'c', bulk);
+							prix.constructeur(produit[39], 'c', 1);
 
 							texte = prix.getPrice();
 							texte = dotToComa(texte);
@@ -618,7 +621,7 @@ void ouverture(PRIX prix)
 				}
 
 				/* TRIAGE TECH DRAWS */
-				if (toupper(choix) == 'E') {
+				if (toupper(userInput_action) == 'E') {
 					/* Le triage va supprimer les fichiers .step pour lesquels aucun produit n'existe */
 					#pragma region Triage pour les dessins techniques
 						string filename[5000] = { "" };
@@ -743,10 +746,10 @@ void ouverture(PRIX prix)
 
 void devAccel() {
 	// Choix de l'action
-	choix = 'B';
+	userInput_action = 'B';
 
 	// Choix du produit
-	reponse = 6;
+	userInput_prdType = 6;
 }
 
 int main()
@@ -762,19 +765,19 @@ int main()
 	else {
 		do {
 			cout << "A) Calcul de ratio inferieur a 50% \nB) Importation \nC) Validation de categorie \nD) Listing des categories \nE) Importation et triage des dessins techniques \nChoix : ";
-			cin >> choix;
+			cin >> userInput_action;
 			cout << endl;
-		} while (toupper(choix) != 'A' && toupper(choix) != 'B' && toupper(choix) != 'C' && toupper(choix) != 'D' && toupper(choix) != 'E');
+		} while (toupper(userInput_action) != 'A' && toupper(userInput_action) != 'B' && toupper(userInput_action) != 'C' && toupper(userInput_action) != 'D' && toupper(userInput_action) != 'E');
 
-		if (toupper(choix) == 'B' || toupper(choix) == 'E') {
+		if (toupper(userInput_action) == 'B' || toupper(userInput_action) == 'E') {
 			do {
 				cout << "	1 - Boulon \n	2 - Ecrou \n	3 - Rondelle \n	4 - Equerre(NOT WORKING) \n	5 - Tige \n	6 - Vis \n	22 - Liste des produits	\n";
-				cin >> reponse;
-			} while (reponse < 1 || (reponse > 6 && reponse != 22));
+				cin >> userInput_prdType;
+			} while (userInput_prdType < 1 || (userInput_prdType > 6 && userInput_prdType != 22));
 		}
 
 		/// TODO NEED TO COMPLETE THE PATH
-		if (toupper(choix) == 'E')
+		if (toupper(userInput_action) == 'E')
 		{
 			cout << "** FACULTATIF | BETA **" << endl;
 			cout << "Veuillez entrer le nom du dossier contenant les dessins techniques a trier : ";
@@ -782,7 +785,7 @@ int main()
 		}
 
 		/// TODO NEED TO COMPLETE THE PATH (reponse=100 isnt used anywhere else...)
-		if (toupper(choix) == 'D') reponse = 100;
+		if (toupper(userInput_action) == 'D') userInput_prdType = 100;
 	}
 
 
