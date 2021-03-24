@@ -829,24 +829,24 @@ inline void WASHER::Length()
 #pragma endregion
 
 
-#pragma region Boulon
-class PressureScrew {
+#pragma region Pressure Screw
+class PRESSURE_SCREW {
 public:
-	PressureScrew(string numProduit, float bulk);
-	PressureScrew();
-	~PressureScrew();
-	double getPoids();
+	PRESSURE_SCREW(string numProduit, float bulk);
+	PRESSURE_SCREW();
+	~PRESSURE_SCREW();
+	double getWgt();
 	float getBulk();
 
 private:
 	string souschaine[2];
 	string text;
-	string numProduit;
+	string prdNbr;
 	double headDiam;
 	double headHgt;
 	double diamNom;
 	double bodyLgt;
-	double poids;
+	double weight;
 
 	// VARS FOR CALCUL
 	double RHO;
@@ -856,13 +856,14 @@ private:
 
 	float bulk;
 	void separation();
-	void calcul();
+	void calculBulk();
+	void calculWgt();
 };
 
-PressureScrew::PressureScrew(string numProduit, float bulk) {
-	this->numProduit = numProduit;
+PRESSURE_SCREW::PRESSURE_SCREW(string productNumber, float bulk) {
+	this->prdNbr = productNumber;
 	this->bulk = bulk;
-	poids = 0;
+	weight = 0;
 	text = "";
 
 	// VARS FOR CALCUL
@@ -871,31 +872,40 @@ PressureScrew::PressureScrew(string numProduit, float bulk) {
 	diamNom = title_diamNom;
 	bodyLgt = stod(title_length);
 	RHO = 7.8;		// kg/m³
-	
 
 	separation();
-	calcul();
+	calculBulk();
 }
 
-PressureScrew::PressureScrew() { }
+PRESSURE_SCREW::PRESSURE_SCREW() { }
 
-PressureScrew::~PressureScrew() { }
+PRESSURE_SCREW::~PRESSURE_SCREW() { }
 
-inline double PressureScrew::getPoids() { return poids; }
+inline double PRESSURE_SCREW::getWgt() { return weight; }
 
-inline float PressureScrew::getBulk() { return bulk; }
+inline float PRESSURE_SCREW::getBulk() { return bulk; }
 
-inline void PressureScrew::calcul() {
+inline void PRESSURE_SCREW::calculBulk() {
 	VT = ((M_PI * pow(headDiam, 2)) / 4) * headHgt;
 	VC = ((M_PI * pow(diamNom, 2)) / 4) * bodyLgt;
 	VTOT = (VT + VC) / 1000000;
 
-	poids = VTOT * RHO;
-	bulk = 5 / poids;
+	weight = VTOT * RHO;
+	if (bulk) weight *= bulk;
+	bulk = 18 / weight; // Arrondir à la dizaine
 }
 
-inline void PressureScrew::separation() {
-	stringstream ss(numProduit);
+inline void PRESSURE_SCREW::calculWgt() {
+	VT = ((M_PI * pow(headDiam, 2)) / 4) * headHgt;
+	VC = ((M_PI * pow(diamNom, 2)) / 4) * bodyLgt;
+	VTOT = (VT + VC) / 1000000;
+
+	weight = VTOT * RHO;
+	bulk = 18 / weight;
+}
+
+inline void PRESSURE_SCREW::separation() {
+	stringstream ss(prdNbr);
 	for (int j = 0; j < 2; j++) getline(ss, souschaine[j], '-');
 	
 	for (int j = 2; j < souschaine[1].length(); j++) text += souschaine[1][j];

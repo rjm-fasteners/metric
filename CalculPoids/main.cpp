@@ -19,15 +19,13 @@
 #include <fstream>
 #include <iostream>
 #include <filesystem>
+using namespace std;
 
 namespace fs = std::filesystem;
 string directoryName = "";
 string startProduct = "";
 string endProduct = "";
-
 using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
-
-using namespace std;
 
 string tag = "\"";
 string photo;
@@ -35,19 +33,18 @@ string photo2;					// yet optional
 string photo3;					// yet optional
 string photo4;					// yet optional
 int userInput_prdType;
-float bulk;						// to be removed
 char userInput_action;
 
 /*****Fonction qui change la virgule pour un point*****/
-string comaToDot(std::string prix) {
-	std::replace(prix.begin(), prix.end(), ',', '.');
-	return prix;
+string comaToDot(string val) {
+	replace(val.begin(), val.end(), ',', '.');
+	return val;
 }
 
 /*****Fonction qui change le point pour une virgule*****/
-string dotToComa(std::string text) {
-	std::replace(text.begin(), text.end(), '.', ',');
-	return text;
+string dotToComa(string val) {
+	replace(val.begin(), val.end(), '.', ',');
+	return val;
 }
 
 /*****Fonction qui change la virgule pour un point et convertie la string en float*****/
@@ -96,7 +93,7 @@ string _ratio(float prix1, float dernierCoutant, int reponse) {
 }
 
 
-void ouverture(PRIX prix)
+void ouverture()
 {
 	if (toupper(userInput_action) == 'D') int i = TabCategorie(100, "");
 	else {
@@ -146,53 +143,34 @@ void ouverture(PRIX prix)
 					}
 					/***************Si recherche de catégorie (option C) est sélectionnée on rempli une autre variable car il n'y a pas le même nombre de valeurs***************/
 					else
-					{
-						for (int i = 0; i < 24; i++)
-						{
-							getline(Product, produitCategorie[i], ';');
-							//cout << i << " : " << produit[i] << endl;
-						}
-					}
-
+						for (int i = 0; i < 24; i++) getline(Product, produitCategorie[i], ';');
+						
 					float prix1 = toFloat(produit[9]);
 					float prix4 = toFloat(produit[39]);
 					float dernierCoutant = toFloat(produit[10]);
 
 					/*******Valide si prix à zéro******/
-					if (produit[39] == "0,0000" || produit[39] == "0.0000")
-					{
-						cout << "-----Pas de prix pour ce produit!-----> ";
-					}
+					if (produit[39] == "0,0000" || produit[39] == "0.0000") cout << "-----Pas de prix pour ce produit!-----> ";
 
 					/******Validation que le ratio est de 85.75% à 86%******/
-					if (prix1 < dernierCoutant * 7.05)
-					{
-						cout << "-----Ratio inferieur a 86%-----> ";
-					}
+					if (prix1 < dernierCoutant * 7.05) cout << "-----Ratio inferieur a 86%-----> ";
 
 					/*************** Valide si le prix 4 est inférieure à 50% ***************/
-					if (toupper(userInput_action) == 'A')
-					{
-						if (prix4 < dernierCoutant * 1.99)
-						{
+					if (toupper(userInput_action) == 'A') {
+						if (prix4 < dernierCoutant * 1.99) {
 							cout << m << " : " << produit[0] << " Prix 4 INFERIEUR a 50%" << endl;
 							m++;
 						}
 					}
 
 					/***************** Validation de présence de catégorie ******************/
-					else if (toupper(userInput_action) == 'C')
-					{
+					else if (toupper(userInput_action) == 'C') {
 						int categoryFound = 0;
 						categoryFound = TabCategorie(20, produitCategorie[0]);
-						if (categoryFound == 1)
-						{
-							cout << "Categorie " << produitCategorie[0] << " est PRESENTE" << endl;
-						}
-						else
-						{
-							cout << "Categorie " << produitCategorie[0] << " MANQUANTE **********" << endl;
-						}
+
+						if (categoryFound == 1) cout << "Categorie " << produitCategorie[0] << " est PRESENTE" << endl;
+						else cout << "Categorie " << produitCategorie[0] << " MANQUANTE **********" << endl;
+						
 					}
 
 					/****************** Importation sélection B implicite *******************/
@@ -248,83 +226,83 @@ void ouverture(PRIX prix)
 							if (userInput_prdType == 9)
 						{
 
-							string texte;
+							//string texte;
 
-							texte = produit[4];
-							float poids = stof(texte);
-							poids = poids * 50;
-							stringstream ss;
-							ss << poids;
-							texte = ss.str();
+							//texte = produit[4];
+							//float poids = stof(texte);
+							//poids = poids * 50;
+							//stringstream ss;
+							//ss << poids;
+							//texte = ss.str();
 
-							TITRE title;
-							string titre = "";
-							TexteATranscrire1[0] = produit[0];
-							title.constructeur(produit[0], userInput_prdType, tag);
-							titre = title.getTitre();
-							tag = title.getTag();
-							TexteATranscrire1[6] = "50";
-							bulk = 200;
-							TexteATranscrire1[1] = "\"" + titre + "\"";
-							TexteATranscrire1[2] = body(produit[2], produit[0], userInput_prdType, tag);
-							TexteATranscrire1[7] = produit[0];
+							//TITRE title;
+							//string titre = "";
+							//TexteATranscrire1[0] = produit[0];
+							//title.constructeur(produit[0], userInput_prdType, tag);
+							//titre = title.getTitre();
+							//tag = title.getTag();
+							//TexteATranscrire1[6] = "50";
+							//qty = 200;
+							//TexteATranscrire1[1] = "\"" + titre + "\"";
+							//TexteATranscrire1[2] = body(produit[2], produit[0], userInput_prdType, tag);
+							//TexteATranscrire1[7] = produit[0];
 
-							texte = dotToComa(texte);
+							//texte = dotToComa(texte);
 
-							TexteATranscrire1[8] = texte;
+							//TexteATranscrire1[8] = texte;
 
-							prix.constructeur(produit[39], 'b', bulk);
+							//prix.constructeur(produit[39], 'b', qty);
 
-							texte = prix.getPrice();
+							//texte = prix.getPrice();
 
-							texte = dotToComa(texte);
+							//texte = dotToComa(texte);
 
-							TexteATranscrire1[12] = texte;
+							//TexteATranscrire1[12] = texte;
 
-							TexteATranscrire1[15] = photo;
-							TexteATranscrire1[18] = produit[10];
-
-
-							texte = produit[4];
-
-							TexteATranscrire1[0] = produit[0];
-							TexteATranscrire1[7] = produit[0];
-
-							poids = stof(texte);
-
-							if (poids < 1)
-							{
-								poids = 1;
-								stringstream ss1;
-								ss1 << poids;
-								texte = ss1.str();
-							}
-
-							comaToDot(texte);
-
-							TexteATranscrire1[8] = texte;
-
-							TexteATranscrire1[12] = produit[9];
-							TexteATranscrire1[18] = produit[10];
+							//TexteATranscrire1[15] = photo;
+							//TexteATranscrire1[18] = produit[10];
 
 
-							tag += "\"";
-							TexteATranscrire1[3] = tag;
+							//texte = produit[4];
 
-							tag = "\"";
-							photo = "";
-							qte = 0;
-							bulk = 0;
-							for (int j = 0; j < 19; j++)
-							{
-								finish << TexteATranscrire1[j] << ";";
-							}
-							finish << endl;
-							for (int j = 0; j < 19; j++)
-							{
-								finish << TexteATranscrire1[j] << ";";
-							}
-							finish << endl;
+							//TexteATranscrire1[0] = produit[0];
+							//TexteATranscrire1[7] = produit[0];
+
+							//poids = stof(texte);
+
+							//if (poids < 1)
+							//{
+							//	poids = 1;
+							//	stringstream ss1;
+							//	ss1 << poids;
+							//	texte = ss1.str();
+							//}
+
+							//comaToDot(texte);
+
+							//TexteATranscrire1[8] = texte;
+
+							//TexteATranscrire1[12] = produit[9];
+							//TexteATranscrire1[18] = produit[10];
+
+
+							//tag += "\"";
+							//TexteATranscrire1[3] = tag;
+
+							//tag = "\"";
+							//photo = "";
+							//qte = 0;
+							//qty = 0;
+							//for (int j = 0; j < 19; j++)
+							//{
+							//	finish << TexteATranscrire1[j] << ";";
+							//}
+							//finish << endl;
+							//for (int j = 0; j < 19; j++)
+							//{
+							//	finish << TexteATranscrire1[j] << ";";
+							//}
+							//finish << endl;
 						}
 						// LISTING PRODUCTS IF REPONSE == 10
 						else if (userInput_prdType == 10)
@@ -339,9 +317,10 @@ void ouverture(PRIX prix)
 							calculatedRatio = _ratio(prix1, dernierCoutant, userInput_prdType);
 							cout << produit[0] << calculatedRatio << endl;
 
-							string texte = produit[4];
 							CALCUL_POIDS* calcul;
-							float rlg = 0;
+							PRIX* prix;
+							string texte = produit[4];
+							float unityWgt = 0;
 
 							// Extrait les deux premiers chiffres de la deuxieme souschaine(souschaine[1]) du numéro du produit
 							// Permet de connaître le diamètre nominal et agir en fonction de celui-là pour les bulk sizes
@@ -377,19 +356,18 @@ void ouverture(PRIX prix)
 
 							/*		x1,		N/A,	N/A,	Bulk
 									#4,		N/A,	N/A,	#5			*/
-							/***** Si diamètre nominal >= M27 && <= M42 (1"+1/16" à 1"+10/16") */
+							/***** Si diamètre nominal >= M27 && <= M42 (1-1/16" à 1-10/16") */
 							if (diamNom >= 27 && diamNom <= 42) {  }
 
 							/*		x1,		N/A,	N/A,	N/A
 									#4,		N/A,	N/A,	N/A			*/
-							/***** Si diamètre nominal > M42 (plus grand que 1"+5/8") */
-							if (diamNom > 42) {  }
+							/***** Si diamètre nominal > M42 (plus grand que 1-5/8") */
+							if (diamNom > 42) { qtyOptBulk = -1; }
 
 							/*		x1,		N/A,	N/A,	N/A
 									#1,		N/A,	N/A,	N/A			*/
-							// M7, M9 ET M11 VENDUS SEULEMENT À L'UNITÉ
 							/***** Si diamètre nominal == M7 ou M9 ou M11 (0.276" ou 0.354" ou 0.433") */
-							else if (diamNom == 7 || diamNom == 9 || diamNom == 11) {  }
+							else if (diamNom == 7 || diamNom == 9 || diamNom == 11) { qtyOptBulk = -1; }
 
 
 #pragma region Prix par 1
@@ -399,47 +377,38 @@ void ouverture(PRIX prix)
 							titre = title.getTitre();
 							tag = title.getTag();
 
-							TexteATranscrire1[1] = "\"" + titre + "[Bulk Size: " + to_string(qtyOptMedium) + "]\"";
+							TexteATranscrire1[1] = "\"" + titre + "[Bulk Size: " + to_string(qtyOptBulk) + "]\"";
 							TexteATranscrire1[2] = body(produit[2], produit[0], userInput_prdType, tag);
 
 							calcul = new CALCUL_POIDS(produit[0], userInput_prdType, 1);
-							texte = calcul->getPoids();
+							unityWgt = calcul->getWgt();
 
 							TexteATranscrire1[0] = produit[0];
 							TexteATranscrire1[7] = produit[0];
-
-							texte = dotToComa(texte);
-
-							TexteATranscrire1[8] = texte;
-
+							TexteATranscrire1[8] = dotToComa(to_string(unityWgt));
 							TexteATranscrire1[12] = produit[9]; // prix 1
 							TexteATranscrire1[19] = produit[10];
 							TexteATranscrire1[16] = "";
 #pragma endregion
 
-							if (qtyOptSmall != 0 && qtyOptMedium != 0) {
-#pragma region Prix par qtyOptB
-								calcul = new CALCUL_POIDS(produit[0], userInput_prdType, qtyOptSmall);
-								texte = calcul->getPoids();
-
+							if (qtyOptSmall) {
+#pragma region Prix pour qtyOptSmall
 								TexteATranscrire2[0] = produit[0];
 								TexteATranscrire2[6] = to_string(qtyOptSmall);
 								TexteATranscrire2[7] = produit[0];
+								// Calculates the weight for the small quantity
+								TexteATranscrire2[8] = dotToComa(to_string(unityWgt * qtyOptSmall));
 
-								texte = dotToComa(texte);
+								prix = new PRIX(comaToDot(produit[29]), qtyOptSmall, "none");	//prix 3
 
-								TexteATranscrire2[8] = texte;
-
-								prix.constructeur(produit[29], 'b', qtyOptSmall); //prix 3
-								texte = prix.getPrice();
-								texte = dotToComa(texte);
-
-								TexteATranscrire2[12] = texte;
+								TexteATranscrire2[12] = dotToComa(prix->getPrice());
 								TexteATranscrire2[18] = produit[10];
 #pragma endregion
+							}
 
+							if (qtyOptBulk != -1) {
 #pragma region Prix par bulk
-								texte = (new CALCUL_POIDS(produit[0], userInput_prdType, 0000))->getPoids();
+								texte = (new CALCUL_POIDS(produit[0], userInput_prdType, 0000))->getWgt();
 								//texte = calcul->getPoids();
 
 								TexteATranscrire3[0] = produit[0];
@@ -450,8 +419,8 @@ void ouverture(PRIX prix)
 
 								TexteATranscrire3[8] = texte;
 
-								prix.constructeur(produit[39], 'b', qtyOptMedium); //prix 4
-								texte = prix.getPrice();
+								prix = new PRIX(produit[39], qtyOptMedium, "none"); //prix 4
+								texte = prix->getPrice();
 								texte = dotToComa(texte);
 
 								TexteATranscrire3[12] = texte;
@@ -466,7 +435,6 @@ void ouverture(PRIX prix)
 
 							tag = "\"";
 							photo = "";
-							qte = 0;
 
 							for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire1[j] << ";";
 							finish << endl;
@@ -486,13 +454,15 @@ void ouverture(PRIX prix)
 						else {
 							string texte;
 							CALCUL_POIDS* calcul;
+							PRIX* prix;
+
 							float rlg = 0;
 							if (produit[0][0] == 'R' && produit[0][1] == 'L' && produit[0][2] == 'G') {
 								rlg = produit[0][4] + produit[0][5];
 								//rlg = stof(produit[0]);
 							}
 							calcul = new CALCUL_POIDS(produit[0], userInput_prdType, 1);
-							texte = calcul->getPoids();
+							texte = calcul->getWgt();
 
 							TITRE title;
 							string titre = "";
@@ -509,9 +479,9 @@ void ouverture(PRIX prix)
 
 							TexteATranscrire1[8] = texte;
 
-							prix.constructeur(produit[39], 'c', 1);
+							//prix.constructeur(produit[39], 'c', 1);
 
-							texte = prix.getPrice();
+							//texte = prix.getPrice();
 							texte = dotToComa(texte);
 
 							TexteATranscrire1[12] = texte;
@@ -577,8 +547,6 @@ void ouverture(PRIX prix)
 
 							tag = "\"";
 							photo = "";
-							qte = 0;
-							bulk = 0;
 
 							if (produit[0][0] == 'E' && produit[0][1] == 'A' || ((produit[0][0] == 'T') && (produit[0][1] == 'I')))
 							{
@@ -788,13 +756,9 @@ int main()
 		if (toupper(userInput_action) == 'D') userInput_prdType = 100;
 	}
 
-
-	PRIX prix;
-
 	cout << endl << "En cours ..." << endl << endl;
-	ouverture(prix);
+	ouverture();
 
 
 	cout << "Fin" << endl;
 }
-
