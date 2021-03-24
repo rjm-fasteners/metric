@@ -108,14 +108,15 @@ void ouverture()
 		int m = 0;
 
 		string TexteATranscrire1[nbrOfHeaders]{ "","","","","","Quantity","Unity","","","shopify","continue","manual","","VRAI","VRAI","","1","FAUX","lg","" }; // si on remet les bulk changer UNITY pour BULK
-		string TexteATranscrire2[nbrOfHeaders]{ "","","","","","","","","","","continue","manual","","VRAI","VRAI","","","","lg","" }; //ligne 2 pour petite quantité
-		string TexteATranscrire3[nbrOfHeaders]{ "","","","","","Quantity","manual","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; // si on remet les bulk changer UNITY pour BULK
-		string TexteATranscrire4[nbrOfHeaders]{ "","","","","","","","","","","","","","","","","2","","","" }; //2e image
+		string TexteATranscrire2[nbrOfHeaders]{ "","","","","","","","","","","continue","manual","","VRAI","VRAI","","","","lg","" }; // Small quantity option
+		string TexteATranscrire3[nbrOfHeaders]{ "","","","","","","","","","","continue","manual","","VRAI","VRAI","","","","lg","" }; // Medium quantity option
+		string TexteATranscrire4[nbrOfHeaders]{ "","","","","","Quantity","manual","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; // si on remet les bulk changer UNITY pour BULK
+		string TexteATranscrire5[nbrOfHeaders]{ "","","","","","","","","","","","","","","","","2","","","" }; //2e image
 
-		string TexteATranscrire5[nbrOfHeaders]{ "","","","","","Color","White Painted Head [100 units]","","","shopify","continue","manual","","VRAI","VRAI","","3","FAUX","lg","" }; //au 100 variante couleur blanche
-		string TexteATranscrire6[nbrOfHeaders]{ "","","","","","Color","White Painted Head [1000 units]","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; //au 1000 variante couleur blanche
-		string TexteATranscrire7[nbrOfHeaders]{ "","","","","","Color","Black Painted Head [100 units]","","","shopify","continue","manual","","VRAI","VRAI","","4","FAUX","lg","" }; //au 100 variante couleur blanche
-		string TexteATranscrire8[nbrOfHeaders]{ "","","","","","Color","Black Painted Head [1000 units]","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; //au 1000 variante couleur blanche
+		string TexteATranscrire6[nbrOfHeaders]{ "","","","","","Color","White Painted Head [100 units]","","","shopify","continue","manual","","VRAI","VRAI","","3","FAUX","lg","" }; //au 100 variante couleur blanche
+		string TexteATranscrire7[nbrOfHeaders]{ "","","","","","Color","White Painted Head [1000 units]","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; //au 1000 variante couleur blanche
+		string TexteATranscrire8[nbrOfHeaders]{ "","","","","","Color","Black Painted Head [100 units]","","","shopify","continue","manual","","VRAI","VRAI","","4","FAUX","lg","" }; //au 100 variante couleur blanche
+		string TexteATranscrire9[nbrOfHeaders]{ "","","","","","Color","Black Painted Head [1000 units]","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; //au 1000 variante couleur blanche
 
 		if (finish.is_open())
 		{
@@ -369,24 +370,22 @@ void ouverture()
 							/***** Si diamètre nominal == M7 ou M9 ou M11 (0.276" ou 0.354" ou 0.433") */
 							else if (diamNom == 7 || diamNom == 9 || diamNom == 11) { qtyOptBulk = -1; }
 
-
 #pragma region Prix par 1
 							TITRE title;
-							string titre = "";
+
 							title.constructeur(produit[0], userInput_prdType, tag);
-							titre = title.getTitre();
+							texte = title.getTitre();
 							tag = title.getTag();
 
-							TexteATranscrire1[1] = "\"" + titre + "[Bulk Size: " + to_string(qtyOptBulk) + "]\"";
+							TexteATranscrire1[1] = "\"" + texte;		// First part of the title
 							TexteATranscrire1[2] = body(produit[2], produit[0], userInput_prdType, tag);
 
-							calcul = new CALCUL_POIDS(produit[0], userInput_prdType, 1);
-							unityWgt = calcul->getWgt();
+							unityWgt = (new CALCUL_POIDS(produit[0], userInput_prdType, 1))->getWgt();
 
 							TexteATranscrire1[0] = produit[0];
 							TexteATranscrire1[7] = produit[0];
 							TexteATranscrire1[8] = dotToComa(to_string(unityWgt));
-							TexteATranscrire1[12] = produit[9]; // prix 1
+							TexteATranscrire1[12] = produit[9];			// Prix #1
 							TexteATranscrire1[19] = produit[10];
 							TexteATranscrire1[16] = "";
 #pragma endregion
@@ -399,40 +398,52 @@ void ouverture()
 								// Calculates the weight for the small quantity
 								TexteATranscrire2[8] = dotToComa(to_string(unityWgt * qtyOptSmall));
 
-								prix = new PRIX(comaToDot(produit[29]), qtyOptSmall, "none");	//prix 3
+								prix = new PRIX(comaToDot(produit[29]), qtyOptSmall, "none");		// Prix #3
 
 								TexteATranscrire2[12] = dotToComa(prix->getPrice());
 								TexteATranscrire2[18] = produit[10];
 #pragma endregion
 							}
 
+							if (qtyOptMedium) {
+#pragma region Prix pour qtyOptMedium
+								TexteATranscrire3[0] = produit[0];
+								TexteATranscrire3[6] = to_string(qtyOptMedium);
+								TexteATranscrire3[7] = produit[0];
+								// Calculates the weight for the medium quantity
+								TexteATranscrire3[8] = dotToComa(to_string(unityWgt * qtyOptMedium));
+
+								prix = new PRIX(comaToDot(produit[39]), qtyOptMedium, "none");		// Prix #4
+
+								TexteATranscrire3[12] = dotToComa(prix->getPrice());
+								TexteATranscrire3[18] = produit[10];
+#pragma endregion
+							}
+
 							if (qtyOptBulk != -1) {
 #pragma region Prix par bulk
-								texte = (new CALCUL_POIDS(produit[0], userInput_prdType, 0000))->getWgt();
-								//texte = calcul->getPoids();
+								calcul = new CALCUL_POIDS(produit[0], userInput_prdType, 0000);
+								unityWgt = calcul->getWgt();
+								qtyOptBulk = calcul->getBulk();
 
-								TexteATranscrire3[0] = produit[0];
-								TexteATranscrire3[6] = "Bulk [" + to_string(qtyOptMedium) + "]";
-								TexteATranscrire3[7] = produit[0];
+								TexteATranscrire4[0] = produit[0];
+								TexteATranscrire4[6] = "Bulk [" + to_string(qtyOptBulk) + "]";
+								TexteATranscrire4[7] = produit[0];
+								// Calculates the weight for the bulk
+								TexteATranscrire4[8] = dotToComa(to_string(unityWgt * qtyOptBulk));
 
-								texte = dotToComa(texte);
+								TexteATranscrire1[1] += "[Bulk Size: " + to_string(qtyOptBulk) + "]\"";		// Second part of the title, including the calculated bulk size
+								prix = new PRIX(produit[49], qtyOptBulk, "none");			// Prix #5
 
-								TexteATranscrire3[8] = texte;
-
-								prix = new PRIX(produit[39], qtyOptMedium, "none"); //prix 4
-								texte = prix->getPrice();
-								texte = dotToComa(texte);
-
-								TexteATranscrire3[12] = texte;
-								TexteATranscrire3[16] = "1";
-								TexteATranscrire3[15] = photo;
-								TexteATranscrire3[18] = produit[10];
+								TexteATranscrire4[12] = dotToComa(prix->getPrice());
+								TexteATranscrire4[16] = "1";
+								TexteATranscrire4[15] = photo;
+								TexteATranscrire4[18] = produit[10];
 #pragma endregion
 							}
 
 							tag += "\"";
 							TexteATranscrire1[3] = tag;
-
 							tag = "\"";
 							photo = "";
 
@@ -441,12 +452,15 @@ void ouverture()
 							
 							for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire2[j] << ";";
 							finish << endl;
-							
+
 							for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire3[j] << ";";
 							finish << endl;
 							
-							if (TexteATranscrire4[15] != "") {
-								for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire4[j] << ";";
+							for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire4[j] << ";";
+							finish << endl;
+							
+							if (TexteATranscrire5[15] != "") {
+								for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire5[j] << ";";
 							}
 							finish << endl;
 						}

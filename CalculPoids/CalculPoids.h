@@ -7,6 +7,7 @@ public:
 	CALCUL_POIDS();
 	~CALCUL_POIDS();
 	double getWgt();
+	int getBulk();
 
 private:
 	BOULON boulon;
@@ -19,6 +20,7 @@ private:
 	string prdNbr;
 	int prdType;
 	int qty;
+	int bulk;
 
 	void choix();
 };
@@ -39,6 +41,10 @@ CALCUL_POIDS::~CALCUL_POIDS() { }
 
 inline double CALCUL_POIDS::getWgt() { return number_wgt; }
 
+// If 0 remains from modulo 10 of bulk, means it's not needed to round up.
+// Otherwise, calculate (10 - remain) and add that to the bulk so it is rounded up to nearest 10.
+inline int CALCUL_POIDS::getBulk() { return (bulk % 10 == 0) ? bulk : (bulk + (10 - (bulk % 10))); }
+
 inline void CALCUL_POIDS::choix() {
 	if (prdType == 1 || prdType == 5) {
 		boulon.constructeur(prdNbr, qty);
@@ -58,7 +64,7 @@ inline void CALCUL_POIDS::choix() {
 	else if (prdType == 4) number_wgt = 0;
 	else if (prdType == 6) {
 		pressScrew = new PRESSURE_SCREW(prdNbr, qty);
-		if(qty) qty = pressScrew->getBulk();
+		bulk = pressScrew->getBulk();
 		number_wgt = pressScrew->getWgt();
 	}
 }

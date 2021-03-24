@@ -857,7 +857,6 @@ private:
 	float bulk;
 	void separation();
 	void calculBulk();
-	void calculWgt();
 };
 
 PRESSURE_SCREW::PRESSURE_SCREW(string productNumber, float bulk) {
@@ -893,15 +892,6 @@ inline void PRESSURE_SCREW::calculBulk() {
 	weight = VTOT * RHO;
 	if (bulk) weight *= bulk;
 	bulk = 18 / weight; // Arrondir à la dizaine
-}
-
-inline void PRESSURE_SCREW::calculWgt() {
-	VT = ((M_PI * pow(headDiam, 2)) / 4) * headHgt;
-	VC = ((M_PI * pow(diamNom, 2)) / 4) * bodyLgt;
-	VTOT = (VT + VC) / 1000000;
-
-	weight = VTOT * RHO;
-	bulk = 18 / weight;
 }
 
 inline void PRESSURE_SCREW::separation() {
