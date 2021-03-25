@@ -13,7 +13,7 @@ private:
 	BOULON boulon;
 	ECROU ecrou;
 	WASHER washer;
-	PRESSURE_SCREW* pressScrew;
+	//PRESSURE_SCREW* pressScrew;
 
 	double number_wgt;
 	string string_wgt;
@@ -63,9 +63,9 @@ inline void CALCUL_POIDS::choix() {
 	}
 	else if (prdType == 4) number_wgt = 0;
 	else if (prdType == 6) {
-		pressScrew = new PRESSURE_SCREW(prdNbr, qty);
-		bulk = pressScrew->getBulk();
-		number_wgt = pressScrew->getWgt();
+		//pressScrew = new PRESSURE_SCREW(prdNbr, qty);
+		//bulk = pressScrew->getBulk();
+		//number_wgt = pressScrew->getWgt();
 	}
 }
 #pragma endregion

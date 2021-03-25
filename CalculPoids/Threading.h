@@ -1,4 +1,9 @@
 #pragma once
+#include <string>
+#include <iostream>
+#include <sstream>
+using namespace std;
+#include <map>
 
 #pragma region COARSE THREAD
 class COARSE_THREAD

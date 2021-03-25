@@ -1,19 +1,56 @@
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
 // Déboguer le programme : F5 ou menu Déboguer > Démarrer le débogage
 
+
+
+#include "Globals.h"
+
+string title_thrdSize;
+string title_thrdType;
+string title_threading;
+string title_thrdFit;
+string title_thrdDirection;
+string title_minThrdLength;
+string title_length;
+string title_grade;
+
+string title_tensStrength;
+string title_shearStrength;
+
+string title_driveStyle;
+string title_driveSize;
+string title_headDiam;
+string title_headHeight;
+string title_headProfile;
+string title_headType;
+
+string title_materialAndPlating;
+int title_diamNom;
+
+
+
+
+
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <string.h>
-#include <sstream>
 #include <math.h>
 #include <cstdlib>
 #include <algorithm>
-#include "PRIX.h"
+#include "Prix.h"
 #include "Poids.h"
 #include "Threading.h"
 #include "CalculPoids.h"
 #include "PrdSpecsAndTitle.h"
+
+
+
+#include "WeightCalculators.h"
+
+
+
 #include "Body.h"
 
 #include <fstream>
@@ -319,6 +356,7 @@ void ouverture()
 							cout << produit[0] << calculatedRatio << endl;
 
 							CALCUL_POIDS* calcul;
+							WEIGHT_CALCULATORS* wgtCalc;
 							PRIX* prix;
 							string texte = produit[4];
 							float unityWgt = 0;
@@ -380,7 +418,7 @@ void ouverture()
 							TexteATranscrire1[1] = "\"" + texte;		// First part of the title
 							TexteATranscrire1[2] = body(produit[2], produit[0], userInput_prdType, tag);
 
-							unityWgt = (new CALCUL_POIDS(produit[0], userInput_prdType, 1))->getWgt();
+							wgtCalc = (new WEIGHT_CALCULATORS(produit[0], userInput_prdType, 1));
 
 							TexteATranscrire1[0] = produit[0];
 							TexteATranscrire1[7] = produit[0];

@@ -33,9 +33,18 @@
     <ClInclude Include="PrdSpecsAndTitle.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="Globals.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="WeightCalculators.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="WeightCalculators.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

@@ -157,14 +157,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="WeightCalculators.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Body.h" />
     <ClInclude Include="CalculPoids.h" />
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="Poids.h" />
     <ClInclude Include="Prix.h" />
     <ClInclude Include="Threading.h" />
     <ClInclude Include="PrdSpecsAndTitle.h" />
+    <ClInclude Include="WeightCalculators.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

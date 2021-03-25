@@ -1,10 +1,6 @@
 #pragma once
-#include <map>
 #include "Threading.h"
-#include <string>
-#include <iostream>
-#include <sstream>
-using namespace std;
+#include "Globals.h"
 
 class ProductsValuesInterface {
 public:
@@ -32,27 +28,6 @@ char grades[4]{ '5', '8', '9', '2' };
 string gradesTitles[4]{ "Grade 5 ", "Grade 8 ", "Grade 9 ", "Grade 2 " };
 string gradesTags[4]{ "grade_5,", "grade_8,", "grade_9,", "grade_2" };
 
-static string title_thrdSize;
-static string title_thrdType;
-static string title_threading;
-static string title_thrdFit;
-static string title_thrdDirection;
-static string title_minThrdLength;
-static string title_length;
-static string title_grade;
-
-static string title_tensStrength;
-static string title_shearStrength;
-
-static string title_driveStyle;
-static string title_driveSize;
-static string title_headDiam;
-static string title_headHeight;
-static string title_headProfile;
-static string title_headType;
-
-static string title_materialAndPlating;
-static int title_diamNom;
 
 #pragma region Boulon
 

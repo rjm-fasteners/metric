@@ -1,6 +1,5 @@
 #pragma once
 #include "PrdSpecsAndTitle.h"
-# define M_PI           3.14159265358979323846  /* pi */
 
 #pragma region Boulon
 
@@ -828,81 +827,3 @@ inline void WASHER::Length()
 }
 #pragma endregion
 
-
-#pragma region Pressure Screw
-class PRESSURE_SCREW {
-public:
-	PRESSURE_SCREW(string numProduit, float bulk);
-	PRESSURE_SCREW();
-	~PRESSURE_SCREW();
-	double getWgt();
-	float getBulk();
-
-private:
-	string souschaine[2];
-	string text;
-	string prdNbr;
-	double headDiam;
-	double headHgt;
-	double diamNom;
-	double bodyLgt;
-	double weight;
-
-	// VARS FOR CALCUL
-	double RHO;
-	double VT;			// Volume tête
-	double VC;			// Volume corps
-	double VTOT;		// Volume total
-
-	float bulk;
-	void separation();
-	void calculBulk();
-};
-
-PRESSURE_SCREW::PRESSURE_SCREW(string productNumber, float bulk) {
-	this->prdNbr = productNumber;
-	this->bulk = bulk;
-	weight = 0;
-	text = "";
-
-	// VARS FOR CALCUL
-	headDiam = stod(title_headDiam);
-	headHgt = stod(title_headHeight);
-	diamNom = title_diamNom;
-	bodyLgt = stod(title_length);
-	RHO = 7.8;		// kg/m³
-
-	separation();
-	calculBulk();
-}
-
-PRESSURE_SCREW::PRESSURE_SCREW() { }
-
-PRESSURE_SCREW::~PRESSURE_SCREW() { }
-
-inline double PRESSURE_SCREW::getWgt() { return weight; }
-
-inline float PRESSURE_SCREW::getBulk() { return bulk; }
-
-inline void PRESSURE_SCREW::calculBulk() {
-	VT = ((M_PI * pow(headDiam, 2)) / 4) * headHgt;
-	VC = ((M_PI * pow(diamNom, 2)) / 4) * bodyLgt;
-	VTOT = (VT + VC) / 1000000;
-
-	weight = VTOT * RHO;
-	if (bulk) weight *= bulk;
-	bulk = 18 / weight; // Arrondir à la dizaine
-}
-
-inline void PRESSURE_SCREW::separation() {
-	stringstream ss(prdNbr);
-	for (int j = 0; j < 2; j++) getline(ss, souschaine[j], '-');
-	
-	for (int j = 2; j < souschaine[1].length(); j++) text += souschaine[1][j];
-	
-	if (souschaine[1][1] == '0') {
-		if (text[0] != '0' && text[0] != '1' && text[0] != '2')
-			text[0] = '0';
-	}
-}
-#pragma endregion
