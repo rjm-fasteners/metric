@@ -2,7 +2,7 @@
 // Déboguer le programme : F5 ou menu Déboguer > Démarrer le débogage
 
 #include "Globals.h"
-#include "Prix.h"
+#include "PriceCalculators.h"
 #include "Threading.h"
 #include "PrdSpecsAndTitle.h"
 #include "WeightCalculators.h"
@@ -330,7 +330,7 @@ void ouverture()
 
 							//CALCUL_POIDS* calcul;
 							WEIGHT_CALCULATORS* wgtCalc;
-							PRIX* prix;
+							PRICE_CALCULATORS* prix;
 							string texte = produit[4];
 							float unityWgt = 0;
 
@@ -412,7 +412,7 @@ void ouverture()
 								// Calculates the weight for the small quantity
 								TexteATranscrire2[8] = dotToComa(to_string(unityWgt * qtyOptSmall));
 
-								prix = new PRIX(comaToDot(produit[29]), qtyOptSmall, "none");		// Prix #3
+								prix = new PRICE_CALCULATORS(comaToDot(produit[29]), qtyOptSmall, "none");		// Prix #3
 
 								TexteATranscrire2[12] = dotToComa(prix->getPrice());
 								TexteATranscrire2[18] = produit[10];
@@ -427,7 +427,7 @@ void ouverture()
 								// Calculates the weight for the medium quantity
 								TexteATranscrire3[8] = dotToComa(to_string(unityWgt * qtyOptMedium));
 
-								prix = new PRIX(comaToDot(produit[39]), qtyOptMedium, "none");		// Prix #4
+								prix = new PRICE_CALCULATORS(comaToDot(produit[39]), qtyOptMedium, "none");		// Prix #4
 
 								TexteATranscrire3[12] = dotToComa(prix->getPrice());
 								TexteATranscrire3[18] = produit[10];
@@ -447,7 +447,7 @@ void ouverture()
 								TexteATranscrire4[8] = dotToComa(to_string(unityWgt * qtyOptBulk));
 
 								TexteATranscrire1[1] += "[Bulk Size: " + to_string(qtyOptBulk) + "]\"";		// Second part of the title, including the calculated bulk size
-								prix = new PRIX(produit[49], qtyOptBulk, "none");				// Prix #5
+								prix = new PRICE_CALCULATORS(produit[49], qtyOptBulk, "none");				// Prix #5
 
 								TexteATranscrire4[12] = dotToComa(prix->getPrice());
 								TexteATranscrire4[16] = "1";
@@ -482,7 +482,7 @@ void ouverture()
 						else {
 							string texte;
 							//CALCUL_POIDS* calcul;
-							PRIX* prix;
+							PRICE_CALCULATORS* prix;
 
 							float rlg = 0;
 							if (produit[0][0] == 'R' && produit[0][1] == 'L' && produit[0][2] == 'G') {

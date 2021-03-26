@@ -157,6 +157,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PriceCalculators.cpp" />
     <ClCompile Include="WeightCalculators.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,7 +165,7 @@
     <ClInclude Include="toRemove_CalculPoids.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="toRemove_Poids.h" />
-    <ClInclude Include="Prix.h" />
+    <ClInclude Include="PriceCalculators.h" />
     <ClInclude Include="Threading.h" />
     <ClInclude Include="PrdSpecsAndTitle.h" />
     <ClInclude Include="WeightCalculators.h" />

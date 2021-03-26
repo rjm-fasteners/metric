@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Prix.h">
+    <ClInclude Include="PriceCalculators.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="toRemove_Poids.h">
@@ -45,6 +45,9 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="WeightCalculators.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="PriceCalculators.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

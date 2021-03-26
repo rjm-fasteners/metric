@@ -1,6 +1,6 @@
 #pragma once
-#include "WeightCalculators.h"
 #include "Globals.h"
+#include "WeightCalculators.h"
 
 WEIGHT_CALCULATORS::WEIGHT_CALCULATORS(int userInput_prdType, int quantity) {
 	this->prdType = userInput_prdType;
