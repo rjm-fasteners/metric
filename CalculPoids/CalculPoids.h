@@ -1,206 +1,71 @@
 #pragma once
 
 #pragma region Calcul Poids
-class CALCUL_POIDS
-{
+class CALCUL_POIDS {
 public:
+	CALCUL_POIDS(string productNumber, int userInput_prdType, int quantity);
 	CALCUL_POIDS();
 	~CALCUL_POIDS();
-	void constructeur(string numproduit, float bulk, char type, int reponse, float rlg);
-	string getPoids();
-	float getBulk();
+	double getWgt();
+	int getBulk();
 
 private:
 	BOULON boulon;
 	ECROU ecrou;
 	WASHER washer;
-	double poid;
-	string poids;
-	string numproduit;
-	float bulk, poidsProduit;
-	char type;
-	int reponse;
-	float rlg;
+	//PRESSURE_SCREW* pressScrew;
+
+	double number_wgt;
+	string string_wgt;
+	string prdNbr;
+	int prdType;
+	int qty;
+	int bulk;
 
 	void choix();
 };
 
-CALCUL_POIDS::CALCUL_POIDS()
-{
-}
+CALCUL_POIDS::CALCUL_POIDS(string productNumber, int userInput_prdType, int quantity) {
+	this->prdNbr = productNumber;
+	this->prdType = userInput_prdType;
+	this->qty = quantity;
 
-CALCUL_POIDS::~CALCUL_POIDS()
-{
-}
-
-inline void CALCUL_POIDS::constructeur(string numproduit, float bulk, char type, int reponse, float rlg)
-{
-	this->numproduit = numproduit;
-	this->bulk = bulk;
-	this->type = type;
-	this->reponse = reponse;
-	this->poidsProduit = poidsProduit;
-	this->rlg = rlg;
-
-	poid = 0;
+	number_wgt = 0;
 
 	choix();
 }
 
-inline string CALCUL_POIDS::getPoids()
-{
-	return poids;
-}
+CALCUL_POIDS::CALCUL_POIDS() { }
 
-inline float CALCUL_POIDS::getBulk()
-{
-	return bulk;
-}
+CALCUL_POIDS::~CALCUL_POIDS() { }
 
-inline void CALCUL_POIDS::choix()
-{
-	switch (reponse)
-	{
-	case 1:
-		boulon.constructeur(numproduit, bulk);
-		bulk = boulon.getbulk();
-		poid = boulon.getpoid();
-		switch (type)
-		{
-		case 'a':
-			poid = poid * bulk;
-			poids = to_string(poid);
-			break;
-		case 'b':
-			poid = poid * qte;
-			poids = to_string(poid);
-			break;
-		case 'c':
-			poids = to_string(poid);
-			break;
-		}
-		break;
+inline double CALCUL_POIDS::getWgt() { return number_wgt; }
 
-	case 2:
-		ecrou.constructeur(numproduit, bulk);
-		bulk = ecrou.getbulk();
-		poid = ecrou.getpoid();
-		switch (type)
-		{
-		case 'a':
-			poid = poid * bulk;
-			poids = to_string(poid);
-			break;
-		case 'b':
-			poid = poid * qte;
-			poids = to_string(poid);
-			break;
-		case 'c':
-			poids = to_string(poid);
-			break;
-		}
-		break;
+// If 0 remains from modulo 10 of bulk, means it's not needed to round up.
+// Otherwise, calculate (10 - remain) and add that to the bulk so it is rounded up to nearest 10.
+inline int CALCUL_POIDS::getBulk() { return (bulk % 10 == 0) ? bulk : (bulk + (10 - (bulk % 10))); }
 
-	case 3:
-		washer.constructeur(numproduit, bulk, rlg);
-		bulk = washer.getbulk();
-		poid = washer.getpoid();
-		switch (type)
-		{
-		case 'a':
-			poid = poid * bulk;
-			poids = to_string(poid);
-			break;
-		case 'b':
-			poid = poid * qte;
-			poids = to_string(poid);
-			break;
-		case 'c':
-			poids = to_string(poid);
-			break;
-		}
-		break;
-
-	case 4:
-		poid = 0;
-		switch (type)
-		{
-		case 'a':
-			poid = poid * bulk;
-			poids = to_string(poid);
-			break;
-		case 'b':
-			poid = poid * qte;
-			poids = to_string(poid);
-			break;
-		case 'c':
-			poids = to_string(poid);
-			break;
-		}
-		break;
-
-	case 5:
-		boulon.constructeur(numproduit, bulk);
-		bulk = boulon.getbulk();
-		poid = boulon.getpoid();
-		switch (type)
-		{
-		case 'a':
-			poid = poid * bulk;
-			poids = to_string(poid);
-			break;
-		case 'b':
-			poid = poid * qte;
-			poids = to_string(poid);
-			break;
-		case 'c':
-			poids = to_string(poid);
-			break;
-		}
-		break;
-
-	case 6:
-		boulon.constructeur(numproduit, bulk);
-		bulk = boulon.getbulk();
-		poid = boulon.getpoid();
-		switch (type)
-		{
-		case 'a':
-			poid = poid * bulk;
-			poids = to_string(poid);
-			break;
-		case 'b':
-			poid = poid * qte;
-			poids = to_string(poid);
-			break;
-		case 'c':
-			poids = to_string(poid);
-			break;
-		}
-		break;
-
-	case 7:
-		break;
-	case 8:
-		boulon.constructeur(numproduit, bulk);
-		bulk = boulon.getbulk();
-		poid = boulon.getpoid();
-		switch (type)
-		{
-		case 'a':
-			poid = poid * bulk;
-			poids = to_string(poid);
-			break;
-		case 'b':
-			poid = poid * qte;
-			poids = to_string(poid);
-			break;
-		case 'c':
-			poids = to_string(poid);
-			break;
-		}
-		break;
-
-	};
+inline void CALCUL_POIDS::choix() {
+	if (prdType == 1 || prdType == 5) {
+		boulon.constructeur(prdNbr, qty);
+		qty = boulon.getbulk();
+		number_wgt = boulon.getpoid();
+	}
+	else if (prdType == 2) {
+		ecrou.constructeur(prdNbr, qty);
+		qty = ecrou.getbulk();
+		number_wgt = ecrou.getpoid();
+	}
+	else if (prdType == 3) {
+		//washer.constructeur(numproduit, bulk, rlg);
+		qty = washer.getbulk();
+		number_wgt = washer.getpoid();
+	}
+	else if (prdType == 4) number_wgt = 0;
+	else if (prdType == 6) {
+		//pressScrew = new PRESSURE_SCREW(prdNbr, qty);
+		//bulk = pressScrew->getBulk();
+		//number_wgt = pressScrew->getWgt();
+	}
 }
 #pragma endregion

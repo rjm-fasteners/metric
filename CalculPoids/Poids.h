@@ -1,5 +1,5 @@
 #pragma once
-
+#include "PrdSpecsAndTitle.h"
 
 #pragma region Boulon
 
@@ -232,64 +232,34 @@ inline void BOULON::calcul()
 	double A = (B * 2) * 2.54;
 	double V_TB = 2.5981 * (A * A) * (height[j] * 2.54);
 	double V_CB;
-	if (souschaine[0][0] == 'T' && souschaine[0][1] == 'I')
-	{
-		V_CB = 3.1416 * ((diametre[j] * 2.54) / 2) * ((diametre[j] * 2.54) / 2) * (tigefiltertexte[i] * 2.54);
-
+	if (souschaine[0][0] == 'T' && souschaine[0][1] == 'I') {
+		V_CB = 3.1415926535 * ((diametre[j] * 2.54) / 2) * ((diametre[j] * 2.54) / 2) * (tigefiltertexte[i] * 2.54);
 	}
-	else
-	{
-		V_CB = 3.1416 * ((diametre[j] * 2.54) / 2) * ((diametre[j] * 2.54) / 2) * (length[i] * 2.54);
-
+	else {
+		V_CB = 3.1415926535 * ((diametre[j] * 2.54) / 2) * ((diametre[j] * 2.54) / 2) * (length[i] * 2.54);
 	}
+
 	double V_T = V_CB + V_TB;
-	if (souschaine[0][0] == 'V')
-	{
-		if (souschaine[0][1] == 'P')
-		{
-			poid = 7.0 * V_T;
+	if (souschaine[0][0] == 'V') {
+		if (souschaine[0][1] == 'P') poid = 7.0 * V_T;
+		else if (souschaine[0][1] == 'M') {
+			if (souschaine[0][2] == 'E') poid = 6.25 * V_T;
+			else poid = 6.5 * V_T;
 		}
-		else if (souschaine[0][1] == 'M')
-		{
-			if (souschaine[0][2] == 'E')
-			{
-				poid = 6.25 * V_T;
-			}
-			else
-			{
-				poid = 6.5 * V_T;
-			}
-		}
-		else
-		{
-			poid = 6.00 * V_T;
-		}
+		else poid = 6.00 * V_T;
 	}
-	else if (souschaine[0][0] == 'T' && souschaine[0][1] == 'F')
-	{
+	else if (souschaine[0][0] == 'T' && souschaine[0][1] == 'F') {
 		poid = 6.55 * V_T;
 	}
-	else
-	{
-		poid = 8.0 * V_T;
-	}
+	else poid = 8.0 * V_T;
 
-	if (poid < 0.5)
-	{
-		poid = 0.51;
-	}
-
+	if (poid < 0.5) poid = 0.51;
+	
 	bulk = 20000 / poid;
 
-	if (bulk > 20)
-	{
-		bulk = round(bulk / 10) * 10;
-	}
-
-	if (bulk > 2500)
-	{
-		bulk = 2500;
-	}
+	if (bulk > 20) bulk = round(bulk / 10) * 10;
+	
+	if (bulk > 2500) bulk = 2500;
 }
 
 inline void BOULON::threading()
@@ -856,3 +826,4 @@ inline void WASHER::Length()
 	texte = "";
 }
 #pragma endregion
+

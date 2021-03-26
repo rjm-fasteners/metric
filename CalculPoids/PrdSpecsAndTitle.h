@@ -1,8 +1,33 @@
 #pragma once
-// LOOK OUT FOR COPIES OF ITEMS (Same prods many times)
+#include "Threading.h"
+#include "Globals.h"
 
-// ALL NON-METRIC PRODUCTS REMOVED
-// NEED TO ADD NEW PRODUCTS
+class ProductsValuesInterface {
+public:
+	string products;
+	map<string, string> values;
+};
+
+class TypeTitleTagsInterface {
+public:
+	string type;
+	string title;
+	string tags;
+};
+
+COARSE_THREAD thread_coarse;
+FINE_THREAD thread_fine;
+EXTRA_FINE_THREAD thread_extra_fine;
+EXTRA_FINE_THREAD thread_extra_extra_fine;
+
+char materials[10]{ '5', '8', '9', 'S', 'N', '3', 'G', 'B' };
+string materialsTitles[10]{ "Zinc Plated ","Yellow Zinc ", "Cadium Plated ","Stainless Steel ","Black-Oxide Alloy Steel ","316 Stainless Steel ","Galvanized ","Brass " };
+string materialsTags[10]{ "zinc, zinc_plated,","yellow_zinc,","cadium_plated,","stainless_steel,304-stainless-steel,","black_oxyde_alloy_steel,","stainless_steel,316-stainless-steel,","galvanized,","brass," };
+
+char grades[4]{ '5', '8', '9', '2' };
+string gradesTitles[4]{ "Grade 5 ", "Grade 8 ", "Grade 9 ", "Grade 2 " };
+string gradesTags[4]{ "grade_5,", "grade_8,", "grade_9,", "grade_2" };
+
 
 #pragma region Boulon
 
@@ -12,7 +37,7 @@ public:
 	Boulon();
 	~Boulon();
 
-	void constructeur(string tag, string titre, string numProduit, float bulk);
+	void constructeur(string tags, string titre, string numProduit);
 	string getTag();
 	string getTitre();
 
@@ -21,8 +46,8 @@ private:
 	string texte;
 	bool trouver;
 	string titre;
-	string tag;
-	char finethread;
+	string tags;
+	char fineThread;
 	string numProduit;
 
 	void separation();
@@ -41,10 +66,10 @@ Boulon::~Boulon()
 {
 }
 
-inline void Boulon::constructeur(string tag, string titre, string numProduit, float bulk)
+inline void Boulon::constructeur(string tags, string titre, string numProduit)
 {
 	this->numProduit = numProduit;
-	this->tag = tag;
+	this->tags = tags;
 	this->titre = titre;
 	texte = "";
 	trouver = false;
@@ -56,14 +81,13 @@ inline void Boulon::constructeur(string tag, string titre, string numProduit, fl
 	length();
 	grade();
 
-	int bulksize = bulk;
-	this->titre += " [Bulk Size : " + to_string(bulksize) + "]";
+	//this->titre += " [Bulk Size : " + to_string(bulksize) + "]";
 
 }
 
 inline string Boulon::getTag()
 {
-	return tag;
+	return tags;
 }
 
 inline string Boulon::getTitre()
@@ -84,9 +108,11 @@ inline void Boulon::separation()
 
 inline void Boulon::produit()
 {
-	string TabProduit[900]
+	// TabProduit VERIFIED ON 03-15		|TODOs|
+	string TabProduit[100]
 	{
-		// Non desired products removed
+		/// TODO ADD MISSING CATS (Found in body but not here)
+		// BMCT, BMCST3, BMCS3, BMEN, BMFN, BMN, BMTFF8N, BMT8N, BMFF8N
 		"BM",		"BM8",		"BMTE8",	"BM9N",		"BMC", 
 		"BMCS",		"BM8N",		"BMTFF",	"0",		"BMTF",	
 		"BMFFE",	"BMTF8N",	"BMT8",		"BMTEFF8",  "BMTFFE", 
@@ -98,7 +124,7 @@ inline void Boulon::produit()
 		"BMST3",
 	};
 
-	string TabProduitTitre[900]
+	string TabProduitTitre[100]
 	{
 		"Metric Hexagonal Bolt ",										"Metric Hexagonal Bolt ",						"Metric Flanged Hexagonal Bolt Full Thread ",		"Metric Hexagonal Bolt ",									"Metric Carriage Bolt ", 
 		"Metric Carriage Bolt ",										"Metric Hexagonal Bolt ",						"Metric Hexagonal Bolt Extra Fine & Full Thread ",	"0 ",														"Metric Hexagonal Bolt Fine & Full Thread ", 
@@ -111,7 +137,7 @@ inline void Boulon::produit()
 		"Metric Hexagonal Bolt Full Thread ",
 	};
 
-	string TabTAgProduit[900]
+	string TabTAgProduit[100]
 	{
 		"bolt,hex,metric,partially_threaded,",							"bolt,hex,metric,partially_threaded,",			"bolt,hex,metric,fully_threaded,",					"bolt,hex,metric,partially_threaded,",						"bolt,carriage, metric,fully_threaded,", 
 		"bolt,carriage,metric,fully_threaded,",							"bolt,hex,metric,partially_threaded,",			"bolt,hex,metric,fully_threaded,",					"0,",														"bolt,hex,metric,fully_threaded,",
@@ -124,7 +150,7 @@ inline void Boulon::produit()
 		"bolt,hex,metric,fully_threaded,", 
 	};
 
-	char TabFineTread[900]
+	char TabFineTread[100]
 	{
 		'c',	'c',	'c',	'c',	'c',
 		'c',	'c',	'e',	'0',	'f',
@@ -155,22 +181,18 @@ inline void Boulon::produit()
 		}
 	}
 	titre = titre + TabProduitTitre[i];
-	tag += TabTAgProduit[i];
-	finethread = TabFineTread[i];
+	tags += TabTAgProduit[i];
+	fineThread = TabFineTread[i];
 }
 
 inline void Boulon::material()
 {
 	int k = 0;
-	char TabMaterial[10]{ '5','8','9','S','N', 'Y','3','G' };
-	string TabMaterialTitre[10]{ "Zinc ","Yellow Zinc ", "Cadium Plated ","Stainless Steel ","Black Steel ", "White Nylon ","316 Stainless Steel ","Galvanized ","Brass " };
-	string TabTagMaterial[10]{ "zinc,","yellow_zinc,","cadium_plated,","stainless_steel,304-stainless-steel,","steel,","nylon,","stainless_steel,316-stainless-steel,","galvanized,","brass," };
-
 	for (int i = 0; i < souschaine[0].length(); i++)
 	{
 		for (int j = 0; j < 10; j++)
 		{
-			if (souschaine[0][i] == TabMaterial[j])
+			if (souschaine[0][i] == materials[j])
 			{
 				k = j;
 			}
@@ -195,46 +217,41 @@ inline void Boulon::material()
 		k = 4;
 	}
 
-	tag += TabTagMaterial[k];
-	titre = titre + TabMaterialTitre[k];
+	tags += materialsTags[k];
+	titre = titre + materialsTitles[k];
 }
 
 inline void Boulon::threading()
-{
+{	
+	switch (fineThread) {
+		case 'c': //thread_coarse
+				thread_coarse.constructeur(numProduit);
+				tags = thread_coarse.getTags();
+				titre = titre + thread_coarse.getThread();
+			break;
 
-	COARSE_THREAD Metric_coarse;
-	FINE_THREAD Metric_fine;
-	EXTRA_FINE_THREAD Metric_extra_fine;
-	EXTRA_FINE_THREAD Metric_extra_extra_fine;
-	
-	switch (finethread)
-	{
+		case 'f': //thread_fine
+				thread_fine.constructeur(numProduit);
+				tags = thread_fine.getTags();
+				titre = titre + thread_fine.getThread();
+			break;
 
-		case 'c': //coarse
-			Metric_coarse.constructeur(numProduit, tag);
-			tag = Metric_coarse.getTag();
-			titre = titre + Metric_coarse.getThread();
+		case 'e': //extra-thread_fine (FF)
+				thread_extra_fine.constructeur(numProduit);
+				tags = thread_extra_fine.getTags();
+				titre = titre + thread_extra_fine.getThread();
 			break;
-		case 'f': //fine
-			Metric_fine.constructeur(numProduit, tag);
-			tag = Metric_fine.getTag();
-			titre = titre + Metric_fine.getThread();
+
+		case 'x': //extra-extra-thread_fine (FF)
+				thread_extra_extra_fine.constructeur(numProduit);
+				tags = thread_extra_extra_fine.getTags();
+				titre = titre + thread_extra_extra_fine.getThread();
 			break;
-		case 'e': //extra-fine (FF)
-			Metric_extra_fine.constructeur(numProduit, tag);
-			tag = Metric_extra_fine.getTag();
-			titre = titre + Metric_extra_fine.getThread();
-			break;
-		case 'x': //extra-extra-fine (FF)
-			Metric_extra_extra_fine.constructeur(numProduit, tag);
-			tag = Metric_extra_extra_fine.getTag();
-			titre = titre + Metric_extra_extra_fine.getThread();
-			break;
+
 		default:
-			cout << "erreur dans le type de thread";
+				cout << "erreur dans le type de thread";
 			break;
 	}
-
 }
 
 inline void Boulon::length()
@@ -406,7 +423,7 @@ inline void Boulon::length()
 		}
 	}
 
-	tag += TabLenghtTag[i];
+	tags += TabLenghtTag[i];
 	titre = titre + TabLenghtTitre[i];
 }
 
@@ -423,10 +440,9 @@ inline void Boulon::grade()
 
 
 
-	if (souschaine[0] == "BMST" || souschaine[0] == "BMCS" || souschaine[0] == "BMEST")
-	{
+	if (souschaine[0] == "BMST" || souschaine[0] == "BMCS" || souschaine[0] == "BMEST") {
 		TabGradeTitre = "";
-		tag += tabTagGrade[0];
+		tags += tabTagGrade[0];
 	}
 	else if (souschaine[0] == "BM" || souschaine[0] == "BMC"  || souschaine[0] == "BME"  || souschaine[0] == "BMF" || souschaine[0] == "BMFE" || souschaine[0] == "BMFF" 
 		|| souschaine[0] == "BMFFE" || souschaine[0] == "BMFTE" || souschaine[0] == "BMT" || souschaine[0] == "BMTE" || souschaine[0] == "BMTF" || souschaine[0] == "BMTFE" 
@@ -434,20 +450,18 @@ inline void Boulon::grade()
 		 )
 	{
 		TabGradeTitre = " Grade 8.8";
-		tag += tabTagGrade[1];
+		tags += tabTagGrade[1];
 	}
-	else if (souschaine[0] == "BMH8")
-	{
+	else if (souschaine[0] == "BMH8") {
 		TabGradeTitre = " Grade 12.9";
-		tag += tabTagGrade[2];
+		tags += tabTagGrade[2];
 	}	
 
-	else
-	{
+	else {
 		TabGradeTitre = " Grade 10.9";
-		tag += tabTagGrade[3];
+		tags += tabTagGrade[3];
 	}
-	titre = titre + TabGradeTitre;
+	titre += TabGradeTitre;
 	
 }
 
@@ -460,7 +474,7 @@ public:
 	Ecrou();
 	~Ecrou();
 
-	void constructeur(string tag, string titre, string numProduit, float bulk);
+	void constructeur(string tags, string titre, string numProduit);
 	string getTag();
 	string getTitre();
 	void produit();
@@ -470,8 +484,8 @@ private:
 	string texte;
 	bool trouver;
 	string titre;
-	string tag;
-	char finethread;
+	string tags;
+	char fineThread;
 	string numProduit;
 
 	void separation();
@@ -480,10 +494,10 @@ private:
 	void grade();
 };
 
-inline void Ecrou::constructeur(string tag, string titre, string numProduit, float bulk)
+inline void Ecrou::constructeur(string tags, string titre, string numProduit)
 {
 	this->numProduit = numProduit;
-	this->tag = tag;
+	this->tags = tags;
 	this->titre = titre;
 	texte = "";
 	trouver = false;
@@ -494,8 +508,7 @@ inline void Ecrou::constructeur(string tag, string titre, string numProduit, flo
 	threading();
 	grade();
 
-	int bulksize = bulk;
-	this->titre += "[Bulk Size : " + to_string(bulksize) + "]";
+	//this->titre += "[Bulk Size : " + to_string(bulksize) + "]";
 
 }
 
@@ -510,7 +523,7 @@ Ecrou::~Ecrou()
 
 inline string Ecrou::getTag()
 {
-	return tag;
+	return tags;
 }
 
 inline string Ecrou::getTitre()
@@ -531,19 +544,17 @@ inline void Ecrou::separation()
 
 inline void Ecrou::produit()
 {
-
+	// TabProduit VERIFIED ON 03-15		|OK|
 	string TabProduit[900]
 	{
-		// Non desired products removed
-		"EM",		"EM8",
-		"EM8Y",		"EMF",		"EMH",		"EMS",		"EMSH",
-		"EMSC",		"EMFE",		"EMFFY",	"EMFH",		"EMFN",
-		"0",		"0",		"EME",		"EMP",		"EMSEF",
-		"EMSF",		"EMSFF",	"EMSK",		"EMSP",		"EMSE",
+		"EM",		"EM8",		"EM8Y",		"EMF",		"EMH",		
+		"EMS",		"EMSH",		"EMSC",		"EMFE",		"EMFFY",	
+		"EMFH",		"EMFN",		"0",		"0",		"EME",		
+		"EMP",		"EMSEF",	"EMSF",		"EMSFF",	"EMSK",		
+		"EMSP",		"EMSE",		"EMSY",		"EMY",		"EMSR",	
 
-		"EMSY",		"EMY",		"EMSR",		"EMR",		"EMF8",
-		"EMFF",		"EMSFFY",	"EMYL",		"EMFFQ",	"EMFQ",
-		"EMQ8",		"EMB",
+		"EMR",		"EMF8",		"EMFF",		"EMSFFY",	"EMYL",		
+		"EMFFQ",	"EMFQ",		"EMQ8",		"EMB",
 	};
 
 	string TabProduitTitre[900]
@@ -558,6 +569,7 @@ inline void Ecrou::produit()
 		"Metric Hexagonal Nut Fine Thread ",		"Metric Hexagonal Nut Nylon Insert Fine Thread ",		"Metric Hexagonal Nut Nylon Insert ",				"Metric Conical Hexagonal LockNut Fine Thread ",	"Metric Conical Hexagonal LockNut Fine Thread ",
 		"Metric Conical Hexagonal Nut ",			"Metric Hexagonal But ",
 	};
+
 	string TabTAgProduit[900]
 	{
 		"hex, nut, metric, Metric_Coarse,",			"hex, nut, metric, Metric_Coarse,", 
@@ -602,22 +614,18 @@ inline void Ecrou::produit()
 		}
 	}
 	titre = titre + TabProduitTitre[i];
-	tag += TabTAgProduit[i];
-	finethread = TabFineTread[i];
+	tags += TabTAgProduit[i];
+	fineThread = TabFineTread[i];
 }
 
 inline void Ecrou::material()
 {
 	int k = 0;
-	char TabMaterial[10]{ '5','8','9','S','N','3','G', 'N', 'B' };
-	string TabMaterialTitre[10]{ "Zinc ","Yellow Zinc ", "Cadium Plated ","Stainless Steel ","Black Steel ","316 Stainless Steel ","Galvanized ","Brass " };
-	string TabTagMaterial[10]{ "zinc,","yellow_zinc,","cadium_plated,","stainless_steel,304-stainless-steel,","steel,","stainless_steel,316-stainless-steel,","galvanized,","brass," };
-
 	for (int i = 0; i < souschaine[0].length(); i++)
 	{
 		for (int j = 0; j < 10; j++)
 		{
-			if (souschaine[0][i] == TabMaterial[j])
+			if (souschaine[0][i] == materials[j])
 			{
 				k = j;
 			}
@@ -637,44 +645,40 @@ inline void Ecrou::material()
 		k = 0;
 	}
 
-	tag += TabTagMaterial[k];
-	titre = titre + TabMaterialTitre[k];
+	tags += materialsTags[k];
+	titre = titre + materialsTitles[k];
 }
 
 inline void Ecrou::threading()
 {
+	switch (fineThread) {
+		case 'c': //thread_coarse
+				thread_coarse.constructeur(numProduit);
+				tags = thread_coarse.getTags();
+				titre = titre + thread_coarse.getThread();
+			break;
 
-	FINE_THREAD fine;
-	EXTRA_FINE_THREAD extra_fine;
-	EXTRA_FINE_THREAD extra_extra_fine;
-	COARSE_THREAD coarse;
+		case 'f': //thread_fine
+				thread_fine.constructeur(numProduit);
+				tags = thread_fine.getTags();
+				titre = titre + thread_fine.getThread();
+			break;
 
-	switch (finethread)
-	{
-	case 'c': //coarse
-		coarse.constructeur(numProduit, tag);
-		tag = coarse.getTag();
-		titre = titre + coarse.getThread();
-		break;
-	case 'f': //fine
-		fine.constructeur(numProduit, tag);
-		tag = fine.getTag();
-		titre = titre + fine.getThread();
-		break;
-	case 'e': //extra-fine (FF)
-		extra_fine.constructeur(numProduit, tag);
-		tag = extra_fine.getTag();
-		titre = titre + extra_fine.getThread();
-		break;
-	default:
-		cout << "erreur dans le type de thread";
-		break;
+		case 'e': //extra-thread_fine (FF)
+				thread_extra_fine.constructeur(numProduit);
+				tags = thread_extra_fine.getTags();
+				titre = titre + thread_extra_fine.getThread();
+			break;
+
+		default:
+				cout << "erreur dans le type de thread";
+			break;
 	}
 
-	/*extremly fine
+	/*extremly thread_fine
 	{
-		extremly_fine.constructeur(numProduit, tag);
-		tag = extremly_fine.getTag();
+		extremly_fine.constructeur(numProduit, tags);
+		tags = extremly_fine.getTag();
 		titre = titre + extremly_fine.getThread();
 	}*/
 }
@@ -694,7 +698,7 @@ inline void Ecrou::grade()
 		|| souschaine[0] == "EMSH" || souschaine[0] == "EMSK" || souschaine[0] == "EMSP" || souschaine[0] == "EMSR" || souschaine[0] == "EMSY")
 	{
 		TabGradeTitre = "";
-		tag += tabTagGrade[0];
+		tags += tabTagGrade[0];
 	}
 	
 	else if (souschaine[0] == "EM" || souschaine[0] == "EMN" || souschaine[0] == "EMB" || souschaine[0] == "EMFN" || souschaine[0] == "EMFFIN" || souschaine[0] == "EMFFQ"
@@ -702,17 +706,17 @@ inline void Ecrou::grade()
 		|| souschaine[0] == "EMFH" || souschaine[0] == "EMH")
 	{
 		TabGradeTitre = " Grade 8.8 ";
-		tag += tabTagGrade[1];
+		tags += tabTagGrade[1];
 	}
 	else if (souschaine[0] == "EM9")
 	{
 		TabGradeTitre = " Grade 12.9 ";
-		tag += tabTagGrade[2];
+		tags += tabTagGrade[2];
 	}
 	else
 	{
 		TabGradeTitre = " Grade 10.9 ";
-		tag += tabTagGrade[3];
+		tags += tabTagGrade[3];
 	}
 	titre = titre + TabGradeTitre;
 }
@@ -727,7 +731,7 @@ public:
 	Washer();
 	~Washer();
 
-	void constructeur(string tag, string titre, string numProduit, float bulk);
+	void constructeur(string tags, string titre, string numProduit);
 	string getTag();
 	string getTitre();
 
@@ -736,8 +740,8 @@ private:
 	string texte;
 	bool trouver;
 	string titre;
-	string tag;
-	char finethread;
+	string tags;
+	char fineThread;
 	string numProduit;
 
 	void separation();
@@ -755,10 +759,10 @@ Washer::~Washer()
 {
 }
 
-inline void Washer::constructeur(string tag, string titre, string numProduit, float bulk)
+inline void Washer::constructeur(string tags, string titre, string numProduit)
 {
 	this->numProduit = numProduit;
-	this->tag = tag;
+	this->tags = tags;
 	this->titre = titre;
 	texte = "";
 	trouver = false;
@@ -769,14 +773,13 @@ inline void Washer::constructeur(string tag, string titre, string numProduit, fl
 	length();
 	grade();
 
-	int bulksize = bulk;
-	this->titre += "[ Bulk Size : " + to_string(bulksize) + " ]";
+	//this->titre += "[ Bulk Size : " + to_string(bulksize) + " ]";
 
 }
 
 inline string Washer::getTag()
 {
-	return tag;
+	return tags;
 }
 
 inline string Washer::getTitre()
@@ -797,9 +800,9 @@ inline void Washer::separation()
 
 inline void Washer::produit()
 {
+	// TabProduit VERIFIED ON 03-15		|OK|
 	string TabProduit[900]
 	{
-		// Non desired products removed
 		"0",		"0",		"0",		"0",		"0",
 		"0",		"0",		"0",		"0",		"0",
 		"0",		"0",		"0",		"0",		"0", 
@@ -869,22 +872,18 @@ inline void Washer::produit()
 		}
 	}
 	titre = titre + TabProduitTitre[i];
-	tag += TabTAgProduit[i];
-	finethread = TabFineTread[i];
+	tags += TabTAgProduit[i];
+	fineThread = TabFineTread[i];
 }
 
 inline void Washer::material()
 {
 	int k = 0;
-	char TabMaterial[10]{ '5','8','9','S','N', 'Y','3','G' };
-	string TabMaterialTitre[10]{ "Zinc ","Yellow Zinc ", "Cadium Plated ","Stainless Steel ","Black Steel ", "White Nylon ","316 Stainless Steel ","Galvanized ","Brass " };
-	string TabTagMaterial[10]{ "zinc,","yellow_zinc,","cadium_plated,","stainless_steel,304-stainless-steel,","steel,","nylon,","stainless_steel,316-stainless-steel,","galvanized,","brass," };
-
 	for (int i = 0; i < souschaine[0].length(); i++)
 	{
 		for (int j = 0; j < 10; j++)
 		{
-			if (souschaine[0][i] == TabMaterial[j])
+			if (souschaine[0][i] == materials[j])
 			{
 				k = j;
 			}
@@ -909,8 +908,8 @@ inline void Washer::material()
 		k = 4;
 	}
 
-	tag += TabTagMaterial[k];
-	titre = titre + TabMaterialTitre[k];
+	tags += materialsTags[k];
+	titre = titre + materialsTitles[k];
 }
 
 inline void Washer::length()
@@ -927,44 +926,6 @@ inline void Washer::length()
 
 		"140", "150", "160", "170", "180",
 		"200", "240", "250",
-
-		//#pragma region "000A - 038A"
-		//"000A", "001", "001A", "002", "002A", "003", "003A", "005", "005A", "006", "006A", "007", "007A", "008", "008A",
-		//"010", "010A", "011", "011A", "012", "012A", "013", "013A", "015", "015A", "016", "016A", "017", "017A", "018", "018A",
-		//"020", "020A", "021", "021A", "022", "022A", "023", "023A", "025", "025A", "026", "026A", "027", "027A", "028", "028A",
-		//"030", "030A", "031", "031A", "032", "032A", "033", "033A", "035", "035A", "036", "036A", "037", "037A", "038", "038A",
-		//#pragma endregion
-		////Quantité : 63
-
-		//#pragma region 040 - 077
-		//"040", "042", "045", "047",
-		//"050", "052", "055", "057",
-		//"060", "062", "065", "067",
-		//"070", "072", "075", "077",
-		//#pragma endregion
-		////Quantité : 79
-
-		//#pragma region "080 - 115"
-		//"080", "085",
-		//"090", "095",
-		//"100", "105",
-		//"110", "115",
-		//#pragma endregion
-		////Quantité : 87
-
-		//#pragma region 120 - 200
-		//"120",
-		//"130",
-		//"140",
-		//"150",
-		//"160",
-		//"170",
-		//"180",
-		//"190",
-		//"200",
-		//#pragma endregion
-
-
 	};
 	string TabLenghtTitre[100]
 	{
@@ -1041,18 +1002,12 @@ inline void Washer::grade()
 {
 	int k = 0;
 	trouver = false;
-	char TabGrade[4]{ '5','8','9','2' };
-	string TabGradeTitre[4]{ "Grade 5 ","Grade 8 ", "Grade 9 ","Grade 2 " };
-	string tabTagGrade[4]
-	{
-		"grade-5,","grade-8,","grade-9,","grade-2"
-	};
 
 	for (int i = 0; i < souschaine[0].length(); i++)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			if (souschaine[0][i] == TabGrade[j])
+			if (souschaine[0][i] == grades[j])
 			{
 				k = j;
 				trouver = true;
@@ -1069,81 +1024,77 @@ inline void Washer::grade()
 
 	if (trouver)
 	{
-		tag += tabTagGrade[k];
-		titre = titre + TabGradeTitre[k];
+		tags += gradesTags[k];
+		titre = titre + gradesTitles[k];
 	}
 }
 
 #pragma endregion
 
-#pragma region vis
-class Vis
-{
+#pragma region Vis
+class Vis {
 public:
+	Vis(string tags, string titre, string numProduit);
 	Vis();
 	~Vis();
 
-	void constructeur(string tag, string titre, string numProduit, float bulk);
 	string getTag();
 	string getTitre();
 
 private:
 	string souschaine[3];
-	string texte;
+	string text;
 	bool trouver;
 	string titre;
-	string tag;
-	char finethread;
+	string tags;
+	char fineThread;
 	string numProduit;
 
 	void separation();
 	void produit();
 	void material();
+	void plating();
 	void threading();
 	void length();
 	void grade();
+	void drive();
+
+	// Section below is used for every other specifications needed by the body.h
+	void otherSpecs();
+
+	string thread;
 };
 
-Vis::Vis()
-{
-}
+Vis::Vis() { }
 
-Vis::~Vis()
-{
-}
-
-inline void Vis::constructeur(string tag, string titre, string numProduit, float bulk)
-{
+inline Vis::Vis(string tags, string titre, string numProduit) {
 	this->numProduit = numProduit;
-	this->tag = tag;
+	this->tags = tags;
 	this->titre = titre;
-	texte = "";
+	text = "";
 	trouver = false;
 
 	separation();
 	produit();
 	material();
+	plating();
 	threading();
 	length();
 	grade();
+	drive();
+	otherSpecs();
 
-	int bulksize = bulk;
-	this->titre += "[Bulk Size : " + to_string(bulksize) + "]";
+	//this->titre += "[Bulk Size : " + to_string(bulksize) + "]";
 
 }
 
-inline string Vis::getTag()
-{
-	return tag;
-}
+Vis::~Vis() { }
 
-inline string Vis::getTitre()
-{
-	return titre;
-}
+inline string Vis::getTag() { return tags; }
 
-inline void Vis::separation()
-{
+inline string Vis::getTitre() { return titre; }
+
+inline void Vis::separation() {
 	stringstream ss(numProduit);
 
 
@@ -1153,370 +1104,372 @@ inline void Vis::separation()
 	}
 }
 
-inline void Vis::produit()
-{
-	string TabProduit[900]
-	{
-		// Non desired products removed
-		"0",		"0",		"0",		"0",		"0",
-		"0",		"0",		"0",		"0",		"0",
-		"0",		"0",		"0",		"0",		"0",
-		"0",		"0",		"0",		"0",		"0",
-		"0",		"0",		"0",		"0",		"0",
+inline void Vis::produit() {
+	text = souschaine[0];
 
-		"0",		"0",		"0",		"0",		"0",
-		"0",		"0",		"0",		"0",		"0",
-		"0",		"0",		"0",		"0",		"0",
-		"0",		"0",		"0",		"0",		"0",
-		"0",		"0",		"0",		"0",		"0",
+	//ProductsValuesInterface prods_vals[10];
+	//prods_vals[0].products = "VPCM, VPCMT, VPCM88, VPCMT88, VPCM10, VPSCM";
+	//prods_vals[0].values["title"] = "Metric Socket Head Cap Screw ";
+	//prods_vals[0].values["tags"] = "metric, pressure_screw, socket_head_cap_screw,";
+	//prods_vals[0].values["thread"] = "c";
 
-		"0",		"0",		"VPRFD",	"0",		"0",
-		"VPCM",		"VPCMF",	"VPCMFF",	"VPFM",		"VPRD",
-		"VPRFD",	"VPSCM",	"VPSCM3",	"0",		"0",
-		"0",		"0",		"VMFM",		"VBF",		"VMSFM",
-		"0",		"VMSPFC",	"VPSPM",	"VMT",		"VMYPM",
-		"VMYPM",	"VPBM",		"VPCMI",	"VMPM",		"VPSBM",
-	};
+	//prods_vals[1].products = "VPCMI, VPCMTI, VPCMTI88, VPCMTI10";
+	//prods_vals[1].values["title"] = "Metric Low Head Socket Head Cap Screw ";
+	//prods_vals[1].values["tags"] = "metric, pressure_screw, socket_head_cap_screw, low_head,";
+	//prods_vals[1].values["thread"] = "c";
 
-	string TabProduitTitre[900]
-	{
-		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
-		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
-		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
-		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
-		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
-		
-		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
-		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
-		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
-		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
-		"0 ",										"0 ",											"0 ",									"0 ",			"0 ",
-		
-		"0 ",										"0 ",											"Set Screw Fine & Full Thread ",								"0 ",										"0 ",
-		"Metric Socket Head Cap Screw ",			"Metric Socket Head Cap Screw ",				"Metric Socket Head Cap Screw Extra Fine Thread",				"Metric Flat Head Cap Screw ",				"Set screw Full Thread Dog Point",
-		"Set screw Full Thread Dog Point",			"Metric Socket Head Cap Screw ",				"Metric Socket Head Cap Screw ",								"0 ",										"0 ",
-		"0 ",										"0 ",											"Flat Head Machine Screw Full Thread ",							"Flat head Wood screw",						"Flat Head Machine Screw Full Thread ",
-		"0 ",										"Flat Head Machine Screw Fine & Full Thread ",	"Metric Flat Head Machine Screw Full Thread ",					"Truss Head Machine Screw Full Thread ",	"Metric Pan Head Metal Screw Full Thread ",
-		"Metric Pan Head Metal Screw Full Thread ", "Metric Button Head Cap Screw Full Thread ",	"Metric Low-Profile Button Head Cap Screw Partially Thread ",	"Metric Pan Head Machine Screw ",			"Metric Button Head Cap Screw Full thread ",
-	};
-	string TabTAgProduit[900]
-	{
-		"0,",																"0,",																"0,",																	"0,",																"0,",
-		"0,",																"0,",																"0,",																	"0,",																"0,",
-		"0,",																"0,",																"0,",																	"0,",																"0,",
-		"0,",																"0,",																"0,",																	"0,",																"0,",
-		"0,",																"0,",																"0,",																	"0,",																"0,",
+	titre = "Metric Socket Head Cap Screw ";
+	tags = "metric, pressure_screw, socket_head_cap_screw,";
+	fineThread = 'c';
 
-		"0,",																"0,",																"0,",																	"0,",																"0,",
-		"0,",																"0,",																"0,",																	"0,",																"0,",
-		"0,",																"0,",																"0,",																	"0,",																"0,",
-		"0,",																"0,",																"0,",																	"0,",																"0,",
-		"0,",																"0,",																"0,",																	"0,",																"0,",
-		
-		"0,",																"0,",																"flat_head_cap_screw,inch,pressure_screw,fully_threaded,dog",			"0",																"0",
-		"metric,socket_head_cap_screw,pressure_screw,partially_threaded,",	"metric,socket_head_cap_screw,pressure_screw,partially_threaded,",	"metric,socket_head_cap_screw,pressure_screw,partially_threaded,UNEF",	"metric,flat_head_cap_screw,pressure_screw,partially_threaded,",	"pressure_screw,inch,set_screw,fully_threaded,dog",
-		"pressure_screw,inch,set_screw,fully_threaded,dog",					"metric,socket_head_cap_screw,pressure_screw,partially_threaded,",	"metric,socket_head_cap_screw,pressure_screw,partially_threaded,",		"0,", "0,",
-		"0,",																"0,",																"flat_head, machine_screw,inch,fully_threaded, ",						"flat_head, wood_screw,inch,partially_threaded, ",					"flat_head, machine_screw,inch,fully_threaded, ",
-		"0,",																"flat_head, machine_screw,inch,fully_threaded, ",					"flat_head, machine_screw,metric,fully_threaded, ",						"truss_head, machine_screw,inch,fully_threaded, ",					"pan_head, metal_screw,metric, fully_threaded,",
-		"pan_head, metal_screw,metric, fully_threaded,",					"button_head_cap_screw,metric,pressure_screw,fully_threaded,",		"button_head_cap_screw,metric,pressure_screw,partially_threaded,",		"pan_head, machine_screw,metric, partially_threaded,",				"metric,button_head_cap_screw,pressure_screw,fully_threaded,"
-	};
-	char TabFineTread[900]
-	{
-			'0',	'0',	'0',	'0',	'0',
-			'0',	'0',	'0',	'0',	'0',
-			'0',	'0',	'0',	'0',	'0',
-			'0',	'0',	'0',	'0',	'0',
-			'0',	'0',	'0',	'0',	'0',
-			 						 		 
-			'0',	'0',	'0',	'0',	'0',
-			'0',	'0',	'0',	'0',	'0',
-			'0',	'0',	'0',	'0',	'0',
-			'0',	'0',	'0',	'0',	'0',
-			'0',	'0',	'0',	'0',	'0',
-			
-			'0',	'0',	'f',	'0',	'0',
-			'c',	'f',	'e',	'c',	'c',
-			'f',	'c',	'c',	'0',	'0',
-			'0',	'0',	'c',	'c',	'c',
-			'0',	'f',	'c',	'c',	'c',
-			'c',	'c',	'c',	'c',	'c',
-	};
+	if (text.find('I') != string::npos) {
+		title_headProfile = "Low";
+		titre += "Low Head "; 
+		tags += "low_head,";
+	} 
+	else title_headProfile = "Standard";
 
-	int i = 0;
-	for (int j = 0; j < souschaine[0].length(); j++)
-	{
-		texte += souschaine[0][j];
+	if (text.find('T') != string::npos) {
+		titre += "Full Thread ";
+		tags += "full_thread,";
 	}
 
-	while (trouver == false)
-	{
-		if (texte == TabProduit[i])
-		{
-			trouver = true;
-		}
-		else
-		{
-			i++;
-		}
+	if (text.find('F') != string::npos) {
+		fineThread = 'f';
 	}
-	titre = titre + TabProduitTitre[i];
-	tag += TabTAgProduit[i];
-	finethread = TabFineTread[i];
+	else if (text.find('FF') != string::npos) {
+		fineThread = 'e';
+	}
+
+	title_thrdDirection = text.find('H') != string::npos ? "Left Hand" : "Right Hand";
+
+	//for (ProductsValuesInterface p_v : prods_vals) {
+	//	if (p_v.products.find(text) != string::npos) {
+	//		titre += p_v.values["title"];
+	//		tags += p_v.values["tags"];
+	//		fineThread = p_v.values["thread"][0];
+	//		break;
+	//	}
+	//}
 }
 
-inline void Vis::material()
-{
-	int k = 0;
-	char TabMaterial[10]{ '5','8','9','S','N', 'Y','3','G' };
-	string TabMaterialTitre[10]{ "Zinc ","Yellow Zinc ", "Cadium Plated ","Stainless Steel ","Black Steel ", "White Nylon ","316 Stainless Steel ","Galvanized ","Brass " };
-	string TabTagMaterial[10]{ "zinc,","yellow_zinc,","cadium_plated,","stainless_steel,304-stainless-steel,","steel,","nylon,","stainless_steel,316-stainless-steel,","galvanized,","brass," };
+inline void Vis::material() {
+	int matId = 0;
+	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P') {
+		char materialsVp[4]{ '$', 'S', 'J', '3' };
+		string materialsVpTitles[4]{ "Black-Oxide Alloy Steel ", "Stainless Steel ", "Titanium ", "A4(316 Stainless Steel) " };
+		string materialsVpTags[4]{ "black, black-oxide, black-oxide_alloy_steel", "stainless_steel, 304_stainless_steel,", "titanium,", "stainless_steel, 316_stainless_steel, a4," };
 
-	for (int i = 0; i < souschaine[0].length(); i++)
-	{
-		for (int j = 0; j < 10; j++)
-		{
-			if (souschaine[0][i] == TabMaterial[j])
-			{
-				k = j;
+		for (int i = 0; i < souschaine[0].length(); i++) {
+			int cpt = 0;
+			for (char mat : materialsVp) {
+				if (souschaine[0][i] == mat) {
+					matId = cpt;
+					break;
+				}
+				cpt++;
 			}
 		}
-	}
 
-	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P')
-	{
-		k = 4;
+		if (!souschaine[2][0]) {
+			tags += materialsVpTags[matId];
+			titre += materialsVpTitles[matId];
+			title_materialAndPlating = materialsVpTitles[matId];
+		}
 	}
-	else if (souschaine[0] == "VMBF" || souschaine[0] == "VMBP")
-	{
-		k = 8;
-	}
+	else {
+		for (int i = 0; i < souschaine[0].length(); i++) {
+			for (int j = 0; j < 10; j++) {
+				if (souschaine[0][i] == materials[j]) {
+					matId = j;
+				}
+			}
+		}
 
-
-	if (souschaine[2][0] == 'Y')
-	{
-		k = 1;
+		tags += materialsTags[matId];
+		titre += materialsTitles[matId];
 	}
-	else if (souschaine[2][0] == 'N')
-	{
-		k = 4;
-	}
-	else if (souschaine[2][0] == 'Z')
-	{
-		k = 0;
-	}
-
-	tag += TabTagMaterial[k];
-	titre = titre + TabMaterialTitre[k];
 }
 
-inline void Vis::threading()
-{
-	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'M' && souschaine[0][2] == 'E')
-	{
-		tag += "unc,";
-		if (souschaine[1][0] == '0' && souschaine[1][1] == '2')
-		{
-			titre += "#2 ";
+inline void Vis::plating() {
+	int platId = 0;
+	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P') {
+		platId = -1;
+		char platingsVp[10]{ 'Z', 'Y' };
+		string platingsVpTitles[10]{ "Zinc Plated ", "Yellow Zinc Plated " };
+		string platingsVpTags[10]{ "zinc, zinc_plated,", "zinc, yellow_zinc, yellow_zinc_plated," };
+
+		int cpt = 0;
+		for (char plat : platingsVp) {
+			if (plat == '\0') break;
+			if (souschaine[2][0] == plat) {
+				platId = cpt;
+				break;
+			}
+			cpt++;
 		}
-		else if (souschaine[1][0] == '0' && souschaine[1][1] == '4')
-		{
-			titre += "#4 ";
-		}
-		else if (souschaine[1][0] == '0' && souschaine[1][1] == '6')
-		{
-			titre += "#6 ";
-		}
-		else if (souschaine[1][0] == '0' && souschaine[1][1] == '8')
-		{
-			titre += "#8 ";
-		}
-		else if (souschaine[1][0] == '1' && souschaine[1][1] == '0')
-		{
-			titre += "#10 ";
-		}
-		else if (souschaine[1][0] == '1' && souschaine[1][1] == '2')
-		{
-			titre += "#12 ";
-		}
-		else if (souschaine[1][0] == '1' && souschaine[1][1] == '4')
-		{
-			titre += "#14 ";
+
+		if (platId != -1) {
+			tags += platingsVpTags[platId];
+			titre += platingsVpTitles[platId];
+			title_materialAndPlating += platingsVpTitles[platId];
 		}
 	}
-	else
-	{
-			FINE_THREAD fine;
-			EXTRA_FINE_THREAD extra_fine;
-			EXTRA_FINE_THREAD extra_extra_fine;
-			COARSE_THREAD coarse;
+	else if(souschaine[2][0]) {
+		if (souschaine[2][0] == 'Y')
+			platId = 1;
+		else if (souschaine[2][0] == 'N')
+			platId = 4;
+		else if (souschaine[2][0] == 'Z')
+			platId = 0;
 
-			switch (finethread)
-			{
-			case 'c': //coarse
-				coarse.constructeur(numProduit, tag);
-				tag = coarse.getTag();
-				titre = titre + coarse.getThread();
+		tags += materialsTags[platId];
+		titre += materialsTitles[platId];
+	}
+}
+
+inline void Vis::threading() {
+	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'M' && souschaine[0][2] == 'E') {
+		tags += "unc,";
+
+		if (souschaine[1][0] == '0') {
+			if (souschaine[1][1] == '2') 
+				titre += "#2 ";
+			else if (souschaine[1][1] == '4') 
+				titre += "#4 ";
+			else if (souschaine[1][1] == '6') 
+				titre += "#6 ";
+			else if (souschaine[1][1] == '8') 
+				titre += "#8 ";
+		}
+		else if (souschaine[1][0] == '1' ) {
+			if(souschaine[1][1] == '0')
+				titre += "#10 ";
+			else if (souschaine[1][1] == '2') 
+				titre += "#12 ";
+			else if (souschaine[1][1] == '4')
+				titre += "#14 ";
+		}
+	}
+	else {
+		switch (fineThread) {
+			case 'c': // Coarse
+					thread_coarse.constructeur(numProduit);
+					tags += thread_coarse.getTags();
+					titre += thread_coarse.getThread();
+
+					thread = thread_coarse.getThread();
+					title_thrdType = "UNC | Coarse";
 				break;
-			case 'f': //fine
-				fine.constructeur(numProduit, tag);
-				tag = fine.getTag();
-				titre = titre + fine.getThread();
+
+			case 'f': // Fine
+					thread_fine.constructeur(numProduit);
+					tags += thread_fine.getTags();
+					titre += thread_fine.getThread();
+
+					thread = thread_fine.getThread();
+					title_thrdType = "UNF | Fine";
 				break;
-			case 'e': //extra-fine (FF)
-				extra_fine.constructeur(numProduit, tag);
-				tag = extra_fine.getTag();
-				titre = titre + extra_fine.getThread();
+
+			case 'e': // Extra-thread_fine (FF)
+					thread_extra_fine.constructeur(numProduit);
+					tags += thread_extra_fine.getTags();
+					titre += thread_extra_fine.getThread();
+
+					thread = thread_extra_fine.getThread();
+					title_thrdType = "UNEF | Extra-fine";
 				break;
+
 			default:
-				cout << "erreur dans le type de thread";
+					cout << "erreur dans le type de thread";
 				break;
-			}
-
-			/*extremly fine
-			{
-				extremly_fine.constructeur(numProduit, tag);
-				tag = extremly_fine.getTag();
-				titre = titre + extremly_fine.getThread();
-			}*/
 		}
+
+		/*extremly thread_fine
+		{
+			extremly_fine.constructeur(numProduit, tags);
+			tags = extremly_fine.getTag();
+			titre = titre + extremly_fine.getThread();
+		}*/
+	}
 }
 
-inline void Vis::length()
-{
-	trouver = false;
-	int i = 0;
-	string TabLenght[100]
-	{
-			"004", "005", "006", "008", "010",	"012", "014",
-			"016", "018", "020", "022", "025", "030",
-			"035", "040", "045", "050", "055",
-			"060", "065", "070", "075", "080",
-			"090", "100", "110", "120", "130",
-
-			"140", "150", "170", "180", "200",
-			"240", "250", "260",
-
-	};
-	string TabLenghtTitre[100]
-	{
-		"* 4mm", "* 5mm", "* 6mm", "* 8mm", "* 10mm", "* 12mm", "* 14mm",
-		"* 16mm", "* 18mm", "* 20mm", "* 22mm", "* 25mm", "* 30mm",
-		"* 35mm", "* 40mm", "* 45mm", "*50mm", "* 55mm",
-		"* 60mm", "* 65mm", "* 70mm", "* 75mm", "* 80mm",
-		"* 90mm", "* 100mm", "* 110mm","* 120mm", "* 130mm",
-
-		"* 140mm", "* 150mm", "* 170mm", "* 180mm", "* 200mm",
-		"* 240mm", "* 250mm", "* 260mm",
-	};
-	texte = "";
+inline void Vis::length() {
+	text = "";
 	for (int j = 2; j < souschaine[1].length(); j++)
-	{
-		texte += souschaine[1][j];
+		text += souschaine[1][j];
+
+	if (souschaine[1][0] == '0' && souschaine[1][1] == '0') {
+		if (text[0] != '0' && text[0] != '1')
+			text[0] = '0';
 	}
 
-	if (souschaine[1][0] == '0' && souschaine[1][1] == '0')
-	{
-		if (texte[0] != '0' && texte[0] != '1')
-		{
-			texte[0] = '0';
-		}
-	}
+	if(text.front() == '0')
+		text.erase(0, 1);
 
-	while (trouver == false)
-	{
-		if (texte == TabLenght[i])
-		{
-			trouver = true;
-		}
-		else
-		{
-			i++;
-		}
-	}
-
-
-	titre = titre + TabLenghtTitre[i];
+	tags += "length_" + text + "mm,";
+	titre += "* " + text + "mm ";
+	title_length = text + "mm";
 }
 
-inline void Vis::grade()
-{
-	int k = 0;
-	trouver = false;
-	char TabGrade[4]{ '5','8','9','2' };
-	string TabGradeTitre[4]{ "Grade 5 ","Grade 8 ", "Grade 9 ","Grade 2 " };
-	string tabTagGrade[4]
-	{
-		"grade-5,","grade-8,","grade-9,","grade-2"
-	};
+inline void Vis::grade() {
+	int idx = 0;
+	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P') {
+		TypeTitleTagsInterface grades[3];
+		#pragma region grades
+		grades[0].type = "88";
+		grades[0].tags = "grade_8.8,";
+		grades[0].title = "Grade 8.8 ";
 
-	for (int i = 0; i < souschaine[0].length(); i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			if (souschaine[0][i] == TabGrade[j])
-			{
-				k = j;
-				trouver = true;
+		grades[1].type = "10";
+		grades[1].tags = "grade_10.9,";
+		grades[1].title = "Grade 10.9 ";
+
+		grades[2].type = "";
+		grades[2].tags = "grade_12.9,";
+		grades[2].title = "Grade 12.9 ";
+		#pragma endregion
+
+		string strengths[3][3];
+		strengths[0][0] = "110,000 psi | Rockwell C21";
+		strengths[0][1] = "150,000 psi | Rockwell C32";
+		strengths[0][2] = "170,000 psi | Rockwell C39";
+		string s = to_string(int(110000 * 0.6));
+		s.insert(s.end() - 3, ',');
+		strengths[1][0] = s + " psi";
+		s = to_string(int(150000 * 0.6));
+		s.insert(s.end() - 3, ',');
+		strengths[1][1] = s + " psi";
+		s = to_string(int(170000 * 0.6));
+		s.insert(s.end() - 3, ',');
+		strengths[1][2] = s + " psi";
+
+		// Created int lgt for readability sakes
+		// Retrieving last 2 chars of souschaine[0] to see if there's a grade specified
+		int lgt = souschaine[0].length();
+		text = souschaine[0].substr(lgt - 2, lgt);
+
+		if (text == grades[0].type) idx = 0;
+		else if (text == grades[1].type) idx = 1;
+		else idx = 2;
+
+		tags += grades[idx].tags;
+		titre += grades[idx].title;
+
+		title_grade = grades[idx].title;
+		title_tensStrength = strengths[0][idx];
+		title_shearStrength = strengths[1][idx];
+	}
+	else {
+		for (int i = 0; i < souschaine[0].length(); i++) {
+			for (int j = 0; j < 3; j++) {
+				if (souschaine[0][i] == grades[j]) {
+					tags += gradesTags[j];
+					titre += gradesTitles[j];
+					break;
+				}
 			}
 		}
 	}
+}
 
-	if (trouver)
-	{
-		tag += tabTagGrade[k];
-		titre = titre + TabGradeTitre[k];
+inline void Vis::drive() {
+	int idx = 0;
+	TypeTitleTagsInterface drives[6];
+	#pragma region drives
+	drives[0].type = "S";
+	drives[0].tags = "slotted,";
+	drives[0].title = "[Slotted Drive] ";
+
+	drives[1].type = "T";
+	drives[1].tags = "torx_pin,";
+	drives[1].title = "[Torx Pin] ";
+
+	drives[2].type = "A";
+	drives[2].tags = "allen_key,";
+	drives[2].title = "[Allen Key] ";
+
+	drives[3].type = "C";
+	drives[3].tags = "square,";
+	drives[3].title = "[Square Drive] ";
+
+	drives[4].type = "Q";
+	drives[4].tags = "quadrex,";
+	drives[4].title = "[Quadrex Drive] ";
+
+	drives[5].type = "DEFAULT";
+	drives[5].tags = "phillips,";
+	drives[5].title = "[Phillips Drive] ";
+	#pragma endregion
+
+	if (souschaine[2][0] == 'S') idx = 0;
+	else if (souschaine[2][0] == 'T') idx = 1;
+	else if (souschaine[2][0] == 'A') idx = 2;
+	else if (souschaine[2][0] == 'C' && souschaine[0] != "VPSRF") idx = 3;
+	else if (souschaine[2][0] == 'Q') idx = 4;
+	else idx = 5;
+
+	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P') {
+		if (souschaine[0] == "VPSCA") idx = 3;
+		else idx = 2;
 	}
 
-	if (souschaine[2][0] == 'S')
-	{
-		titre = titre + "[Slotted Drive] ";
-		tag += "slotted,";
-	}
-	else if (souschaine[2][0] == 'T')
-	{
-		titre = titre + "[Torx Pin] ";
-		tag += "torx_pin,";
-	}
-	else if (souschaine[2][0] == 'A')
-	{
-		titre = titre + "[Allen Pin] ";
-		tag += "allen_pin,";
-	}
-	else if (souschaine[2][0] == 'C')
-	{
-		if (souschaine[0] == "VPSRF")
-		{
+	tags += drives[idx].tags;
+	titre += drives[idx].title;
+	title_driveStyle = (drives[idx].title.erase(0, 1).erase(drives[idx].title.size() - 2));		// Removes square brackets
+}
 
-		}
-		else
-		{
-			titre = titre + "[Square Drive] ";
-			tag += "square,";
-		}
-	}
-	else if (souschaine[2][0] == 'Q')
-	{
-		titre = titre + "[Quadrex Drive] ";
-		tag += "quadrex,";
-	}
-	else if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P')
-	{
-		if (souschaine[0] == "VPSCA")
-		{
-			titre = titre + "[Square Drive] ";
-			tag += "square,";
-		}
-		else
-		{
-			titre = titre + "[Allen Drive] ";
-			tag += "allen,";
-		}
-	}
-	else
-	{
-		titre = titre + "[Philips Drive] ";
-		tag += "philips,";
-	}
+inline void Vis::otherSpecs() {
+	// Retrieves number(s) from after 'M' and until ' '(space)		# Nominal Diameter
+	title_diamNom = stoi(thread.substr(1, thread.find(' ')));
+
+	// Head Diameter equals 1.5 times the nominal diameter			# Head Diameter
+	title_headDiam = to_string(int(title_diamNom * 1.5));
+
+	// Head Height is same as nominal diameter						# Head Height
+	title_headHeight = to_string(title_diamNom) + "mm";
+
+	// Conditions for variables that cannot be calculated			# Drive Size, Head Diameter
+	if (title_diamNom == 48)	  { title_driveSize = "36"; }
+	else if (title_diamNom == 42) { title_driveSize = "32"; }
+	else if (title_diamNom == 36) { title_driveSize = "27"; }
+	else if (title_diamNom == 33) { title_driveSize = "24"; }
+	else if (title_diamNom == 30) { title_driveSize = "22"; }
+	else if (title_diamNom == 27) { title_driveSize = "19"; }
+	else if (title_diamNom == 24) { title_driveSize = "19"; }
+	else if (title_diamNom == 22) { title_driveSize = "17"; }
+	else if (title_diamNom == 20) { title_driveSize = "17"; }
+	else if (title_diamNom == 18) { title_driveSize = "14"; }
+	else if (title_diamNom == 16) { title_driveSize = "14"; }
+	else if (title_diamNom == 14) { title_driveSize = "12"; }
+	else if (title_diamNom == 12) { title_driveSize = "10"; }
+	else if (title_diamNom == 10) { title_driveSize = "8"; title_headDiam = "16"; }
+	else if (title_diamNom == 8)  { title_driveSize = "6"; title_headDiam = "13"; }
+	else if (title_diamNom == 7)  { title_driveSize = "6"; title_headDiam = "12"; }
+	else if (title_diamNom == 6)  { title_driveSize = "5"; title_headDiam = "10"; }
+	else if (title_diamNom == 5)  { title_driveSize = "4"; title_headDiam = "8.5"; }
+	else if (title_diamNom == 4)  { title_driveSize = "3"; title_headDiam = "7"; }
+	else if (title_diamNom == 3.5){ title_driveSize = "2.5"; title_headDiam = "6.2"; }
+	else if (title_diamNom == 3)  { title_driveSize = "2.5"; title_headDiam = "5.5"; }
+	else if (title_diamNom == 2.5){ title_driveSize = "2"; title_headDiam = "4.5"; }
+	else if (title_diamNom == 2)  { title_driveSize = "1.5"; title_headDiam = "3.8"; }
+	else if (title_diamNom == 1.6){ title_driveSize = "1.5"; title_headDiam = "3"; }
+	title_driveSize += "mm";
+	title_headDiam += "mm";
+
+	// Remove last space so the measure unit (mm) is next to the number		# Thread
+	thread.pop_back();		
+	title_thrdSize = thread + "mm";
+
+	// Minimum Thread Length can be calculated with... y = 2x + 12			# Minimum Thread Length
+	title_minThrdLength = to_string(2 * title_diamNom + 12) + "mm";
+
+	// Threading is either full or partial									# Threading
+	title_threading = souschaine[0].find('T') != string::npos ? "Fully Threaded" : "Partially Threaded";
+
+	// Those will be constant
+	title_thrdFit = "Class 5g6g";
+	title_headType = "Socket";
 }
 
 #pragma endregion
@@ -1528,7 +1481,7 @@ public:
 	Tige_Filte();
 	~Tige_Filte();
 
-	void constructeur(string tag, string titre, string numProduit, float bulk);
+	void constructeur(string tags, string titre, string numProduit);
 	string getTag();
 	string getTitre();
 
@@ -1537,8 +1490,8 @@ private:
 	string texte;
 	bool trouver;
 	string titre;
-	string tag;
-	bool finethread;
+	string tags;
+	bool fineThread;
 	string numProduit;
 
 	void separation();
@@ -1557,10 +1510,10 @@ Tige_Filte::~Tige_Filte()
 {
 }
 
-inline void Tige_Filte::constructeur(string tag, string titre, string numProduit, float bulk)
+inline void Tige_Filte::constructeur(string tags, string titre, string numProduit)
 {
 	this->numProduit = numProduit;
-	this->tag = tag;
+	this->tags = tags;
 	this->titre = titre;
 	texte = "";
 	trouver = false;
@@ -1572,14 +1525,12 @@ inline void Tige_Filte::constructeur(string tag, string titre, string numProduit
 	length();
 	grade();
 
-	int bulksize = bulk;
-	this->titre += "[ Bulk Size : " + to_string(bulksize) + " ]";
-
+	//this->titre += "[ Bulk Size : " + to_string(bulksize) + " ]";
 }
 
 inline string Tige_Filte::getTag()
 {
-	return tag;
+	return tags;
 }
 
 inline string Tige_Filte::getTitre()
@@ -1600,29 +1551,29 @@ inline void Tige_Filte::separation()
 
 inline void Tige_Filte::produit()
 {
-	string TabProduit[900]
+	// TabProduit VERIFIED ON 03-15		|OK|
+	string TabProduit[20]
 	{
-		// Non desired products removed
 		"0",		"0",		"0",		"0",		"0",
 		"0",		"0",		"0",		"0",		"TIM",
 		"TIM8",		"TIMS",		"TIMF",		"TIM8FF",
 	};
 
-	string TabProduitTitre[900]
+	string TabProduitTitre[20]
 	{
 		"0 ",				"0 ",				"0 ",							"0 ",							"0 ",		
 		"0 ",				"0 ",				"0 ",							"0 ",							"Threaded Rod ",
 		"Threaded Rod ",	"Threaded Rod ",	"Threaded Rod Fine Thread ",	"Threaded Rod Fine Thread ",
 	};
 
-	string TabTAgProduit[900]
+	string TabTAgProduit[20]
 	{
 		"0,",					"0,",						"0,",					"0,",						"0,",
 		"0,",					"0,",						"0,",					"0,",						"tige_filete,metric,",
 		"tige_filete,metric,",	"tige_filete,metric,",		"tige_filete,metric,",	"tige_filete,metric,",
 	};
 
-	bool TabFineTread[900]
+	bool TabFineTread[20]
 	{
 		0,			0,			0,			0,			0,
 		0,			0,			0,			0,			false,
@@ -1647,22 +1598,22 @@ inline void Tige_Filte::produit()
 		}
 	}
 	titre = titre + TabProduitTitre[i];
-	tag += TabTAgProduit[i];
-	finethread = TabFineTread[i];
+	tags += TabTAgProduit[i];
+	fineThread = TabFineTread[i];
 }
 
 inline void Tige_Filte::material()
 {
 	int k = 0;
-	char TabMaterial[10]{ '5','8','9','S','N', 'Y','3','G' };
-	string TabMaterialTitre[10]{ "Zinc ","Yellow Zinc ", "Cadium Plated ","Stainless Steel ","Black Steel ", "White Nylon ","316 Stainless Steel ","Galvanized ","Brass " };
-	string TabTagMaterial[10]{ "zinc,","yellow_zinc,","cadium_plated,","stainless_steel,304-stainless-steel,","steel,","nylon,","stainless_steel,316-stainless-steel,","galvanized,","brass," };
+	char materials[10]{ '5','8','9','S','N', 'Y','3','G' };
+	string materialsTitles[10]{ "Zinc ","Yellow Zinc ", "Cadium Plated ","Stainless Steel ","Black Steel ", "White Nylon ","316 Stainless Steel ","Galvanized ","Brass " };
+	string materialsTags[10]{ "zinc,","yellow_zinc,","cadium_plated,","stainless_steel,304-stainless-steel,","steel,","nylon,","stainless_steel,316-stainless-steel,","galvanized,","brass," };
 
 	for (int i = 0; i < souschaine[0].length(); i++)
 	{
 		for (int j = 0; j < 10; j++)
 		{
-			if (souschaine[0][i] == TabMaterial[j])
+			if (souschaine[0][i] == materials[j])
 			{
 				k = j;
 			}
@@ -1683,26 +1634,21 @@ inline void Tige_Filte::material()
 		k = 4;
 	}
 
-	tag += TabTagMaterial[k];
-	titre = titre + TabMaterialTitre[k];
+	tags += materialsTags[k];
+	titre = titre + materialsTitles[k];
 }
 
 inline void Tige_Filte::threading()
 {
-	FINE_THREAD fine;
-	COARSE_THREAD coarse;
-
-	if (finethread == true)
-	{
-		fine.constructeur(numProduit, tag);
-		tag = fine.getTag();
-		titre = titre + fine.getThread();
+	if (fineThread) {
+		thread_fine.constructeur(numProduit);
+		tags = thread_fine.getTags();
+		titre = titre + thread_fine.getThread();
 	}
-	else
-	{
-		coarse.constructeur(numProduit, tag);
-		tag = coarse.getTag();
-		titre = titre + coarse.getThread();
+	else {
+		thread_coarse.constructeur(numProduit);
+		tags = thread_coarse.getTags();
+		titre = titre + thread_coarse.getThread();
 	}
 }
 
@@ -1812,18 +1758,12 @@ inline void Tige_Filte::grade()
 {
 	int k = 0;
 	trouver = false;
-	char TabGrade[4]{ '5','8','9','2' };
-	string TabGradeTitre[4]{ "Grade 5 ","Grade 8 ", "Grade 9 ","Grade 2 " };
-	string tabTagGrade[4]
-	{
-		"grade-5,","grade-8,","grade-9,","grade-2"
-	};
 
 	for (int i = 0; i < souschaine[0].length(); i++)
 	{
 		for (int j = 0; j < 3; j++)
 		{
-			if (souschaine[0][i] == TabGrade[j])
+			if (souschaine[0][i] == grades[j])
 			{
 				k = j;
 				trouver = true;
@@ -1840,8 +1780,8 @@ inline void Tige_Filte::grade()
 
 	if (trouver)
 	{
-		tag += tabTagGrade[k];
-		titre = titre + TabGradeTitre[k];
+		tags += gradesTags[k];
+		titre = titre + gradesTitles[k];
 	}
 }
 
@@ -1852,23 +1792,23 @@ class TITRE
 public:
 	TITRE();
 	~TITRE();
-	void constructeur(string numProduit,float bulk, int reponse, string tag);
+	void constructeur(string numProduit, int reponse, string tags);
 	string getTag();
 	string getTitre();
 
 private:
 	string titre;
-	string texte;
-	bool trouver;
-	bool finethread;
-	bool extrafinethread;
-	bool extraextrafinethread;
-	int i;
+	//string texte;
+	//bool trouver;
+	bool fineThread;
+	//bool extrafinethread;
+	//bool extraextrafinethread;
+	//int i;
 	string souschaine[3];
 	string numProduit;
 	int reponse;
-	string tag;
-	float bulk;
+	string tags;
+	//float bulk;
 
 	void produit();
 };
@@ -1881,21 +1821,20 @@ TITRE::~TITRE()
 {
 }
 
-inline void TITRE::constructeur(string numProduit, float bulk,int reponse, string tag)
+inline void TITRE::constructeur(string numProduit, int reponse, string tags)
 {
-	i = 0;
-	trouver = false;
-	texte = "";
+	//i = 0;
+	//trouver = false;
+	//texte = "";
 	this->reponse = reponse;
-	this->tag = tag;
-	this->bulk = bulk;
+	this->tags = tags;
 	this->numProduit = numProduit;
 	produit();
 }
 
 inline string TITRE::getTag()
 {
-	return tag;
+	return tags;
 }
 
 inline string TITRE::getTitre()
@@ -1908,50 +1847,49 @@ inline void TITRE::produit()
 	Boulon bolt;
 	Ecrou nut;
 	Washer washer;
-	Vis screw;
 	//Equerre equerre;
 	Tige_Filte tige;
+	Vis* screw;
 
-	switch (reponse)
-	{
-	case 1:
-		bolt.constructeur(tag, titre, numProduit, bulk);
-		tag = bolt.getTag();
-		titre = bolt.getTitre();
-		break;
+	switch (reponse) {
+		case 1:
+			bolt.constructeur(tags, titre, numProduit);
+			tags = bolt.getTag();
+			titre = bolt.getTitre();
+			break;
 
-	case 2:
-		nut.constructeur(tag, titre, numProduit, bulk);
-		tag = nut.getTag();
-		titre = nut.getTitre();
-		break;
+		case 2:
+			nut.constructeur(tags, titre, numProduit);
+			tags = nut.getTag();
+			titre = nut.getTitre();
+			break;
 
-	case 3:
-		washer.constructeur(tag, titre, numProduit, bulk);
-		tag = washer.getTag();
-		titre = washer.getTitre();
-		break;
+		case 3:
+			washer.constructeur(tags, titre, numProduit);
+			tags = washer.getTag();
+			titre = washer.getTitre();
+			break;
 
-	// PLUS D'EQUERRE POUR L'INSTANT
-	/*
-	case 4:
-		equerre.constructeur(tag, titre, numProduit, bulk);
-		tag = equerre.getTag();
-		titre = equerre.getTitre();
-		break;
-	*/
+		// PLUS D'EQUERRE POUR L'INSTANT
+		/*
+		case 4:
+			equerre.constructeur(tags, titre, numProduit);
+			tags = equerre.getTag();
+			titre = equerre.getTitre();
+			break;
+		*/
 
-	case 5:
-		tige.constructeur(tag, titre, numProduit, bulk);
-		tag = tige.getTag();
-		titre = tige.getTitre();
-		break;
+		case 5:
+			tige.constructeur(tags, titre, numProduit);
+			tags = tige.getTag();
+			titre = tige.getTitre();
+			break;
 
-	case 6:
-		screw.constructeur(tag, titre, numProduit, bulk);
-		tag = screw.getTag();
-		titre = screw.getTitre();
-		break;
+		case 6:
+			screw = new Vis(tags, titre, numProduit);
+			tags = screw->getTag();
+			titre = screw->getTitre();
+			break;
 	}
 	
 }
