@@ -2,12 +2,6 @@
 #include "Threading.h"
 #include "Globals.h"
 
-class ProductsValuesInterface {
-public:
-	string products;
-	map<string, string> values;
-};
-
 class TypeTitleTagsInterface {
 public:
 	string type;
@@ -15,7 +9,7 @@ public:
 	string tags;
 };
 
-COARSE_THREAD thread_coarse;
+THREADING* threading_calc;
 FINE_THREAD thread_fine;
 EXTRA_FINE_THREAD thread_extra_fine;
 EXTRA_FINE_THREAD thread_extra_extra_fine;
@@ -220,37 +214,10 @@ inline void Boulon::material()
 	titre = titre + materialsTitles[k];
 }
 
-inline void Boulon::threading()
-{	
-	switch (fineThread) {
-		case 'c': //thread_coarse
-				thread_coarse.constructeur(numProduit);
-				tags = thread_coarse.getTags();
-				titre = titre + thread_coarse.getThread();
-			break;
-
-		case 'f': //thread_fine
-				thread_fine.constructeur(numProduit);
-				tags = thread_fine.getTags();
-				titre = titre + thread_fine.getThread();
-			break;
-
-		case 'e': //extra-thread_fine (FF)
-				thread_extra_fine.constructeur(numProduit);
-				tags = thread_extra_fine.getTags();
-				titre = titre + thread_extra_fine.getThread();
-			break;
-
-		case 'x': //extra-extra-thread_fine (FF)
-				thread_extra_extra_fine.constructeur(numProduit);
-				tags = thread_extra_extra_fine.getTags();
-				titre = titre + thread_extra_extra_fine.getThread();
-			break;
-
-		default:
-				cout << "erreur dans le type de thread";
-			break;
-	}
+inline void Boulon::threading() {
+	threading_calc = new THREADING(fineThread);
+	tags = threading_calc->getTags();
+	titre += threading_calc->getThread();
 }
 
 inline void Boulon::length()
@@ -651,10 +618,10 @@ inline void Ecrou::material()
 inline void Ecrou::threading()
 {
 	switch (fineThread) {
-		case 'c': //thread_coarse
-				thread_coarse.constructeur(numProduit);
-				tags = thread_coarse.getTags();
-				titre = titre + thread_coarse.getThread();
+		case 'c': //threading_calc
+				threading_calc = new THREADING();
+				tags = threading_calc->getTags();
+				titre = titre + threading_calc->getThread();
 			break;
 
 		case 'f': //thread_fine
@@ -1033,7 +1000,7 @@ inline void Washer::grade()
 #pragma region Vis
 class Vis {
 public:
-	Vis(string tags, string titre, string numProduit);
+	Vis(string tags, string titre);
 	Vis();
 	~Vis();
 
@@ -1041,15 +1008,11 @@ public:
 	string getTitre();
 
 private:
-	string souschaine[3];
 	string text;
-	bool trouver;
 	string titre;
 	string tags;
 	char fineThread;
-	string numProduit;
 
-	void separation();
 	void produit();
 	void material();
 	void plating();
@@ -1066,14 +1029,11 @@ private:
 
 Vis::Vis() { }
 
-inline Vis::Vis(string tags, string titre, string numProduit) {
-	this->numProduit = numProduit;
+inline Vis::Vis(string tags, string titre) {
 	this->tags = tags;
 	this->titre = titre;
 	text = "";
-	trouver = false;
 
-	separation();
 	produit();
 	material();
 	plating();
@@ -1093,18 +1053,8 @@ inline string Vis::getTag() { return tags; }
 
 inline string Vis::getTitre() { return titre; }
 
-inline void Vis::separation() {
-	stringstream ss(numProduit);
-
-
-	for (int j = 0; j < 3; j++)
-	{
-		getline(ss, souschaine[j], '-');
-	}
-}
-
 inline void Vis::produit() {
-	text = souschaine[0];
+	text = global_splittedPrdNbr[0];
 
 	//ProductsValuesInterface prods_vals[10];
 	//prods_vals[0].products = "VPCM, VPCMT, VPCM88, VPCMT88, VPCM10, VPSCM";
@@ -1152,15 +1102,15 @@ inline void Vis::produit() {
 
 inline void Vis::material() {
 	int matId = 0;
-	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P') {
+	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
 		char materialsVp[4]{ '$', 'S', 'J', '3' };
-		string materialsVpTitles[4]{ "Black-Oxide Alloy Steel ", "Stainless Steel ", "Titanium ", "A4(316 Stainless Steel) " };
-		string materialsVpTags[4]{ "black, black-oxide, black-oxide_alloy_steel", "stainless_steel, 304_stainless_steel,", "titanium,", "stainless_steel, 316_stainless_steel, a4," };
+		string materialsVpTitles[4]{ "Black-Oxide Alloy Steel ", "A2 Stainless Steel[Imperial 304 SS] ", "Titanium ", "A4 Stainless Steel[Imperial 316 SS] " };
+		string materialsVpTags[4]{ "black, black-oxide, black-oxide_alloy_steel", "stainless_steel, 304_stainless_steel, a2, a2_stainless_steel,", "titanium,", "stainless_steel, 316_stainless_steel, a4, a4_stainless_steel" };
 
-		for (int i = 0; i < souschaine[0].length(); i++) {
+		for (int i = 0; i < global_splittedPrdNbr[0].length(); i++) {
 			int cpt = 0;
 			for (char mat : materialsVp) {
-				if (souschaine[0][i] == mat) {
+				if (global_splittedPrdNbr[0][i] == mat) {
 					matId = cpt;
 					break;
 				}
@@ -1168,16 +1118,16 @@ inline void Vis::material() {
 			}
 		}
 
-		if (!souschaine[2][0]) {
+		if (!global_splittedPrdNbr[2][0]) {
 			tags += materialsVpTags[matId];
 			titre += materialsVpTitles[matId];
 			title_materialAndPlating = materialsVpTitles[matId];
 		}
 	}
 	else {
-		for (int i = 0; i < souschaine[0].length(); i++) {
+		for (int i = 0; i < global_splittedPrdNbr[0].length(); i++) {
 			for (int j = 0; j < 10; j++) {
-				if (souschaine[0][i] == materials[j]) {
+				if (global_splittedPrdNbr[0][i] == materials[j]) {
 					matId = j;
 				}
 			}
@@ -1190,7 +1140,7 @@ inline void Vis::material() {
 
 inline void Vis::plating() {
 	int platId = 0;
-	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P') {
+	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
 		platId = -1;
 		char platingsVp[10]{ 'Z', 'Y' };
 		string platingsVpTitles[10]{ "Zinc Plated ", "Yellow Zinc Plated " };
@@ -1199,7 +1149,7 @@ inline void Vis::plating() {
 		int cpt = 0;
 		for (char plat : platingsVp) {
 			if (plat == '\0') break;
-			if (souschaine[2][0] == plat) {
+			if (global_splittedPrdNbr[2][0] == plat) {
 				platId = cpt;
 				break;
 			}
@@ -1212,12 +1162,12 @@ inline void Vis::plating() {
 			title_materialAndPlating += platingsVpTitles[platId];
 		}
 	}
-	else if(souschaine[2][0]) {
-		if (souschaine[2][0] == 'Y')
+	else if(global_splittedPrdNbr[2][0]) {
+		if (global_splittedPrdNbr[2][0] == 'Y')
 			platId = 1;
-		else if (souschaine[2][0] == 'N')
+		else if (global_splittedPrdNbr[2][0] == 'N')
 			platId = 4;
-		else if (souschaine[2][0] == 'Z')
+		else if (global_splittedPrdNbr[2][0] == 'Z')
 			platId = 0;
 
 		tags += materialsTags[platId];
@@ -1226,61 +1176,34 @@ inline void Vis::plating() {
 }
 
 inline void Vis::threading() {
-	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'M' && souschaine[0][2] == 'E') {
+	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'M' && global_splittedPrdNbr[0][2] == 'E') {
 		tags += "unc,";
 
-		if (souschaine[1][0] == '0') {
-			if (souschaine[1][1] == '2') 
+		if (global_splittedPrdNbr[1][0] == '0') {
+			if (global_splittedPrdNbr[1][1] == '2') 
 				titre += "#2 ";
-			else if (souschaine[1][1] == '4') 
+			else if (global_splittedPrdNbr[1][1] == '4') 
 				titre += "#4 ";
-			else if (souschaine[1][1] == '6') 
+			else if (global_splittedPrdNbr[1][1] == '6') 
 				titre += "#6 ";
-			else if (souschaine[1][1] == '8') 
+			else if (global_splittedPrdNbr[1][1] == '8') 
 				titre += "#8 ";
 		}
-		else if (souschaine[1][0] == '1' ) {
-			if(souschaine[1][1] == '0')
+		else if (global_splittedPrdNbr[1][0] == '1' ) {
+			if(global_splittedPrdNbr[1][1] == '0')
 				titre += "#10 ";
-			else if (souschaine[1][1] == '2') 
+			else if (global_splittedPrdNbr[1][1] == '2') 
 				titre += "#12 ";
-			else if (souschaine[1][1] == '4')
+			else if (global_splittedPrdNbr[1][1] == '4')
 				titre += "#14 ";
 		}
 	}
 	else {
-		switch (fineThread) {
-			case 'c': // Coarse
-					thread_coarse.constructeur(numProduit);
-					tags += thread_coarse.getTags();
-					titre += thread_coarse.getThread();
+		threading_calc = new THREADING(fineThread);
+		tags = threading_calc->getTags();
+		titre += threading_calc->getThread();
 
-					thread = thread_coarse.getThread();
-					title_thrdType = "UNC | Coarse";
-				break;
-
-			case 'f': // Fine
-					thread_fine.constructeur(numProduit);
-					tags += thread_fine.getTags();
-					titre += thread_fine.getThread();
-
-					thread = thread_fine.getThread();
-					title_thrdType = "UNF | Fine";
-				break;
-
-			case 'e': // Extra-thread_fine (FF)
-					thread_extra_fine.constructeur(numProduit);
-					tags += thread_extra_fine.getTags();
-					titre += thread_extra_fine.getThread();
-
-					thread = thread_extra_fine.getThread();
-					title_thrdType = "UNEF | Extra-fine";
-				break;
-
-			default:
-					cout << "erreur dans le type de thread";
-				break;
-		}
+		thread = threading_calc->getThread();
 
 		/*extremly thread_fine
 		{
@@ -1293,10 +1216,10 @@ inline void Vis::threading() {
 
 inline void Vis::length() {
 	text = "";
-	for (int j = 2; j < souschaine[1].length(); j++)
-		text += souschaine[1][j];
+	for (int j = 2; j < global_splittedPrdNbr[1].length(); j++)
+		text += global_splittedPrdNbr[1][j];
 
-	if (souschaine[1][0] == '0' && (souschaine[1][1] == '1' || souschaine[1][1] == '2' || souschaine[1][1] == '3' || souschaine[1][1] == '4')) {
+	if (global_splittedPrdNbr[1][0] == '0' && (global_splittedPrdNbr[1][1] == '1' || global_splittedPrdNbr[1][1] == '2' || global_splittedPrdNbr[1][1] == '3' || global_splittedPrdNbr[1][1] == '4')) {
 		if (text[0] != '0' && text[0] != '1')
 			text[0] = '0';
 	}
@@ -1311,7 +1234,7 @@ inline void Vis::length() {
 
 inline void Vis::grade() {
 	int idx = 0;
-	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P') {
+	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
 		TypeTitleTagsInterface grades[3];
 		#pragma region grades
 		grades[0].type = "88";
@@ -1342,25 +1265,27 @@ inline void Vis::grade() {
 		strengths[1][2] = s + " psi";
 
 		// Created int lgt for readability sakes
-		// Retrieving last 2 chars of souschaine[0] to see if there's a grade specified
-		int lgt = souschaine[0].length();
-		text = souschaine[0].substr(lgt - 2, lgt);
+		// Retrieving last 2 chars of global_splittedPrdNbr[0] to see if there's a grade specified
+		int lgt = global_splittedPrdNbr[0].length();
+		text = global_splittedPrdNbr[0].substr(lgt - 2, lgt);
 
 		if (text == grades[0].type) idx = 0;
 		else if (text == grades[1].type) idx = 1;
 		else idx = 2;
 
-		tags += grades[idx].tags;
-		titre += grades[idx].title;
+		if (global_splittedPrdNbr[0][2] != 'S') {
+			tags += grades[idx].tags;
+			titre += grades[idx].title;
+			title_grade = grades[idx].title;
+		}
 
-		title_grade = grades[idx].title;
 		title_tensStrength = strengths[0][idx];
 		title_shearStrength = strengths[1][idx];
 	}
 	else {
-		for (int i = 0; i < souschaine[0].length(); i++) {
+		for (int i = 0; i < global_splittedPrdNbr[0].length(); i++) {
 			for (int j = 0; j < 3; j++) {
-				if (souschaine[0][i] == grades[j]) {
+				if (global_splittedPrdNbr[0][i] == grades[j]) {
 					tags += gradesTags[j];
 					titre += gradesTitles[j];
 					break;
@@ -1399,15 +1324,15 @@ inline void Vis::drive() {
 	drives[5].title = "[Phillips Drive] ";
 	#pragma endregion
 
-	if (souschaine[2][0] == 'S') idx = 0;
-	else if (souschaine[2][0] == 'T') idx = 1;
-	else if (souschaine[2][0] == 'A') idx = 2;
-	else if (souschaine[2][0] == 'C' && souschaine[0] != "VPSRF") idx = 3;
-	else if (souschaine[2][0] == 'Q') idx = 4;
+	if (global_splittedPrdNbr[2][0] == 'S') idx = 0;
+	else if (global_splittedPrdNbr[2][0] == 'T') idx = 1;
+	else if (global_splittedPrdNbr[2][0] == 'A') idx = 2;
+	else if (global_splittedPrdNbr[2][0] == 'C' && global_splittedPrdNbr[0] != "VPSRF") idx = 3;
+	else if (global_splittedPrdNbr[2][0] == 'Q') idx = 4;
 	else idx = 5;
 
-	if (souschaine[0][0] == 'V' && souschaine[0][1] == 'P') {
-		if (souschaine[0] == "VPSCA") idx = 3;
+	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
+		if (global_splittedPrdNbr[0] == "VPSCA") idx = 3;
 		else idx = 2;
 	}
 
@@ -1462,7 +1387,7 @@ inline void Vis::otherSpecs() {
 	title_minThrdLength = to_string(2 * title_diamNom + 12) + "mm";
 
 	// Threading is either full or partial									# Threading
-	title_threading = souschaine[0].find('T') != string::npos ? "Fully Threaded" : "Partially Threaded";
+	title_threading = global_splittedPrdNbr[0].find('T') != string::npos ? "Fully Threaded" : "Partially Threaded";
 
 	// Those will be constant
 	title_thrdFit = "Class 5g6g";
@@ -1643,9 +1568,9 @@ inline void Tige_Filte::threading()
 		titre = titre + thread_fine.getThread();
 	}
 	else {
-		thread_coarse.constructeur(numProduit);
-		tags = thread_coarse.getTags();
-		titre = titre + thread_coarse.getThread();
+		threading_calc = new THREADING();
+		tags = threading_calc->getTags();
+		titre = titre + threading_calc->getThread();
 	}
 }
 
@@ -1789,7 +1714,7 @@ class TITRE
 public:
 	TITRE();
 	~TITRE();
-	void constructeur(string numProduit, int reponse, string tags);
+	void constructeur(int reponse, string tags);
 	string getTag();
 	string getTitre();
 
@@ -1818,7 +1743,7 @@ TITRE::~TITRE()
 {
 }
 
-inline void TITRE::constructeur(string numProduit, int reponse, string tags)
+inline void TITRE::constructeur(int reponse, string tags)
 {
 	//i = 0;
 	//trouver = false;
@@ -1883,7 +1808,7 @@ inline void TITRE::produit()
 			break;
 
 		case 6:
-			screw = new Vis(tags, titre, numProduit);
+			screw = new Vis(tags, titre);
 			tags = screw->getTag();
 			titre = screw->getTitre();
 			break;

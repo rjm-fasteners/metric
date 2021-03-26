@@ -32,6 +32,9 @@ string title_headType;
 string title_materialAndPlating;
 int title_diamNom;
 
+string global_splittedPrdNbr[3];
+string global_prdNbr;
+
 string comaToDot(string val) {
 	replace(val.begin(), val.end(), ',', '.');
 	return val;
@@ -187,6 +190,11 @@ void ouverture()
 
 					/****************** Importation sélection B implicite *******************/
 					else {
+						global_prdNbr = produit[0];
+						stringstream ss(global_prdNbr);
+						for (int j = 0; j < 3; j++)
+							getline(ss, global_splittedPrdNbr[j], '-');
+
 						/*if (reponse == 6)
 						{
 							string texte;
@@ -320,7 +328,7 @@ void ouverture()
 						else if (userInput_prdType == 10)
 						{
 							// String variable isn't useful (creating a new string just for that wouldn't be good idea)
-							TexteATranscrire1[2] = body("0", "0", 0, "0");
+							TexteATranscrire1[2] = body("0", 0, "0");
 						}
 
 						/* Boulon, Ecrou, Rondelle, Vis pression */
@@ -380,12 +388,12 @@ void ouverture()
 #pragma region Prix par 1
 							TITRE title;
 
-							title.constructeur(produit[0], userInput_prdType, tag);
+							title.constructeur(userInput_prdType, tag);
 							texte = title.getTitre();
 							tag = title.getTag();
 
 							TexteATranscrire1[1] = "\"" + texte + "\"";
-							TexteATranscrire1[2] = body(produit[2], produit[0], userInput_prdType, tag);
+							TexteATranscrire1[2] = body(produit[2], userInput_prdType, tag);
 
 							wgtCalc = new WEIGHT_CALCULATORS(userInput_prdType, 1);
 							unityWgt = wgtCalc->getWgt();
@@ -492,12 +500,12 @@ void ouverture()
 							TITRE title;
 							string titre = "";
 							TexteATranscrire1[0] = produit[0];
-							title.constructeur(produit[0], userInput_prdType, tag);
+							title.constructeur(userInput_prdType, tag);
 							titre = title.getTitre();
 							tag = title.getTag();
 
 							TexteATranscrire1[1] = "\"" + titre + "\"";
-							TexteATranscrire1[2] = body(produit[2], produit[0], userInput_prdType, tag);
+							TexteATranscrire1[2] = body(produit[2], userInput_prdType, tag);
 							TexteATranscrire1[7] = produit[0];
 
 							texte = dotToComa(texte);

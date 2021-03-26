@@ -41,7 +41,15 @@ extern string title_headDiam;
 
 extern int title_diamNom;
 
+extern string global_splittedPrdNbr[3];
+extern string global_prdNbr;
+
 extern string comaToDot(string val);
 extern string dotToComa(string val);
 extern float toFloat(string prix);
+
+struct KeyValuesInterface {
+	string key;
+	map<string, string> values;
+};
 #endif

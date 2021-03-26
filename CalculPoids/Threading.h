@@ -1,123 +1,125 @@
 #pragma once
 #include "Globals.h"
 
+KeyValuesInterface threads[100] = {
+	{"01", { {"c", "0.25"},	{"f", "0.2"},	{"e", "X"},		{"eff", "X"} } },
+	{"012",{ {"c", "0.25"}, {"f", "0.2"},	{"e", "X"},		{"eff", "X"} } },
+	{"014",{ {"c", "0.3"},	{"f", "0.2"},	{"e", "X"},		{"eff", "X"} } },
+	{"016",{ {"c", "0.35"}, {"f", "0.2"},	{"e", "X"},		{"eff", "X"} } },
+	{"017",{ {"c", "0.35"}, {"f", "0.2"},	{"e", "X"},		{"eff", "X"} } },
+	{"018",{ {"c", "0.35"}, {"f", "0.2"},	{"e", "X"},		{"eff", "X"} } },
+	{"02", { {"c", "0.4"},	{"f", "0.25"},	{"e", "X"},		{"eff", "X"} } },
+	{"022",{ {"c", "0.45"}, {"f", "0.25"},	{"e", "X"},		{"eff", "X"} } },
+	{"023",{ {"c", "0.4"},	{"f", "X"},		{"e", "X"},		{"eff", "X"} } },
+	{"025",{ {"c", "0.45"}, {"f", "0.35"},	{"e", "X"},		{"eff", "X"} } },
+	{"026",{ {"c", "0.45"}, {"f", "X"},		{"e", "X"},		{"eff", "X"} } },
+	{"03", { {"c", "0.5"},	{"f", "0.35"},	{"e", "X"},		{"eff", "X"} } },
+	{"035",{ {"c", "0.6"},	{"f", "0.35"},	{"e", "X"},		{"eff", "X"} } },
+	{"04", { {"c", "0.7"},	{"f", "0.5"},	{"e", "X"},		{"eff", "X"} } },
+	{"05", { {"c", "0.8"},	{"f", "0.5"},	{"e", "X"},		{"eff", "X"} } },
+	{"06", { {"c", "1.0"},	{"f", "0.75"},	{"e", "X"},		{"eff", "X"} } },
+	{"07", { {"c", "1.0"},	{"f", "0.75"},	{"e", "X"},		{"eff", "X"} } },
+	{"08", { {"c", "1.25"}, {"f", "1"},		{"e", "0.75"},	{"eff", "X"} } },
+	{"09", { {"c", "1.25"}, {"f", "1"},		{"e", "0.75"},	{"eff", "X"} } },
+	{"10", { {"c", "1.5"},	{"f", "1.25"},	{"e", "1"},		{"eff", "0.75"} } },
+	{"11", { {"c", "1.5"},	{"f", "1"},		{"e", "0.75"},	{"eff", "X"} } },
+	{"12", { {"c", "1.75"}, {"f", "1.5"},	{"e", "1.25"},	{"eff", "1"} } },
+	{"14", { {"c", "2"},	{"f", "1.5"},	{"e", "1.25"},	{"eff", "1"} } },
+	{"16", { {"c", "2"},	{"f", "1.5"},	{"e", "1"},		{"eff", "X"} } },
+	{"18", { {"c", "2.5"},	{"f", "2"},		{"e", "1.5"},	{"eff", "1"} } },
+	{"20", { {"c", "2.5"},	{"f", "2"},		{"e", "1.5"},	{"eff", "1"} } },
+	{"22", { {"c", "2.5"},	{"f", "2"},		{"e", "1.5"},	{"eff", "1"} } },
+	{"24", { {"c", "3"},	{"f", "2"},		{"e", "1.5"},	{"eff", "1"} } },
+	{"27", { {"c", "3"},	{"f", "2"},		{"e", "1.5"},	{"eff", "1"} } },
+	{"30", { {"c", "3.5"},	{"f", "2"},		{"e", "1.5"},	{"eff", "X"} } },
+	{"33", { {"c", "3.5"},	{"f", "3"},		{"e", "2"},		{"eff", "1.5"} } },
+	{"36", { {"c", "4"},	{"f", "3"},		{"e", "2"},		{"eff", "1.5"} } },
+	{"39", { {"c", "4"},	{"f", "3"},		{"e", "2"},		{"eff", "1.5"} } },
+	{"42", { {"c", "4.5"},	{"f", "4"},		{"e", "3"},		{"eff", "2"} } },
+	{"45", { {"c", "4.5"},	{"f", "4"},		{"e", "3"},		{"eff", "2"} } },
+	{"48", { {"c", "5"},	{"f", "4"},		{"e", "3"},		{"eff", "2"} } },
+	{"X",  { {"c", "5"},	{"f", "4"},		{"e", "3"},		{"eff", "X"} } },
+	{"56", { {"c", "5.5"},	{"f", "4"},		{"e", "3"},		{"eff", "2"} } },
+	{"60", { {"c", "5.5"},	{"f", "4"},		{"e", "3"},		{"eff", "2"} } },
+	{"64", { {"c", "6"},	{"f", "4"},		{"e", "3"},		{"eff", "2"} } },
+	{"68", { {"c", "6"},	{"f", "4"},		{"e", "3"},		{"eff", "2"} } },
+	{"72", { {"c", "6"},	{"f", "4"},		{"e", "3"},		{"eff", "2"} } },
+	{"76", { {"c", "6"},	{"f", "X"},		{"e", "X"},		{"eff", "X"} } },
+	{"80", { {"c", "6"},	{"f", "4"},		{"e", "3"},		{"eff", "2"} } },
+	{"90", { {"c", "6"},	{"f", "4"},		{"e", "3"},		{"eff", "2"} } },
+	{"100",{ {"c", "6"},	{"f", "4"},		{"e", "3"},		{"eff", "2"} } },
+};
+
 #pragma region COARSE THREAD
-class COARSE_THREAD
-{
+class THREADING {
 public:
-	COARSE_THREAD();
-	~COARSE_THREAD();
-	void constructeur(string numProduit);
+	THREADING(char threadType);
+	THREADING();
+	~THREADING();
 	string getTags();
 	string getThread();
+
 private:
 	string texte;
 	string souschaine[2];
 	string tags;
-	void separation();
+	string thrdTitle;
 	string numProduit;
-	int i;
-	bool trouver;
-
-	string TabThread[100] {
-		"01",	"012",	"014",	"016",	"017",	"018",
-		"02",	"022",	"023",	"025",	"026",	"03",	"035",	"04",
-		"05",	"06",	"07",	"08",	"09",	"10",	"11",
-		"12",	"14",	"16",	"18",	"20",	"22",	"24",
-		"27",	"30",	"33",	"36",	"39",	"42",	"45",
-		"48",	"52",	"56",	"60",	"64",	"68",	"72",
-		"76",	"80",	"90",	"100",
-	};
-
-	string TabThreadTitreC[100]
-	{
-
-		"M1 * 0.25 ","M1.2 * 0.25 ","M1.4 * 0.3 ","M1.6 * 0.35 ","M1.7 * 0.35 ","M1.8 * 0.35 ",
-		"M2 * 0.4 ","M2.2 * 0.45 ","M2.3 * 0.4 ","M2.5 * 0.45 ","M2.6 * 0.45 ","M3 * 0.5 ","M3.5 * 0.6 ","M4 * 0.7 ",
-		"M5 * 0.8 ","M6 * 1.0 ","M7 * 1.0 ","M8 * 1.25 ", "M9 * 1.25 ","M10 * 1.5 ","M11 * 1.5 ",
-		"M12 * 1.75 ", "M14 * 2 ", "M16 * 2 ", "M18 * 2.5 ","M20 * 2.5 ", "M22 * 2.5 ", "M24 * 3 ",
-		"M27 * 3 ", "M30 * 3.5 ","M33 * 3.5 ", "M36 * 4 ", "M39 * 4 ", "M42 * 4.5 ", "M45 * 4.5 ",
-		"M48 * 5 ", "M52 * 5 ", "M56 * 5.5 ", "M60 * 5.5 ", "M64 * 6 ","M68 * 6 ", "M72 * 6 ",
-		"M76 * 6 ", "M80 * 6 ", "M90 * 6 ",	"M100 * 6 ",
-
-		/*		imperial
-				"1-64 ", "2-56 ", "3-48 ", "4-40 ", "5-40 ",
-				"6-32 ", "8-32 ", "10-24 ","12-24 ", "1/4-20 ",
-				"5/16-18 ", "3/8-16 ", "7/16-14 ", "1/2-13 ","9/16-12 ",
-				"5/8-11 ", "3/4-10 ", "7/8-9 ", "1-8 ", "1-1/8-7 ",
-				"1-1/4-7 ", "1-3/8-6 ", "1-1/2-6 ", "2-4-1/2 ",*/
-	};
-
-	string TabTagTitreC[100]
-	{
-
-		"thread_size_m1_0-25,", "thread_size_m1-2_0-25,", "thread_size_m1-4_0-3,", "thread_size_m1-6_0-35,", "thread_size_m1-7_0-35,", "thread_size_m1-8_0-35,",
-		"thread_size_m2_0-4,", "thread_size_m2-2_0-45,", "thread_size_m2-3_0-4,", "thread_size_m2-5_0-45,", "thread_size_m2-6_0-45,", "thread_size_m3_0-5,", "thread_size_m3-5_0-6,", "thread_size_m4_0-7,",
-		"thread_size_m5_0-8,", "thread_size_m6_1,", "thread_size_m7_1,", "thread_size_m8_1-25,", "thread_size_m9_1-25,", "thread_size_m10_1-5,", "thread_size_m11_1-5,",
-		"thread_size_m12_1-75,", "thread_size_m14_2,", "thread_size_m16_2,", "thread_size_m18_2-5,", "thread_size_m20_2-5,", "thread_size_m22_2-5,", "thread_size_m24_3,",
-		"thread_size_m27_3,", "thread_size_m30_3-5,", "thread_size_m33_3-5,", "thread_size_m36_4,", "thread_size_m39_4,", "thread_size_m42_4-5,", "thread_size_m45_4-5,",
-		"thread_size_m48_5,", "thread_size_m52_5,", "thread_size_m56_5-5,", "thread_size_m60_5-5,", "thread_size_m64_6,", "thread_size_m68_6,", "thread_size_m72_6,",
-		"thread_size_m76_6,", "thread_size_m80_6,", "thread_size_m90_6,", "thread_size_m100_6,",
-		
-
-		/*		impérial
-				"thread_size_1-64,", "thread_size_2-56,", "thread_size_3-48,", "thread_size_4-40,", "thread_size_5-40,",
-				"thread_size_6-32,", "thread_size_8-32,", "thread_size_10-24,", "thread_size_12-24,", "thread_size_1-4-20,",
-				"thread_size_5-16-18,", "thread_size_3-8-16,", "thread_size_7-16-14,", "thread_size_1-2-13,", "thread_size_9-16-12,",
-				"thread_size_5-8-11,", "thread_size_3-4-10,", "thread_size_7-8-9,", "thread_size_1-8,", "thread_size_1-1-8-7,",
-				"thread_size_1-1-4-7,", "thread_size_1-3-8-6,", "thread_size_1-1-2-6,", "thread_size_2-4-1-2,"*/
-	};
+	string thrdType;
 
 	void threading();
 
 };
 
-COARSE_THREAD::COARSE_THREAD() { }
+THREADING::THREADING() { }
 
-COARSE_THREAD::~COARSE_THREAD() { }
-
-inline void COARSE_THREAD::constructeur(string numProduit) {
-	this->numProduit = numProduit;
-	i = 0;
-	trouver = false;
-	tags = "metric_coarse,";
-	separation();
+THREADING::THREADING(char threadType) {
+	thrdType = threadType;
+	thrdTitle = "";
 	threading();
 }
 
-inline string COARSE_THREAD::getTags() { return tags; }
+THREADING::~THREADING() { }
 
-inline string COARSE_THREAD::getThread() { return TabThreadTitreC[i]; }
+inline string THREADING::getTags() { return tags; }
 
-inline void COARSE_THREAD::separation()
-{
-	stringstream ss(numProduit);
+inline string THREADING::getThread() { return thrdTitle; }
 
-	for (int j = 0; j < 2; j++)
-	{
-		getline(ss, souschaine[j], '-');
-	}
-}
-
-inline void COARSE_THREAD::threading() {
-	if (souschaine[1][0] == '0' && (souschaine[1][1] == '1' || souschaine[1][1] == '2' || souschaine[1][1] == '3' || souschaine[1][1] == '4'))
-	{
-		texte += souschaine[1][0];
-		texte += souschaine[1][1];
-		texte += souschaine[1][2];
+inline void THREADING::threading() {
+	if (global_splittedPrdNbr[1][0] == '0' && (global_splittedPrdNbr[1][1] == '1' || global_splittedPrdNbr[1][1] == '2' || global_splittedPrdNbr[1][1] == '3' || global_splittedPrdNbr[1][1] == '4')) {
+		texte = global_splittedPrdNbr[1][0];
+		texte += global_splittedPrdNbr[1][1];
+		texte += global_splittedPrdNbr[1][2];
 	}
 	else {
-		texte += souschaine[1][0];
-		texte += souschaine[1][1];
+		texte = global_splittedPrdNbr[1][0];
+		texte += global_splittedPrdNbr[1][1];
 	}
-	while (trouver == false) {
-		if (texte == TabThread[i]) {
-			trouver = true;
+
+	tags = "metric_";
+
+	if (thrdType == "c") {
+		title_thrdType = "UNC | Coarse";
+		tags += "coarse,";
+	}
+	else if (thrdType == "f") {
+		title_thrdType = "UNF | Fine";
+		tags += "fine,";
+	}
+	else if (thrdType == "e") {
+		title_thrdType = "UNEF | Extra-fine";
+		tags += "extra-fine,";
+	}
+
+	for (KeyValuesInterface k_v : threads) {
+		if (k_v.key == texte) {
+			string formatted = !texte.front() ? (texte[1] + "." + texte[2]) : texte;	// Converts 0xy to x.y (any other stay as they are) (example: M012 to M1.2)
+			thrdTitle = "M" + formatted + " * " + k_v.values[thrdType] + " ";
+
+			tags += "thread_size_m" + formatted + "_" + k_v.values[thrdType] + ",";
 			break;
 		}
-		i++;
 	}
-	tags += TabTagTitreC[i];
 }
 #pragma endregion
 
@@ -140,16 +142,6 @@ private:
 	int i;
 	bool trouver;
 
-	string TabThread[100]
-	{
-		"01","012","014","016","018",
-		"02","022","025","03","035","04",
-		"05","06","07","08","09","10","11",
-		"12","14","16","18","20","22","24",
-		"27","30","33","36","39","42" "45",
-		"48","52","56","60","64","68","72",
-		"80","90","100",
-	};
 
 	string TabThreadTitreF[100]
 	{
@@ -228,17 +220,6 @@ inline void FINE_THREAD::threading()
 	{
 		texte += souschaine[1][0];
 		texte += souschaine[1][1];
-	}
-	while (trouver == false)
-	{
-		if (texte == TabThread[i])
-		{
-			trouver = true;
-		}
-		else
-		{
-			i++;
-		}
 	}
 	tags += TabTagThreadF[i];
 }
