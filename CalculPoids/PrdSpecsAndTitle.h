@@ -10,9 +10,6 @@ public:
 };
 
 THREADING* threading_calc;
-FINE_THREAD thread_fine;
-EXTRA_FINE_THREAD thread_extra_fine;
-EXTRA_FINE_THREAD thread_extra_extra_fine;
 
 char materials[10]{ '5', '8', '9', 'S', 'N', '3', 'G', 'B' };
 string materialsTitles[10]{ "Zinc Plated ","Yellow Zinc ", "Cadium Plated ","Stainless Steel ","Black-Oxide Alloy Steel ","316 Stainless Steel ","Galvanized ","Brass " };
@@ -215,9 +212,9 @@ inline void Boulon::material()
 }
 
 inline void Boulon::threading() {
-	threading_calc = new THREADING(fineThread);
+	threading_calc = new THREADING();
 	tags = threading_calc->getTags();
-	titre += threading_calc->getThread();
+	titre = titre + threading_calc->getThread();
 }
 
 inline void Boulon::length()
@@ -617,29 +614,9 @@ inline void Ecrou::material()
 
 inline void Ecrou::threading()
 {
-	switch (fineThread) {
-		case 'c': //threading_calc
-				threading_calc = new THREADING();
-				tags = threading_calc->getTags();
-				titre = titre + threading_calc->getThread();
-			break;
-
-		case 'f': //thread_fine
-				thread_fine.constructeur(numProduit);
-				tags = thread_fine.getTags();
-				titre = titre + thread_fine.getThread();
-			break;
-
-		case 'e': //extra-thread_fine (FF)
-				thread_extra_fine.constructeur(numProduit);
-				tags = thread_extra_fine.getTags();
-				titre = titre + thread_extra_fine.getThread();
-			break;
-
-		default:
-				cout << "erreur dans le type de thread";
-			break;
-	}
+	threading_calc = new THREADING();
+	tags = threading_calc->getTags();
+	titre = titre + threading_calc->getThread();
 
 	/*extremly thread_fine
 	{
@@ -1011,7 +988,7 @@ private:
 	string text;
 	string titre;
 	string tags;
-	char fineThread;
+	string fineThread;
 
 	void produit();
 	void material();
@@ -1019,6 +996,7 @@ private:
 	void threading();
 	void length();
 	void grade();
+	void strength();
 	void drive();
 
 	// Section below is used for every other specifications needed by the body.h
@@ -1040,6 +1018,7 @@ inline Vis::Vis(string tags, string titre) {
 	threading();
 	length();
 	grade();
+	strength();
 	drive();
 	otherSpecs();
 
@@ -1084,9 +1063,11 @@ inline void Vis::produit() {
 	}
 
 	if (text.find('F') != string::npos) 
-		fineThread = 'f';
+		fineThread = "f";
 	else if (text.find('FF') != string::npos) 
-		fineThread = 'e';
+		fineThread = "ff";
+	else if (text.find('FFF') != string::npos)
+		fineThread = "fff";
 
 	title_thrdDirection = text.find('H') != string::npos ? "Left Hand" : "Right Hand";
 
@@ -1232,6 +1213,10 @@ inline void Vis::length() {
 	title_length = text + "mm";
 }
 
+inline void Vis::strength() {
+
+}
+
 inline void Vis::grade() {
 	int idx = 0;
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
@@ -1251,6 +1236,7 @@ inline void Vis::grade() {
 		#pragma endregion
 
 		string strengths[3][3];
+		#pragma region strengths
 		strengths[0][0] = "110,000 psi | Rockwell C21";
 		strengths[0][1] = "150,000 psi | Rockwell C32";
 		strengths[0][2] = "170,000 psi | Rockwell C39";
@@ -1263,6 +1249,7 @@ inline void Vis::grade() {
 		s = to_string(int(170000 * 0.6));
 		s.insert(s.end() - 3, ',');
 		strengths[1][2] = s + " psi";
+		#pragma endregion
 
 		// Created int lgt for readability sakes
 		// Retrieving last 2 chars of global_splittedPrdNbr[0] to see if there's a grade specified
@@ -1562,16 +1549,9 @@ inline void Tige_Filte::material()
 
 inline void Tige_Filte::threading()
 {
-	if (fineThread) {
-		thread_fine.constructeur(numProduit);
-		tags = thread_fine.getTags();
-		titre = titre + thread_fine.getThread();
-	}
-	else {
-		threading_calc = new THREADING();
-		tags = threading_calc->getTags();
-		titre = titre + threading_calc->getThread();
-	}
+	threading_calc = new THREADING();
+	tags = threading_calc->getTags();
+	titre = titre + threading_calc->getThread();
 }
 
 inline void Tige_Filte::length()
