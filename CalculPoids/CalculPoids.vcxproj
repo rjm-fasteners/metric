@@ -161,9 +161,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Body.h" />
-    <ClInclude Include="CalculPoids.h" />
+    <ClInclude Include="toRemove_CalculPoids.h" />
     <ClInclude Include="Globals.h" />
-    <ClInclude Include="Poids.h" />
+    <ClInclude Include="toRemove_Poids.h" />
     <ClInclude Include="Prix.h" />
     <ClInclude Include="Threading.h" />
     <ClInclude Include="PrdSpecsAndTitle.h" />

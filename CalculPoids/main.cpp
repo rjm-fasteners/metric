@@ -3,9 +3,7 @@
 
 #include "Globals.h"
 #include "Prix.h"
-#include "Poids.h"
 #include "Threading.h"
-#include "CalculPoids.h"
 #include "PrdSpecsAndTitle.h"
 #include "WeightCalculators.h"
 #include "Body.h"
@@ -36,6 +34,11 @@ string comaToDot(string val) {
 	replace(val.begin(), val.end(), ',', '.');
 	return val;
 }
+
+string dotToComa(string val) {
+	replace(val.begin(), val.end(), '.', ',');
+	return val;
+}
 #pragma endregion
 
 #pragma region Technical Drawings variables
@@ -53,12 +56,6 @@ string photo3;					// yet optional
 string photo4;					// yet optional
 int userInput_prdType;
 char userInput_action;
-
-/*****Fonction qui change le point pour une virgule*****/
-string dotToComa(string val) {
-	replace(val.begin(), val.end(), '.', ',');
-	return val;
-}
 
 /*****Fonction qui change la virgule pour un point et convertie la string en float*****/
 float toFloat(std::string prix) {
@@ -331,7 +328,7 @@ void ouverture()
 							calculatedRatio = _ratio(prix1, dernierCoutant, userInput_prdType);
 							cout << produit[0] << calculatedRatio << endl;
 
-							CALCUL_POIDS* calcul;
+							//CALCUL_POIDS* calcul;
 							WEIGHT_CALCULATORS* wgtCalc;
 							PRIX* prix;
 							string texte = produit[4];
@@ -484,7 +481,7 @@ void ouverture()
 
 						else {
 							string texte;
-							CALCUL_POIDS* calcul;
+							//CALCUL_POIDS* calcul;
 							PRIX* prix;
 
 							float rlg = 0;
@@ -492,8 +489,8 @@ void ouverture()
 								rlg = produit[0][4] + produit[0][5];
 								//rlg = stof(produit[0]);
 							}
-							calcul = new CALCUL_POIDS(produit[0], userInput_prdType, 1);
-							texte = calcul->getWgt();
+							//calcul = new CALCUL_POIDS(produit[0], userInput_prdType, 1);
+							//texte = calcul->getWgt();
 
 							TITRE title;
 							string titre = "";

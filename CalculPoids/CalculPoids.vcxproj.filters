@@ -18,13 +18,13 @@
     <ClInclude Include="Prix.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Poids.h">
+    <ClInclude Include="toRemove_Poids.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Threading.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="CalculPoids.h">
+    <ClInclude Include="toRemove_CalculPoids.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Body.h">

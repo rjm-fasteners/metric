@@ -40,6 +40,6 @@ extern string title_headDiam;
 
 extern int title_diamNom;
 
-/*****Fonction qui change la virgule pour un point*****/
 extern string comaToDot(string val);
+extern string dotToComa(string val);
 #endif
