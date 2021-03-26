@@ -1,9 +1,5 @@
 #pragma once
-#include <string>
-#include <iostream>
-#include <sstream>
-using namespace std;
-#include <map>
+#include "Globals.h"
 
 #pragma region COARSE THREAD
 class COARSE_THREAD
@@ -104,7 +100,7 @@ inline void COARSE_THREAD::separation()
 }
 
 inline void COARSE_THREAD::threading() {
-	if (souschaine[1][0] == '0' && souschaine[1][1] == '0')
+	if (souschaine[1][0] == '0' && (souschaine[1][1] == '1' || souschaine[1][1] == '2' || souschaine[1][1] == '3' || souschaine[1][1] == '4'))
 	{
 		texte += souschaine[1][0];
 		texte += souschaine[1][1];

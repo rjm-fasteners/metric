@@ -1133,12 +1133,10 @@ inline void Vis::produit() {
 		tags += "full_thread,";
 	}
 
-	if (text.find('F') != string::npos) {
+	if (text.find('F') != string::npos) 
 		fineThread = 'f';
-	}
-	else if (text.find('FF') != string::npos) {
+	else if (text.find('FF') != string::npos) 
 		fineThread = 'e';
-	}
 
 	title_thrdDirection = text.find('H') != string::npos ? "Left Hand" : "Right Hand";
 
@@ -1298,13 +1296,13 @@ inline void Vis::length() {
 	for (int j = 2; j < souschaine[1].length(); j++)
 		text += souschaine[1][j];
 
-	if (souschaine[1][0] == '0' && souschaine[1][1] == '0') {
+	if (souschaine[1][0] == '0' && (souschaine[1][1] == '1' || souschaine[1][1] == '2' || souschaine[1][1] == '3' || souschaine[1][1] == '4')) {
 		if (text[0] != '0' && text[0] != '1')
 			text[0] = '0';
 	}
 
-	if(text.front() == '0')
-		text.erase(0, 1);
+	if(text.front() == '0') text.erase(0, 1);
+	if(text.front() == '0') text.erase(0, 1);
 
 	tags += "length_" + text + "mm,";
 	titre += "* " + text + "mm ";

@@ -11,6 +11,7 @@
 #include <cstdlib>
 #include <algorithm>
 #include <filesystem>
+#include <map>
 using namespace std;
 
 # define M_PI 3.14159265358979323846		/* Pi */
@@ -42,4 +43,5 @@ extern int title_diamNom;
 
 extern string comaToDot(string val);
 extern string dotToComa(string val);
+extern float toFloat(string prix);
 #endif

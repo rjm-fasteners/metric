@@ -8,6 +8,7 @@
 #include "WeightCalculators.h"
 #include "Body.h"
 
+// Declaring variables and functions from Global.h to make them accessible everywhere
 #pragma region Global variables
 string title_thrdSize;
 string title_thrdType;
@@ -30,6 +31,7 @@ string title_headType;
 
 string title_materialAndPlating;
 int title_diamNom;
+
 string comaToDot(string val) {
 	replace(val.begin(), val.end(), ',', '.');
 	return val;
@@ -38,6 +40,11 @@ string comaToDot(string val) {
 string dotToComa(string val) {
 	replace(val.begin(), val.end(), '.', ',');
 	return val;
+}
+
+float toFloat(string prix) {
+	prix = comaToDot(prix);
+	return std::atof(prix.c_str());
 }
 #pragma endregion
 
@@ -56,12 +63,6 @@ string photo3;					// yet optional
 string photo4;					// yet optional
 int userInput_prdType;
 char userInput_action;
-
-/*****Fonction qui change la virgule pour un point et convertie la string en float*****/
-float toFloat(std::string prix) {
-	prix = comaToDot(prix);
-	return std::atof(prix.c_str());
-}
 
 string _ratio(float prix1, float dernierCoutant, int reponse) {
 	string result = "";
@@ -354,29 +355,22 @@ void ouverture()
 							/*		x1,		x10,	x50,	Bulk
 									#1,		#3,		#4,		#5			*/
 							/***** Si diamètre nominal == M6 || M8 || M10 (1/4" || 5/16" || 3/8") */
-							if (diamNom == 6 || diamNom == 8 || diamNom == 10) { qtyOptSmall = 10; qtyOptMedium = 50; qtyOptBulk = 1000; }
+							else if (diamNom == 6 || diamNom == 8 || diamNom == 10) { qtyOptSmall = 10; qtyOptMedium = 50; qtyOptBulk = 1000; }
 
 							/*		x1,		x5,		x25,	Bulk
 									#2,		#3,		#4,		#5			*/
-							/***** Si diamètre nominal == M12 || M14 || M16 (1/2" || 9/16" || 5/8") */
-							if (diamNom == 12 || diamNom == 14 || diamNom == 16) { qtyOptSmall = 5; qtyOptMedium = 25; qtyOptBulk = 500; }
+									/***** Si diamètre nominal == M12 || M14 || M16 (1/2" || 9/16" || 5/8") */
+							else if (diamNom == 12 || diamNom == 14 || diamNom == 16) { qtyOptSmall = 5; qtyOptMedium = 25; qtyOptBulk = 500; }
 
 							/*		x1,		N/A,	x5,		Bulk
 									#3,		N/A,	#4,		#5			*/
-							/***** Si diamètre nominal >= M18 && <= M24 (11/16" à 1") */
-							if (diamNom >= 18 && diamNom <= 24) { qtyOptMedium = 5; qtyOptBulk = 200; }
-
-							/*		x1,		N/A,	N/A,	Bulk
-									#4,		N/A,	N/A,	#5			*/
-							/***** Si diamètre nominal >= M27 && <= M42 (1-1/16" à 1-10/16") */
-							if (diamNom >= 27 && diamNom <= 42) { qtyOptBulk = 100; }
+									/***** Si diamètre nominal >= M18 && <= M24 (11/16" à 1") */
+							else if (diamNom >= 18 && diamNom <= 24) { qtyOptMedium = 5; qtyOptBulk = 200; }
 
 							/*		x1,		N/A,	N/A,	N/A
-									#4,		N/A,	N/A,	N/A			*/
-							/***** Si diamètre nominal > M42 (plus grand que 1-5/8") */
-							if (diamNom > 42) { qtyOptBulk = -1; }
-							// MAX FIXED TO 50
-
+									#5,		N/A,	N/A,	N/A			*/
+									/***** Si diamètre nominal >= M27 (plus grand que 1-1/16") */
+							else if (diamNom >= 27) { qtyOptBulk = -1; }
 
 							/*		x1,		N/A,	N/A,	N/A
 									#1,		N/A,	N/A,	N/A			*/
@@ -390,7 +384,7 @@ void ouverture()
 							texte = title.getTitre();
 							tag = title.getTag();
 
-							TexteATranscrire1[1] = "\"" + texte;		// First part of the title
+							TexteATranscrire1[1] = "\"" + texte + "\"";
 							TexteATranscrire1[2] = body(produit[2], produit[0], userInput_prdType, tag);
 
 							wgtCalc = new WEIGHT_CALCULATORS(userInput_prdType, 1);
@@ -399,7 +393,10 @@ void ouverture()
 							TexteATranscrire1[0] = produit[0];
 							TexteATranscrire1[7] = produit[0];
 							TexteATranscrire1[8] = dotToComa(to_string(unityWgt));
-							TexteATranscrire1[12] = produit[9];			// Prix #1
+							if(diamNom >= 27) TexteATranscrire1[12] = produit[49];	// Prix #5
+							else if(diamNom >= 18 && diamNom <= 24) TexteATranscrire1[12] = produit[29];	// Prix #3
+							else if(diamNom == 12 || diamNom == 14 || diamNom == 16) TexteATranscrire1[12] = produit[19];	// Prix #2
+							else  TexteATranscrire1[12] = produit[9];	// Prix #1
 							TexteATranscrire1[19] = produit[10];
 							TexteATranscrire1[16] = "";
 #pragma endregion
@@ -446,7 +443,7 @@ void ouverture()
 								// Calculates the weight for the bulk
 								TexteATranscrire4[8] = dotToComa(to_string(unityWgt * qtyOptBulk));
 
-								TexteATranscrire1[1] += "[Bulk Size: " + to_string(qtyOptBulk) + "]\"";		// Second part of the title, including the calculated bulk size
+								TexteATranscrire1[1] = "\"" + texte + "[Bulk Size: " + to_string(qtyOptBulk) + "]\"";		// Second part of the title, including the calculated bulk size
 								prix = new PRICE_CALCULATORS(produit[49], qtyOptBulk, "none");				// Prix #5
 
 								TexteATranscrire4[12] = dotToComa(prix->getPrice());
