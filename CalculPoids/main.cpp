@@ -1,10 +1,16 @@
 // Exécuter le programme : Ctrl+F5 ou menu Déboguer > Exécuter sans débogage
 // Déboguer le programme : F5 ou menu Déboguer > Démarrer le débogage
 
-
-
 #include "Globals.h"
+#include "Prix.h"
+#include "Poids.h"
+#include "Threading.h"
+#include "CalculPoids.h"
+#include "PrdSpecsAndTitle.h"
+#include "WeightCalculators.h"
+#include "Body.h"
 
+#pragma region Global variables
 string title_thrdSize;
 string title_thrdType;
 string title_threading;
@@ -26,43 +32,19 @@ string title_headType;
 
 string title_materialAndPlating;
 int title_diamNom;
+string comaToDot(string val) {
+	replace(val.begin(), val.end(), ',', '.');
+	return val;
+}
+#pragma endregion
 
-
-
-
-
-
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <string.h>
-#include <math.h>
-#include <cstdlib>
-#include <algorithm>
-#include "Prix.h"
-#include "Poids.h"
-#include "Threading.h"
-#include "CalculPoids.h"
-#include "PrdSpecsAndTitle.h"
-
-
-
-#include "WeightCalculators.h"
-
-
-
-#include "Body.h"
-
-#include <fstream>
-#include <iostream>
-#include <filesystem>
-using namespace std;
-
+#pragma region Technical Drawings variables
 namespace fs = std::filesystem;
 string directoryName = "";
 string startProduct = "";
 string endProduct = "";
 using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
+#pragma endregion
 
 string tag = "\"";
 string photo;
@@ -71,12 +53,6 @@ string photo3;					// yet optional
 string photo4;					// yet optional
 int userInput_prdType;
 char userInput_action;
-
-/*****Fonction qui change la virgule pour un point*****/
-string comaToDot(string val) {
-	replace(val.begin(), val.end(), ',', '.');
-	return val;
-}
 
 /*****Fonction qui change le point pour une virgule*****/
 string dotToComa(string val) {
@@ -158,7 +134,7 @@ void ouverture()
 		if (finish.is_open())
 		{
 
-			finish << "Handle;Title;Body (HTML);Tags;Published;Option1 Name;Option1 Value;Variant SKU;Variant Grams;Variant Inventory Tracker;Variant Inventory Policy;Variant Fulfillment Service;Variant Price;Variant Requires Shipping;Variant Taxable;Image Src;Gift Card;Variant Weight Unit;Cost per item" << endl;
+			finish << "Handle;Title;Body (HTML);Tags;Published;Option1 Name;Option1 Value;Variant SKU;Variant Grams;Variant Inventory Tracker;Variant Inventory Policy;Variant Fulfillment Service;Variant Price;Variant Requires Shipping;Variant Taxable;Image Src;Image Position;Gift Card;Variant Weight Unit;Cost per item" << endl;
 
 			if (Product.is_open())
 			{
@@ -381,27 +357,29 @@ void ouverture()
 							/*		x1,		x10,	x50,	Bulk
 									#1,		#3,		#4,		#5			*/
 							/***** Si diamètre nominal == M6 || M8 || M10 (1/4" || 5/16" || 3/8") */
-							if (diamNom == 6 || diamNom == 8 || diamNom == 10) { qtyOptSmall = 10; qtyOptMedium = 50; }
+							if (diamNom == 6 || diamNom == 8 || diamNom == 10) { qtyOptSmall = 10; qtyOptMedium = 50; qtyOptBulk = 1000; }
 
 							/*		x1,		x5,		x25,	Bulk
 									#2,		#3,		#4,		#5			*/
 							/***** Si diamètre nominal == M12 || M14 || M16 (1/2" || 9/16" || 5/8") */
-							if (diamNom == 12 || diamNom == 14 || diamNom == 16) { qtyOptSmall = 5; qtyOptMedium = 25; }
+							if (diamNom == 12 || diamNom == 14 || diamNom == 16) { qtyOptSmall = 5; qtyOptMedium = 25; qtyOptBulk = 500; }
 
 							/*		x1,		N/A,	x5,		Bulk
 									#3,		N/A,	#4,		#5			*/
 							/***** Si diamètre nominal >= M18 && <= M24 (11/16" à 1") */
-							if (diamNom >= 18 && diamNom <= 24 ) { qtyOptMedium = 5; }
+							if (diamNom >= 18 && diamNom <= 24) { qtyOptMedium = 5; qtyOptBulk = 200; }
 
 							/*		x1,		N/A,	N/A,	Bulk
 									#4,		N/A,	N/A,	#5			*/
 							/***** Si diamètre nominal >= M27 && <= M42 (1-1/16" à 1-10/16") */
-							if (diamNom >= 27 && diamNom <= 42) {  }
+							if (diamNom >= 27 && diamNom <= 42) { qtyOptBulk = 100; }
 
 							/*		x1,		N/A,	N/A,	N/A
 									#4,		N/A,	N/A,	N/A			*/
 							/***** Si diamètre nominal > M42 (plus grand que 1-5/8") */
 							if (diamNom > 42) { qtyOptBulk = -1; }
+							// MAX FIXED TO 50
+
 
 							/*		x1,		N/A,	N/A,	N/A
 									#1,		N/A,	N/A,	N/A			*/
@@ -418,7 +396,8 @@ void ouverture()
 							TexteATranscrire1[1] = "\"" + texte;		// First part of the title
 							TexteATranscrire1[2] = body(produit[2], produit[0], userInput_prdType, tag);
 
-							wgtCalc = (new WEIGHT_CALCULATORS(produit[0], userInput_prdType, 1));
+							wgtCalc = new WEIGHT_CALCULATORS(userInput_prdType, 1);
+							unityWgt = wgtCalc->getWgt();
 
 							TexteATranscrire1[0] = produit[0];
 							TexteATranscrire1[7] = produit[0];
@@ -460,9 +439,9 @@ void ouverture()
 
 							if (qtyOptBulk != -1) {
 #pragma region Prix par bulk
-								calcul = new CALCUL_POIDS(produit[0], userInput_prdType, 0000);
-								unityWgt = calcul->getWgt();
-								qtyOptBulk = calcul->getBulk();
+								wgtCalc = new WEIGHT_CALCULATORS(userInput_prdType, qtyOptBulk);
+								unityWgt = wgtCalc->getWgt();
+								qtyOptBulk = wgtCalc->getBulk();
 
 								TexteATranscrire4[0] = produit[0];
 								TexteATranscrire4[6] = "Bulk [" + to_string(qtyOptBulk) + "]";
@@ -471,7 +450,7 @@ void ouverture()
 								TexteATranscrire4[8] = dotToComa(to_string(unityWgt * qtyOptBulk));
 
 								TexteATranscrire1[1] += "[Bulk Size: " + to_string(qtyOptBulk) + "]\"";		// Second part of the title, including the calculated bulk size
-								prix = new PRIX(produit[49], qtyOptBulk, "none");			// Prix #5
+								prix = new PRIX(produit[49], qtyOptBulk, "none");				// Prix #5
 
 								TexteATranscrire4[12] = dotToComa(prix->getPrice());
 								TexteATranscrire4[16] = "1";

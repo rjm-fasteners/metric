@@ -3558,24 +3558,24 @@ string bodyScrew(string categorie, string numProduit, string tag) {
 			"<tr><td>Material & Plating</td><td>" + title_materialAndPlating + "</td></tr>" +
 			"<tr><td>System of Measurement</td><td>Metric</td></tr>" +
 			"<tr><td><u>Thread Specifications</u></td><td></td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Threading</td><td>" + title_threading + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Type</td><td>" + title_thrdType + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Direction</td><td>" + title_thrdDirection + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Size</td><td>" + title_thrdSize + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Min. Length</td><td>" + title_minThrdLength + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Fit</td><td>" + title_thrdFit + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Threading</td><td>" + title_threading + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Type</td><td>" + title_thrdType + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Direction</td><td>" + title_thrdDirection + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Size</td><td>" + title_thrdSize + "</td></tr>" +
+				((title_threading[0] == 'P') ? "<tr><td style=\"text-indent: 25px\">Min. Length</td><td>" + title_minThrdLength + "</td></tr>" : " ") +
+				"<tr><td style=\"text-indent: 25px\">Fit</td><td>" + title_thrdFit + "</td></tr>" +
 			"<tr><td><u>Head Specifications</u></td><td></td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Type</td><td>" + title_headType + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Profile</td><td>" + title_headProfile + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Diameter</td><td>" + title_headDiam + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Height</td><td>" + title_headHeight + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Drive Style</td><td>" + title_driveStyle + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Drive Size</td><td>" + title_driveSize + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Type</td><td>" + title_headType + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Profile</td><td>" + title_headProfile + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Diameter</td><td>" + title_headDiam + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Height</td><td>" + title_headHeight + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Drive Style</td><td>" + title_driveStyle + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Drive Size</td><td>" + title_driveSize + "</td></tr>" +
 			"<tr><td><u>Strength Specifications</u></td><td></td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Strength Grade/Class</td><td>" + title_grade + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Tensile Strength | Hardness</td><td>" + title_tensStrength + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Shear Strength</td><td>" + title_shearStrength + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px;\">Classification</td><td>DIN 912</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Strength Grade/Class</td><td>" + title_grade + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Tensile Strength | Hardness</td><td>" + title_tensStrength + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Shear Strength</td><td>" + title_shearStrength + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Classification</td><td>DIN 912</td></tr>" +
 		"</tbody></table>"
 
 		"<br/>"

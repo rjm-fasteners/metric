@@ -23,24 +23,14 @@ private:
 	int i;
 	bool trouver;
 
-	string TabThread[100]
-	{
-
-		"01","012","014","016","017","018",
-		"02","022","023","025","026","03","035","04",
-		"05","06","07","08","09","10","11",
-		"12","14","16","18","20","22","24",
-		"27","30","33","36","39","42" "45",
-		"48","52","56","60","64","68","72",
-		"76","80","90","100",
-		
-
-		/*		imperial
-				"001","002", "003","004","005",
-				"006","007","008","009","01",
-				"02","03","04","05","06","07",
-				"08","09","10","11","12",
-				"13","15","20"*/
+	string TabThread[100] {
+		"01",	"012",	"014",	"016",	"017",	"018",
+		"02",	"022",	"023",	"025",	"026",	"03",	"035",	"04",
+		"05",	"06",	"07",	"08",	"09",	"10",	"11",
+		"12",	"14",	"16",	"18",	"20",	"22",	"24",
+		"27",	"30",	"33",	"36",	"39",	"42",	"45",
+		"48",	"52",	"56",	"60",	"64",	"68",	"72",
+		"76",	"80",	"90",	"100",
 	};
 
 	string TabThreadTitreC[100]
@@ -86,16 +76,11 @@ private:
 
 };
 
-COARSE_THREAD::COARSE_THREAD()
-{
-}
+COARSE_THREAD::COARSE_THREAD() { }
 
-COARSE_THREAD::~COARSE_THREAD()
-{
-}
+COARSE_THREAD::~COARSE_THREAD() { }
 
-inline void COARSE_THREAD::constructeur(string numProduit)
-{
+inline void COARSE_THREAD::constructeur(string numProduit) {
 	this->numProduit = numProduit;
 	i = 0;
 	trouver = false;
@@ -104,15 +89,9 @@ inline void COARSE_THREAD::constructeur(string numProduit)
 	threading();
 }
 
-inline string COARSE_THREAD::getTags()
-{
-	return tags;
-}
+inline string COARSE_THREAD::getTags() { return tags; }
 
-inline string COARSE_THREAD::getThread()
-{
-	return TabThreadTitreC[i];
-}
+inline string COARSE_THREAD::getThread() { return TabThreadTitreC[i]; }
 
 inline void COARSE_THREAD::separation()
 {
@@ -124,8 +103,7 @@ inline void COARSE_THREAD::separation()
 	}
 }
 
-inline void COARSE_THREAD::threading()
-{
+inline void COARSE_THREAD::threading() {
 	if (souschaine[1][0] == '0' && souschaine[1][1] == '0')
 	{
 		texte += souschaine[1][0];

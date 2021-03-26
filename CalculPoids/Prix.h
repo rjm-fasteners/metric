@@ -19,7 +19,7 @@ private:
 
 inline PRIX::PRIX(string productPrice, int quantity, string info) {
 	finalPrice = 0;
-	this->prdPrice = stof(productPrice);
+	this->prdPrice = stof(comaToDot(productPrice));
 	this->info = info;
 	this->qty = quantity;
 	finalprice();
