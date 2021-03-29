@@ -8,10 +8,10 @@ WEIGHT::WEIGHT(int userInput_prdType, int quantity) {
 	weight = 0;
 
 	// VARS FOR CALCUL
-	headDiam = stod(title_headDiam);
-	headHgt = stod(title_headHeight);
-	diamNom = title_diamNom;
-	bodyLgt = stod(title_length);
+	headDiam = stod(global_headDiam);
+	headHgt = stod(global_headHeight);
+	diamNom = global_diamNom;
+	bodyLgt = stod(global_length);
 	RHO = 7.8;
 
 	choix();

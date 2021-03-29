@@ -3198,43 +3198,43 @@ string bodyScrew(string categorie, string tag) {
 	string corrResistance;
 	string plated = "providing a mild resistance to corrosion in dry environments";
 	string stainless = "providing a high resistance to corrosion in dry and wet environments";
-	corrResistance = title_materialAndPlating[0] == 'A' ? stainless : plated;
-	title_materialAndPlating.pop_back();	// Removes unecessary space at the end
+	corrResistance = global_materialAndPlating[0] == 'A' ? stainless : plated;
+	global_materialAndPlating.pop_back();	// Removes unecessary space at the end
 
 	string tableHTML = 
 		"<table><tbody>"
 			"<tr><td>Product Number</td><td>"  + global_prdNbr + "</td></tr>" +
-			"<tr><td>Nominal Diameter</td><td>" + title_thrdSize + "</td></tr>" +
-			"<tr><td>Length</td><td>" + title_length + "</td></tr>" +
-			"<tr><td>Material & Plating</td><td>" + title_materialAndPlating + "</td></tr>" +
+			"<tr><td>Nominal Diameter</td><td>" + global_thrdSize + "</td></tr>" +
+			"<tr><td>Length</td><td>" + global_length + "</td></tr>" +
+			"<tr><td>Material & Plating</td><td>" + global_materialAndPlating + "</td></tr>" +
 			"<tr><td>System of Measurement</td><td>Metric</td></tr>" +
 			"<tr><td><u>Thread Specifications</u></td><td></td></tr>" +
-				"<tr><td style=\"text-indent: 25px\">Threading</td><td>" + title_threading + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px\">Type</td><td>" + title_thrdType + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px\">Direction</td><td>" + title_thrdDirection + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px\">Size</td><td>" + title_thrdSize + "</td></tr>" +
-				((title_threading[0] == 'P') ? "<tr><td style=\"text-indent: 25px\">Min. Length</td><td>" + title_minThrdLength + "</td></tr>" : " ") +
-				"<tr><td style=\"text-indent: 25px\">Fit</td><td>" + title_thrdFit + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Threading</td><td>" + global_threading + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Type</td><td>" + global_thrdType + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Direction</td><td>" + global_thrdDirection + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Size</td><td>" + global_thrdSize + "</td></tr>" +
+				((global_threading[0] == 'P') ? "<tr><td style=\"text-indent: 25px\">Min. Length</td><td>" + global_minThrdLength + "</td></tr>" : " ") +
+				"<tr><td style=\"text-indent: 25px\">Fit</td><td>" + global_thrdFit + "</td></tr>" +
 			"<tr><td><u>Head Specifications</u></td><td></td></tr>" +
-				"<tr><td style=\"text-indent: 25px\">Type</td><td>" + title_headType + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px\">Profile</td><td>" + title_headProfile + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px\">Diameter</td><td>" + title_headDiam + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px\">Height</td><td>" + title_headHeight + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px\">Drive Style</td><td>" + title_driveStyle + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px\">Drive Size</td><td>" + title_driveSize + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Type</td><td>" + global_headType + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Profile</td><td>" + global_headProfile + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Diameter</td><td>" + global_headDiam + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Height</td><td>" + global_headHeight + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Drive Style</td><td>" + global_driveStyle + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Drive Size</td><td>" + global_driveSize + "</td></tr>" +
 			"<tr><td><u>Strength Specifications</u></td><td></td></tr>" +
-				"<tr><td style=\"text-indent: 25px\">Strength Grade/Class</td><td>" + title_grade + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px\">Tensile Strength | Hardness</td><td>" + title_tensStrength + "</td></tr>" +
-				"<tr><td style=\"text-indent: 25px\">Shear Strength</td><td>" + title_shearStrength + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Strength Grade/Class</td><td>" + global_grade + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Tensile Strength | Hardness</td><td>" + global_tensStrength + "</td></tr>" +
+				"<tr><td style=\"text-indent: 25px\">Shear Strength</td><td>" + global_shearStrength + "</td></tr>" +
 				"<tr><td style=\"text-indent: 25px\">Classification</td><td>DIN 912</td></tr>" +
 		"</tbody></table>"
 
 		"<br/>"
 		
 		"<div>"
-			"<p>This socket head cap screw has a length of " + title_length + " with a threading of " + title_thrdSize + " [" + title_threading + "]. It is made of " + title_materialAndPlating + ", " + corrResistance + ".</p>"
-			"<p>The cup point" + (title_grade != "" ? (" and the " + title_grade) : ("")) + " increases its strength against the pressure and has a tensile strength and hardness of " + title_tensStrength + ". Furthermore, it features a shear strenght of " + title_shearStrength + ".</p>"
-			"<p>"+ title_thrdType +" threads are an industry standard. These screws are classified as DIN 912 and comply with dimensional standards.</p>"
+			"<p>This socket head cap screw has a length of " + global_length + " with a threading of " + global_thrdSize + " [" + global_threading + "]. It is made of " + global_materialAndPlating + ", " + corrResistance + ".</p>"
+			"<p>The cup point" + (global_grade != "" ? (" and the " + global_grade) : ("")) + " increases its strength against the pressure and has a tensile strength and hardness of " + global_tensStrength + ". Furthermore, it features a shear strenght of " + global_shearStrength + ".</p>"
+			"<p>"+ global_thrdType +" threads are an industry standard. These screws are classified as DIN 912 and comply with dimensional standards.</p>"
 		"</div>";
 
 	return tableHTML;

@@ -3,7 +3,7 @@
 #include "Threading.h"
 
 
-KeyValuesInterface threads[100] = {
+struct_KeyValues threads[100] = {
 	{"01", { {"c", "0.25"},	{"f", "0.2"},	{"ff", "X"},	{"fff", "X"} } },
 	{"012",{ {"c", "0.25"}, {"f", "0.2"},	{"ff", "X"},	{"fff", "X"} } },
 	{"014",{ {"c", "0.3"},	{"f", "0.2"},	{"ff", "X"},	{"fff", "X"} } },
@@ -80,23 +80,23 @@ void THREADING::threading() {
 	tags = "metric_";
 
 	if (thrdType == "c") {
-		title_thrdType = "ISO Metric Pitch | Coarse";
+		global_thrdType = "ISO Metric Pitch | Coarse";
 		tags += "coarse,";
 	}
 	else if (thrdType == "f") {
-		title_thrdType = "ISO Metric Pitch | Fine";
+		global_thrdType = "ISO Metric Pitch | Fine";
 		tags += "fine,";
 	}
 	else if (thrdType == "ff") {
-		title_thrdType = "ISO Metric Pitch | Extra-fine";
+		global_thrdType = "ISO Metric Pitch | Extra-fine";
 		tags += "extra-fine,";
 	}
 	else if (thrdType == "fff") {
-		title_thrdType = "ISO Metric Pitch | Extra-extra-fine";
+		global_thrdType = "ISO Metric Pitch | Extra-extra-fine";
 		tags += "extra-extra-fine,";
 	}
 
-	for (KeyValuesInterface k_v : threads) {
+	for (struct_KeyValues k_v : threads) {
 		if (k_v.key == text) {
 			string formatted = text;
 			if (text[0] == '0') {

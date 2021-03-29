@@ -1045,11 +1045,11 @@ inline void Vis::produit() {
 	fineThread = 'c';
 
 	if (text.find('I') != string::npos) {
-		title_headProfile = "Low";
+		global_headProfile = "Low";
 		titre += "Low Head "; 
 		tags += "low_head,";
 	} 
-	else title_headProfile = "Standard";
+	else global_headProfile = "Standard";
 
 	if (text.find('T') != string::npos) {
 		titre += "Full Thread ";
@@ -1063,7 +1063,7 @@ inline void Vis::produit() {
 	else if (text.find('FFF') != string::npos)
 		fineThread = "fff";
 
-	title_thrdDirection = text.find('H') != string::npos ? "Left Hand" : "Right Hand";
+	global_thrdDirection = text.find('H') != string::npos ? "Left Hand" : "Right Hand";
 
 	//for (ProductsValuesInterface p_v : prods_vals) {
 	//	if (p_v.products.find(text) != string::npos) {
@@ -1096,7 +1096,7 @@ inline void Vis::material() {
 		if (!global_splittedPrdNbr[2][0]) {
 			tags += materialsVpTags[matId];
 			titre += materialsVpTitles[matId];
-			title_materialAndPlating = materialsVpTitles[matId];
+			global_materialAndPlating = materialsVpTitles[matId];
 		}
 	}
 	else {
@@ -1134,7 +1134,7 @@ inline void Vis::plating() {
 		if (platId != -1) {
 			tags += platingsVpTags[platId];
 			titre += platingsVpTitles[platId];
-			title_materialAndPlating += platingsVpTitles[platId];
+			global_materialAndPlating += platingsVpTitles[platId];
 		}
 	}
 	else if(global_splittedPrdNbr[2][0]) {
@@ -1204,7 +1204,7 @@ inline void Vis::length() {
 
 	tags += "length_" + text + "mm,";
 	titre += "* " + text + "mm ";
-	title_length = text + "mm";
+	global_length = text + "mm";
 }
 
 inline string Vis::strength(string type, int i) {
@@ -1213,9 +1213,9 @@ inline string Vis::strength(string type, int i) {
 		int strengths[3] = { 110000, 150000, 170000 };
 		string hardness[3] = { " | Rockwell C21", " | Rockwell C32", " | Rockwell C39" };
 
-		if (title_materialAndPlating[0] == 'A') {
+		if (global_materialAndPlating[0] == 'A') {
 			i = 0;	// Since there's no strength grades for stainless steel
-			if (title_materialAndPlating[1] == '2') {	// Stainless A2 (304)
+			if (global_materialAndPlating[1] == '2') {	// Stainless A2 (304)
 				strengths[0] = 70000;
 				hardness[0] = " | Rockwell B70";
 			}
@@ -1243,7 +1243,7 @@ inline string Vis::strength(string type, int i) {
 inline void Vis::grade() {
 	int idx = 0;
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
-		TypeTitleTagsInterface grades[3];
+		struct_TypeTitleTags grades[3];
 #pragma region grades
 		grades[0].type = "88";
 		grades[0].tags = "grade_8.8,";
@@ -1270,11 +1270,11 @@ inline void Vis::grade() {
 		if (global_splittedPrdNbr[0][2] != 'S') {
 			tags += grades[idx].tags;
 			titre += grades[idx].title;
-			title_grade = grades[idx].title;
+			global_grade = grades[idx].title;
 		}
 
-		title_tensStrength = strength("tensile", idx);
-		title_shearStrength = strength("shear", idx);
+		global_tensStrength = strength("tensile", idx);
+		global_shearStrength = strength("shear", idx);
 	}
 	else {
 		for (int i = 0; i < global_splittedPrdNbr[0].length(); i++) {
@@ -1291,7 +1291,7 @@ inline void Vis::grade() {
 
 inline void Vis::drive() {
 	int idx = 0;
-	TypeTitleTagsInterface drives[6];
+	struct_TypeTitleTags drives[6];
 	#pragma region drives
 	drives[0].type = "S";
 	drives[0].tags = "slotted,";
@@ -1332,60 +1332,60 @@ inline void Vis::drive() {
 
 	tags += drives[idx].tags;
 	titre += drives[idx].title;
-	title_driveStyle = (drives[idx].title.erase(0, 1).erase(drives[idx].title.size() - 2));		// Removes square brackets
+	global_driveStyle = (drives[idx].title.erase(0, 1).erase(drives[idx].title.size() - 2));		// Removes square brackets
 }
 
 inline void Vis::otherSpecs() {
 	// Retrieves number(s) from after 'M' and until ' '(space)		# Nominal Diameter
-	title_diamNom = stoi(thread.substr(1, thread.find(' ')));
+	global_diamNom = stoi(thread.substr(1, thread.find(' ')));
 
 	// Head Diameter equals 1.5 times the nominal diameter			# Head Diameter
-	title_headDiam = to_string(int(title_diamNom * 1.5));
+	global_headDiam = to_string(int(global_diamNom * 1.5));
 
 	// Head Height is same as nominal diameter						# Head Height
-	title_headHeight = to_string(title_diamNom) + "mm";
+	global_headHeight = to_string(global_diamNom) + "mm";
 
 	// Conditions for variables that cannot be calculated			# Drive Size, Head Diameter
-	if (title_diamNom == 48)	  { title_driveSize = "36"; }
-	else if (title_diamNom == 42) { title_driveSize = "32"; }
-	else if (title_diamNom == 36) { title_driveSize = "27"; }
-	else if (title_diamNom == 33) { title_driveSize = "24"; }
-	else if (title_diamNom == 30) { title_driveSize = "22"; }
-	else if (title_diamNom == 27) { title_driveSize = "19"; }
-	else if (title_diamNom == 24) { title_driveSize = "19"; }
-	else if (title_diamNom == 22) { title_driveSize = "17"; }
-	else if (title_diamNom == 20) { title_driveSize = "17"; }
-	else if (title_diamNom == 18) { title_driveSize = "14"; }
-	else if (title_diamNom == 16) { title_driveSize = "14"; }
-	else if (title_diamNom == 14) { title_driveSize = "12"; }
-	else if (title_diamNom == 12) { title_driveSize = "10"; }
-	else if (title_diamNom == 10) { title_driveSize = "8"; title_headDiam = "16"; }
-	else if (title_diamNom == 8)  { title_driveSize = "6"; title_headDiam = "13"; }
-	else if (title_diamNom == 7)  { title_driveSize = "6"; title_headDiam = "12"; }
-	else if (title_diamNom == 6)  { title_driveSize = "5"; title_headDiam = "10"; }
-	else if (title_diamNom == 5)  { title_driveSize = "4"; title_headDiam = "8.5"; }
-	else if (title_diamNom == 4)  { title_driveSize = "3"; title_headDiam = "7"; }
-	else if (title_diamNom == 3.5){ title_driveSize = "2.5"; title_headDiam = "6.2"; }
-	else if (title_diamNom == 3)  { title_driveSize = "2.5"; title_headDiam = "5.5"; }
-	else if (title_diamNom == 2.5){ title_driveSize = "2"; title_headDiam = "4.5"; }
-	else if (title_diamNom == 2)  { title_driveSize = "1.5"; title_headDiam = "3.8"; }
-	else if (title_diamNom == 1.6){ title_driveSize = "1.5"; title_headDiam = "3"; }
-	title_driveSize += "mm";
-	title_headDiam += "mm";
+	if (global_diamNom == 48)	  { global_driveSize = "36"; }
+	else if (global_diamNom == 42) { global_driveSize = "32"; }
+	else if (global_diamNom == 36) { global_driveSize = "27"; }
+	else if (global_diamNom == 33) { global_driveSize = "24"; }
+	else if (global_diamNom == 30) { global_driveSize = "22"; }
+	else if (global_diamNom == 27) { global_driveSize = "19"; }
+	else if (global_diamNom == 24) { global_driveSize = "19"; }
+	else if (global_diamNom == 22) { global_driveSize = "17"; }
+	else if (global_diamNom == 20) { global_driveSize = "17"; }
+	else if (global_diamNom == 18) { global_driveSize = "14"; }
+	else if (global_diamNom == 16) { global_driveSize = "14"; }
+	else if (global_diamNom == 14) { global_driveSize = "12"; }
+	else if (global_diamNom == 12) { global_driveSize = "10"; }
+	else if (global_diamNom == 10) { global_driveSize = "8"; global_headDiam = "16"; }
+	else if (global_diamNom == 8)  { global_driveSize = "6"; global_headDiam = "13"; }
+	else if (global_diamNom == 7)  { global_driveSize = "6"; global_headDiam = "12"; }
+	else if (global_diamNom == 6)  { global_driveSize = "5"; global_headDiam = "10"; }
+	else if (global_diamNom == 5)  { global_driveSize = "4"; global_headDiam = "8.5"; }
+	else if (global_diamNom == 4)  { global_driveSize = "3"; global_headDiam = "7"; }
+	else if (global_diamNom == 3.5){ global_driveSize = "2.5"; global_headDiam = "6.2"; }
+	else if (global_diamNom == 3)  { global_driveSize = "2.5"; global_headDiam = "5.5"; }
+	else if (global_diamNom == 2.5){ global_driveSize = "2"; global_headDiam = "4.5"; }
+	else if (global_diamNom == 2)  { global_driveSize = "1.5"; global_headDiam = "3.8"; }
+	else if (global_diamNom == 1.6){ global_driveSize = "1.5"; global_headDiam = "3"; }
+	global_driveSize += "mm";
+	global_headDiam += "mm";
 
 	// Remove last space so the measure unit (mm) is next to the number		# Thread
 	thread.pop_back();		
-	title_thrdSize = thread + "mm";
+	global_thrdSize = thread + "mm";
 
 	// Minimum Thread Length can be calculated with... y = 2x + 12			# Minimum Thread Length
-	title_minThrdLength = to_string(2 * title_diamNom + 12) + "mm";
+	global_minThrdLength = to_string(2 * global_diamNom + 12) + "mm";
 
 	// Threading is either full or partial									# Threading
-	title_threading = global_splittedPrdNbr[0].find('T') != string::npos ? "Fully Threaded" : "Partially Threaded";
+	global_threading = global_splittedPrdNbr[0].find('T') != string::npos ? "Fully Threaded" : "Partially Threaded";
 
 	// Those will be constant
-	title_thrdFit = "Class 5g6g";
-	title_headType = "Socket";
+	global_thrdFit = "Class 5g6g";
+	global_headType = "Socket";
 }
 
 #pragma endregion

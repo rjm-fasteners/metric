@@ -10,27 +10,27 @@
 
 // Declaring variables and functions from Global.h to make them accessible everywhere
 #pragma region Global variables
-string title_thrdSize;
-string title_thrdType;
-string title_threading;
-string title_thrdFit;
-string title_thrdDirection;
-string title_minThrdLength;
-string title_length;
-string title_grade;
+string global_thrdSize;
+string global_thrdType;
+string global_threading;
+string global_thrdFit;
+string global_thrdDirection;
+string global_minThrdLength;
+string global_length;
+string global_grade;
 
-string title_tensStrength;
-string title_shearStrength;
+string global_tensStrength;
+string global_shearStrength;
 
-string title_driveStyle;
-string title_driveSize;
-string title_headDiam;
-string title_headHeight;
-string title_headProfile;
-string title_headType;
+string global_driveStyle;
+string global_driveSize;
+string global_headDiam;
+string global_headHeight;
+string global_headProfile;
+string global_headType;
 
-string title_materialAndPlating;
-int title_diamNom;
+string global_materialAndPlating;
+int global_diamNom;
 
 string global_splittedPrdNbr[3];
 string global_prdNbr;
