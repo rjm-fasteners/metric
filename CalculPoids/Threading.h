@@ -114,7 +114,15 @@ inline void THREADING::threading() {
 
 	for (KeyValuesInterface k_v : threads) {
 		if (k_v.key == text) {
-			string formatted = !text.front() ? (text[1] + "." + text[2]) : text;	// Converts 0xy to x.y (any other stay as they are) (example: M012 to M1.2)
+			string formatted = text;
+			if (text[0] == '0') {
+				text.erase(0, 1);
+				if (text[1]) {
+					formatted = text[0];		// Converts 0xy to x.y (any other stay as they are) (example: M012 to M1.2)
+					formatted += ".";
+					formatted += text[1];
+				}
+			}
 			thrdTitle = "M" + formatted + " * " + k_v.values[thrdType] + " ";
 
 			tags += "thread_size_m" + formatted + "_" + k_v.values[thrdType] + ",";
