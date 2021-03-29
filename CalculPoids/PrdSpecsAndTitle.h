@@ -996,8 +996,8 @@ private:
 	void threading();
 	void length();
 	void grade();
-	void strength();
 	void drive();
+	string strength(string type, int i);
 
 	// Section below is used for every other specifications needed by the body.h
 	void otherSpecs();
@@ -1018,7 +1018,7 @@ inline Vis::Vis(string tags, string titre) {
 	threading();
 	length();
 	grade();
-	strength();
+	//strength();
 	drive();
 	otherSpecs();
 
@@ -1213,15 +1213,44 @@ inline void Vis::length() {
 	title_length = text + "mm";
 }
 
-inline void Vis::strength() {
+inline string Vis::strength(string type, int i) {
+	string strength;
+	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
+		int strengths[3] = { 110000, 150000, 170000 };
+		string hardness[3] = { " | Rockwell C21", " | Rockwell C32", " | Rockwell C39" };
 
+		if (title_materialAndPlating[0] == 'A') {
+			i = 0;	// Since there's no strength grades for stainless steel
+			if (title_materialAndPlating[1] == '2') {	// Stainless A2 (304)
+				strengths[0] = 70000;
+				hardness[0] = " | Rockwell B70";
+			}
+			else {	// Stainless A4 (316)
+				strengths[0] = 75000;
+				hardness[0] = " | Rockwell B79";
+			}
+		}
+
+		if (type == "tensile") {
+			strength = to_string(strengths[i]);
+			strength.insert(strength.end() - 3, ',');
+			strength += hardness[i];
+		}
+		else {
+			strength = to_string(int(strengths[i] * 0.6));
+			strength.insert(strength.end() - 3, ',');
+			strength += " psi";
+		}
+
+		return strength;
+	}
 }
 
 inline void Vis::grade() {
 	int idx = 0;
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
 		TypeTitleTagsInterface grades[3];
-		#pragma region grades
+#pragma region grades
 		grades[0].type = "88";
 		grades[0].tags = "grade_8.8,";
 		grades[0].title = "Grade 8.8 ";
@@ -1233,23 +1262,7 @@ inline void Vis::grade() {
 		grades[2].type = "";
 		grades[2].tags = "grade_12.9,";
 		grades[2].title = "Grade 12.9 ";
-		#pragma endregion
-
-		string strengths[3][3];
-		#pragma region strengths
-		strengths[0][0] = "110,000 psi | Rockwell C21";
-		strengths[0][1] = "150,000 psi | Rockwell C32";
-		strengths[0][2] = "170,000 psi | Rockwell C39";
-		string s = to_string(int(110000 * 0.6));
-		s.insert(s.end() - 3, ',');
-		strengths[1][0] = s + " psi";
-		s = to_string(int(150000 * 0.6));
-		s.insert(s.end() - 3, ',');
-		strengths[1][1] = s + " psi";
-		s = to_string(int(170000 * 0.6));
-		s.insert(s.end() - 3, ',');
-		strengths[1][2] = s + " psi";
-		#pragma endregion
+#pragma endregion
 
 		// Created int lgt for readability sakes
 		// Retrieving last 2 chars of global_splittedPrdNbr[0] to see if there's a grade specified
@@ -1266,8 +1279,8 @@ inline void Vis::grade() {
 			title_grade = grades[idx].title;
 		}
 
-		title_tensStrength = strengths[0][idx];
-		title_shearStrength = strengths[1][idx];
+		title_tensStrength = strength("tensile", idx);
+		title_shearStrength = strength("shear", idx);
 	}
 	else {
 		for (int i = 0; i < global_splittedPrdNbr[0].length(); i++) {
