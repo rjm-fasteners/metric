@@ -2,12 +2,6 @@
 #include "Threading.h"
 #include "Globals.h"
 
-class TypeTitleTagsInterface {
-public:
-	string type;
-	string title;
-	string tags;
-};
 
 THREADING* threading_calc;
 

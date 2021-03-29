@@ -48,6 +48,12 @@ extern string comaToDot(string val);
 extern string dotToComa(string val);
 extern float toFloat(string prix);
 
+struct TypeTitleTagsInterface {
+	string type;
+	string title;
+	string tags;
+};
+
 struct KeyValuesInterface {
 	string key;
 	map<string, string> values;

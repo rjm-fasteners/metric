@@ -158,6 +158,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Price.cpp" />
+    <ClCompile Include="Threading.cpp" />
     <ClCompile Include="Weight.cpp" />
   </ItemGroup>
   <ItemGroup>
