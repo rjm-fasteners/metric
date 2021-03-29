@@ -157,18 +157,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="PriceCalculators.cpp" />
-    <ClCompile Include="WeightCalculators.cpp" />
+    <ClCompile Include="Price.cpp" />
+    <ClCompile Include="Weight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Body.h" />
     <ClInclude Include="toRemove_CalculPoids.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="toRemove_Poids.h" />
-    <ClInclude Include="PriceCalculators.h" />
+    <ClInclude Include="Price.h" />
     <ClInclude Include="Threading.h" />
     <ClInclude Include="PrdSpecsAndTitle.h" />
-    <ClInclude Include="WeightCalculators.h" />
+    <ClInclude Include="Weight.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

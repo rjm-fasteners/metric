@@ -2,10 +2,10 @@
 // Déboguer le programme : F5 ou menu Déboguer > Démarrer le débogage
 
 #include "Globals.h"
-#include "PriceCalculators.h"
+#include "Price.h"
 #include "Threading.h"
 #include "PrdSpecsAndTitle.h"
-#include "WeightCalculators.h"
+#include "Weight.h"
 #include "Body.h"
 
 // Declaring variables and functions from Global.h to make them accessible everywhere
@@ -338,8 +338,8 @@ void ouverture()
 							cout << produit[0] << calculatedRatio << endl;
 
 							//CALCUL_POIDS* calcul;
-							WEIGHT_CALCULATORS* wgtCalc;
-							PRICE_CALCULATORS* prix;
+							WEIGHT* wgtCalc;
+							PRICE* prix;
 							string texte = produit[4];
 							float unityWgt = 0;
 
@@ -395,7 +395,7 @@ void ouverture()
 							TexteATranscrire1[1] = "\"" + texte + "\"";
 							TexteATranscrire1[2] = body(produit[2], userInput_prdType, tag);
 
-							wgtCalc = new WEIGHT_CALCULATORS(userInput_prdType, 1);
+							wgtCalc = new WEIGHT(userInput_prdType, 1);
 							unityWgt = wgtCalc->getWgt();
 
 							TexteATranscrire1[0] = produit[0];
@@ -417,7 +417,7 @@ void ouverture()
 								// Calculates the weight for the small quantity
 								TexteATranscrire2[8] = dotToComa(to_string(unityWgt * qtyOptSmall));
 
-								prix = new PRICE_CALCULATORS(comaToDot(produit[29]), qtyOptSmall, "none");		// Prix #3
+								prix = new PRICE(comaToDot(produit[29]), qtyOptSmall, "none");		// Prix #3
 
 								TexteATranscrire2[12] = dotToComa(prix->getPrice());
 								TexteATranscrire2[18] = produit[10];
@@ -432,7 +432,7 @@ void ouverture()
 								// Calculates the weight for the medium quantity
 								TexteATranscrire3[8] = dotToComa(to_string(unityWgt * qtyOptMedium));
 
-								prix = new PRICE_CALCULATORS(comaToDot(produit[39]), qtyOptMedium, "none");		// Prix #4
+								prix = new PRICE(comaToDot(produit[39]), qtyOptMedium, "none");		// Prix #4
 
 								TexteATranscrire3[12] = dotToComa(prix->getPrice());
 								TexteATranscrire3[18] = produit[10];
@@ -441,7 +441,7 @@ void ouverture()
 
 							if (qtyOptBulk != -1) {
 #pragma region Prix par bulk
-								wgtCalc = new WEIGHT_CALCULATORS(userInput_prdType, qtyOptBulk);
+								wgtCalc = new WEIGHT(userInput_prdType, qtyOptBulk);
 								unityWgt = wgtCalc->getWgt();
 								qtyOptBulk = wgtCalc->getBulk();
 
@@ -452,7 +452,7 @@ void ouverture()
 								TexteATranscrire4[8] = dotToComa(to_string(unityWgt * qtyOptBulk));
 
 								TexteATranscrire1[1] = "\"" + texte + "[Bulk Size: " + to_string(qtyOptBulk) + "]\"";		// Second part of the title, including the calculated bulk size
-								prix = new PRICE_CALCULATORS(produit[49], qtyOptBulk, "none");				// Prix #5
+								prix = new PRICE(produit[49], qtyOptBulk, "none");				// Prix #5
 
 								TexteATranscrire4[12] = dotToComa(prix->getPrice());
 								TexteATranscrire4[16] = "1";
@@ -487,7 +487,7 @@ void ouverture()
 						else {
 							string texte;
 							//CALCUL_POIDS* calcul;
-							PRICE_CALCULATORS* prix;
+							PRICE* prix;
 
 							float rlg = 0;
 							if (produit[0][0] == 'R' && produit[0][1] == 'L' && produit[0][2] == 'G') {
