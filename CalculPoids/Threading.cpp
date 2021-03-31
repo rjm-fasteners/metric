@@ -40,7 +40,7 @@ struct_KeyValues threads[100] = {
 	{"42", { {"c", "4.5"},	{"f", "4"},		{"ff", "3"},	{"fff", "2"} } },
 	{"45", { {"c", "4.5"},	{"f", "4"},		{"ff", "3"},	{"fff", "2"} } },
 	{"48", { {"c", "5"},	{"f", "4"},		{"ff", "3"},	{"fff", "2"} } },
-	{"X",  { {"c", "5"},	{"f", "4"},		{"ff", "3"},	{"fff", "X"} } },
+	{"52", { {"c", "5"},	{"f", "4"},		{"ff", "3"},	{"fff", "X"} } },
 	{"56", { {"c", "5.5"},	{"f", "4"},		{"ff", "3"},	{"fff", "2"} } },
 	{"60", { {"c", "5.5"},	{"f", "4"},		{"ff", "3"},	{"fff", "2"} } },
 	{"64", { {"c", "6"},	{"f", "4"},		{"ff", "3"},	{"fff", "2"} } },
@@ -67,7 +67,7 @@ string THREADING::getTags() { return tags; }
 string THREADING::getThread() { return thrdTitle; }
 
 void THREADING::threading() {
-	if (global_splittedPrdNbr[1][0] == '0' && (global_splittedPrdNbr[1][1] == '1' || global_splittedPrdNbr[1][1] == '2' || global_splittedPrdNbr[1][1] == '3' || global_splittedPrdNbr[1][1] == '4')) {
+	if (global_splittedPrdNbr[1][0] == '0' && global_splittedPrdNbr[1][1] < 4 && global_splittedPrdNbr[1][2] != '0' && global_splittedPrdNbr[1][2] != '1') {
 		text = global_splittedPrdNbr[1][0];
 		text += global_splittedPrdNbr[1][1];
 		text += global_splittedPrdNbr[1][2];

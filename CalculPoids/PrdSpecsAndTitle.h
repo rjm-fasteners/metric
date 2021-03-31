@@ -2,6 +2,14 @@
 #include "Threading.h"
 #include "Globals.h"
 
+string picturess[100] = {
+	"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/screw_socket_head_PT_NR.PNG?v=1579188584",								// Socket Screw Partial Thread
+	"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_SS_f2f45a3f-8058-4b3c-a834-03eb6164f370.PNG?v=1600708638",	// Socket Screw Full Thread Stainless Steel
+	"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/noPictureImg.PNG?v=1609364630",											// Socket Screw Full Thread Titanium
+	"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_SS3.png?v=1607705430",										// Socket Screw Full Thread Stainless Steel A4 (316)
+};
+
+map<string, string> pictures;
 
 THREADING* threading_calc;
 
@@ -971,20 +979,22 @@ inline void Washer::grade()
 #pragma region Vis
 class Vis {
 public:
-	Vis(string tags, string titre);
 	Vis();
 	~Vis();
 
-	string getTag();
-	string getTitre();
+	string getTags();
+	string getTitle();
 
 private:
 	string text;
-	string titre;
+	string title;
 	string tags;
 	string fineThread;
+	string thread;
+	string pictureIndex;
 
-	void produit();
+	void productBase();
+	void head();
 	void material();
 	void plating();
 	void threading();
@@ -995,84 +1005,59 @@ private:
 
 	// Section below is used for every other specifications needed by the body.h
 	void otherSpecs();
-
-	string thread;
 };
 
-Vis::Vis() { }
-
-inline Vis::Vis(string tags, string titre) {
-	this->tags = tags;
-	this->titre = titre;
+Vis::Vis() {
 	text = "";
+	pictureIndex = "";
 
-	produit();
+	pictures.insert(pair<string, string>("Standard|Black-Oxide Alloy Steel|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/screw_socket_head_PT_NR.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>("Standard|Black-Oxide Alloy Steel|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_FT_NR.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>("Standard|A2 Stainless Steel[Imperial 304 SS]|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_SS.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>("Standard|A2 Stainless Steel[Imperial 304 SS]|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_SS.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>("Standard|A4 Stainless Steel[Imperial 316 SS]|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_3SS.png?v=1588692308"));
+	pictures.insert(pair<string, string>("Standard|A4 Stainless Steel[Imperial 316 SS]|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_FT_3SS.png?v=1588785976"));
+	pictures.insert(pair<string, string>("Low|Black-Oxide Alloy Steel|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_low_head_PT.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>("Low|Black-Oxide Alloy Steel|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_low_head_FT.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>("Standard|Titanium|Partial Thread|[Allen Key]", ""));
+	pictures.insert(pair<string, string>("Standard|Titanium|Full Thread|[Allen Key]", ""));
+
+	productBase();
+	head();
 	material();
 	plating();
 	threading();
 	length();
 	grade();
-	//strength();
 	drive();
 	otherSpecs();
-
-	//this->titre += "[Bulk Size : " + to_string(bulksize) + "]";
-
 }
 
 Vis::~Vis() { }
 
-inline string Vis::getTag() { return tags; }
+inline string Vis::getTags() { return tags; }
 
-inline string Vis::getTitre() { return titre; }
+inline string Vis::getTitle() { return title; }
 
-inline void Vis::produit() {
+inline void Vis::productBase() {
 	text = global_splittedPrdNbr[0];
 
-	//ProductsValuesInterface prods_vals[10];
-	//prods_vals[0].products = "VPCM, VPCMT, VPCM88, VPCMT88, VPCM10, VPSCM";
-	//prods_vals[0].values["title"] = "Metric Socket Head Cap Screw ";
-	//prods_vals[0].values["tags"] = "metric, pressure_screw, socket_head_cap_screw,";
-	//prods_vals[0].values["thread"] = "c";
-
-	//prods_vals[1].products = "VPCMI, VPCMTI, VPCMTI88, VPCMTI10";
-	//prods_vals[1].values["title"] = "Metric Low Head Socket Head Cap Screw ";
-	//prods_vals[1].values["tags"] = "metric, pressure_screw, socket_head_cap_screw, low_head,";
-	//prods_vals[1].values["thread"] = "c";
-
-	titre = "Metric Socket Head Cap Screw ";
+	title = "Metric Socket Head Cap Screw ";
 	tags = "metric, pressure_screw, socket_head_cap_screw,";
 	fineThread = 'c';
+}
 
+inline void Vis::head() {
 	if (text.find('I') != string::npos) {
 		global_headProfile = "Low";
-		titre += "Low Head "; 
+		pictureIndex = "Low|";
+		title += "Low Head ";
 		tags += "low_head,";
-	} 
-	else global_headProfile = "Standard";
-
-	if (text.find('T') != string::npos) {
-		titre += "Full Thread ";
-		tags += "full_thread,";
 	}
-
-	if (text.find('F') != string::npos) 
-		fineThread = "f";
-	else if (text.find('FF') != string::npos) 
-		fineThread = "ff";
-	else if (text.find('FFF') != string::npos)
-		fineThread = "fff";
-
-	global_thrdDirection = text.find('H') != string::npos ? "Left Hand" : "Right Hand";
-
-	//for (ProductsValuesInterface p_v : prods_vals) {
-	//	if (p_v.products.find(text) != string::npos) {
-	//		titre += p_v.values["title"];
-	//		tags += p_v.values["tags"];
-	//		fineThread = p_v.values["thread"][0];
-	//		break;
-	//	}
-	//}
+	else {
+		global_headProfile = "Standard";
+		pictureIndex = "Standard|";
+	}
 }
 
 inline void Vis::material() {
@@ -1080,7 +1065,7 @@ inline void Vis::material() {
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
 		char materialsVp[4]{ '$', 'S', 'J', '3' };
 		string materialsVpTitles[4]{ "Black-Oxide Alloy Steel ", "A2 Stainless Steel[Imperial 304 SS] ", "Titanium ", "A4 Stainless Steel[Imperial 316 SS] " };
-		string materialsVpTags[4]{ "black, black-oxide, black-oxide_alloy_steel", "stainless_steel, 304_stainless_steel, a2, a2_stainless_steel,", "titanium,", "stainless_steel, 316_stainless_steel, a4, a4_stainless_steel" };
+		string materialsVpTags[4]{ "black, black-oxide, black-oxide_alloy_steel,", "stainless_steel, 304_stainless_steel, a2, a2_stainless_steel,", "titanium,", "stainless_steel, 316_stainless_steel, a4, a4_stainless_steel," };
 
 		for (int i = 0; i < global_splittedPrdNbr[0].length(); i++) {
 			int cpt = 0;
@@ -1095,8 +1080,11 @@ inline void Vis::material() {
 
 		if (!global_splittedPrdNbr[2][0]) {
 			tags += materialsVpTags[matId];
-			titre += materialsVpTitles[matId];
+			title += materialsVpTitles[matId];
 			global_materialAndPlating = materialsVpTitles[matId];
+
+			materialsVpTitles[matId].pop_back();	// Removing last unecessary space for the picture index
+			pictureIndex += materialsVpTitles[matId] + "|";
 		}
 	}
 	else {
@@ -1109,14 +1097,13 @@ inline void Vis::material() {
 		}
 
 		tags += materialsTags[matId];
-		titre += materialsTitles[matId];
+		title += materialsTitles[matId];
 	}
 }
 
 inline void Vis::plating() {
 	int platId = 0;
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
-		platId = -1;
 		char platingsVp[10]{ 'Z', 'Y' };
 		string platingsVpTitles[10]{ "Zinc Plated ", "Yellow Zinc Plated " };
 		string platingsVpTags[10]{ "zinc, zinc_plated,", "zinc, yellow_zinc, yellow_zinc_plated," };
@@ -1125,16 +1112,13 @@ inline void Vis::plating() {
 		for (char plat : platingsVp) {
 			if (plat == '\0') break;
 			if (global_splittedPrdNbr[2][0] == plat) {
-				platId = cpt;
+				tags += platingsVpTags[cpt];
+				title += platingsVpTitles[cpt];
+				global_materialAndPlating += platingsVpTitles[cpt];
+				pictureIndex += platingsVpTitles[cpt] + "|";
 				break;
 			}
 			cpt++;
-		}
-
-		if (platId != -1) {
-			tags += platingsVpTags[platId];
-			titre += platingsVpTitles[platId];
-			global_materialAndPlating += platingsVpTitles[platId];
 		}
 	}
 	else if(global_splittedPrdNbr[2][0]) {
@@ -1146,7 +1130,7 @@ inline void Vis::plating() {
 			platId = 0;
 
 		tags += materialsTags[platId];
-		titre += materialsTitles[platId];
+		title += materialsTitles[platId];
 	}
 }
 
@@ -1156,35 +1140,56 @@ inline void Vis::threading() {
 
 		if (global_splittedPrdNbr[1][0] == '0') {
 			if (global_splittedPrdNbr[1][1] == '2') 
-				titre += "#2 ";
+				title += "#2 ";
 			else if (global_splittedPrdNbr[1][1] == '4') 
-				titre += "#4 ";
+				title += "#4 ";
 			else if (global_splittedPrdNbr[1][1] == '6') 
-				titre += "#6 ";
+				title += "#6 ";
 			else if (global_splittedPrdNbr[1][1] == '8') 
-				titre += "#8 ";
+				title += "#8 ";
 		}
 		else if (global_splittedPrdNbr[1][0] == '1' ) {
 			if(global_splittedPrdNbr[1][1] == '0')
-				titre += "#10 ";
+				title += "#10 ";
 			else if (global_splittedPrdNbr[1][1] == '2') 
-				titre += "#12 ";
+				title += "#12 ";
 			else if (global_splittedPrdNbr[1][1] == '4')
-				titre += "#14 ";
+				title += "#14 ";
 		}
 	}
 	else {
-		threading_calc = new THREADING(fineThread);
-		tags = threading_calc->getTags();
-		titre += threading_calc->getThread();
+		text = global_splittedPrdNbr[0];
 
+		if (text.find('T') != string::npos) {
+			title += "Full Thread ";
+			tags += "full_thread,";
+			pictureIndex += string("Full Thread") + "|";
+		}
+		else {
+			title += "Partial Thread ";
+			tags += "partial_thread,";
+			pictureIndex += string("Partial Thread") + "|";
+		}
+
+		if (text.find('F') != string::npos)
+			fineThread = "f";
+		else if (text.find('FF') != string::npos)
+			fineThread = "ff";
+		else if (text.find('FFF') != string::npos)
+			fineThread = "fff";
+
+		global_thrdDirection = text.find('H') != string::npos ? "Left Hand" : "Right Hand";
+
+		threading_calc = new THREADING(fineThread);
+		tags += threading_calc->getTags();
+		title += threading_calc->getThread();
 		thread = threading_calc->getThread();
 
 		/*extremly thread_fine
 		{
 			extremly_fine.constructeur(numProduit, tags);
 			tags = extremly_fine.getTag();
-			titre = titre + extremly_fine.getThread();
+			title = title + extremly_fine.getThread();
 		}*/
 	}
 }
@@ -1203,7 +1208,7 @@ inline void Vis::length() {
 	if(text.front() == '0') text.erase(0, 1);
 
 	tags += "length_" + text + "mm,";
-	titre += "* " + text + "mm ";
+	title += "* " + text + "mm ";
 	global_length = text + "mm";
 }
 
@@ -1228,6 +1233,7 @@ inline string Vis::strength(string type, int i) {
 		if (type == "tensile") {
 			strength = to_string(strengths[i]);
 			strength.insert(strength.end() - 3, ',');
+			strength += " psi";
 			strength += hardness[i];
 		}
 		else {
@@ -1236,7 +1242,7 @@ inline string Vis::strength(string type, int i) {
 			strength += " psi";
 		}
 
-		return strength;
+			return strength;
 	}
 }
 
@@ -1269,7 +1275,7 @@ inline void Vis::grade() {
 
 		if (global_splittedPrdNbr[0][2] != 'S') {
 			tags += grades[idx].tags;
-			titre += grades[idx].title;
+			title += grades[idx].title;
 			global_grade = grades[idx].title;
 		}
 
@@ -1281,7 +1287,7 @@ inline void Vis::grade() {
 			for (int j = 0; j < 3; j++) {
 				if (global_splittedPrdNbr[0][i] == grades[j]) {
 					tags += gradesTags[j];
-					titre += gradesTitles[j];
+					title += gradesTitles[j];
 					break;
 				}
 			}
@@ -1330,12 +1336,21 @@ inline void Vis::drive() {
 		else idx = 2;
 	}
 
+	pictureIndex += drives[idx].title.substr(0, (drives[idx].title.length() - 1));	// Removing last unecessary space for the picture index
+
 	tags += drives[idx].tags;
-	titre += drives[idx].title;
+	title += drives[idx].title;
 	global_driveStyle = (drives[idx].title.erase(0, 1).erase(drives[idx].title.size() - 2));		// Removes square brackets
 }
 
 inline void Vis::otherSpecs() {
+	for (pair<string,string> p : pictures) {
+		if (p.first.find(pictureIndex) != string::npos) {
+			global_picture = p.second;
+			break;
+		}
+	}
+
 	// Retrieves number(s) from after 'M' and until ' '(space)		# Nominal Diameter
 	global_diamNom = stoi(thread.substr(1, thread.find(' ')));
 
@@ -1696,63 +1711,36 @@ inline void Tige_Filte::grade()
 
 #pragma endregion
 
-class TITRE
-{
+class PRD_SPECS_AND_TITLE {
 public:
-	TITRE();
-	~TITRE();
-	void constructeur(int reponse, string tags);
-	string getTag();
-	string getTitre();
+	PRD_SPECS_AND_TITLE(int reponse);
+	PRD_SPECS_AND_TITLE();
+	~PRD_SPECS_AND_TITLE();
+	string getTags();
+	string getTitle();
 
 private:
-	string titre;
-	//string texte;
-	//bool trouver;
-	bool fineThread;
-	//bool extrafinethread;
-	//bool extraextrafinethread;
-	//int i;
-	string souschaine[3];
-	string numProduit;
-	int reponse;
+	string title;
 	string tags;
-	//float bulk;
+	int reponse;
 
 	void produit();
 };
 
-TITRE::TITRE()
-{
-}
-
-TITRE::~TITRE()
-{
-}
-
-inline void TITRE::constructeur(int reponse, string tags)
-{
-	//i = 0;
-	//trouver = false;
-	//texte = "";
+PRD_SPECS_AND_TITLE::PRD_SPECS_AND_TITLE(int reponse) {
 	this->reponse = reponse;
-	this->tags = tags;
-	this->numProduit = numProduit;
 	produit();
 }
 
-inline string TITRE::getTag()
-{
-	return tags;
-}
+PRD_SPECS_AND_TITLE::PRD_SPECS_AND_TITLE() { }
 
-inline string TITRE::getTitre()
-{
-	return titre;
-}
+PRD_SPECS_AND_TITLE::~PRD_SPECS_AND_TITLE() { }
 
-inline void TITRE::produit()
-{
+inline string PRD_SPECS_AND_TITLE::getTags() { return tags; }
+
+inline string PRD_SPECS_AND_TITLE::getTitle() { return title; }
+
+inline void PRD_SPECS_AND_TITLE::produit() {
 	Boulon bolt;
 	Ecrou nut;
 	Washer washer;
@@ -1762,21 +1750,21 @@ inline void TITRE::produit()
 
 	switch (reponse) {
 		case 1:
-			bolt.constructeur(tags, titre, numProduit);
+			bolt.constructeur(tags, title, global_prdNbr);
 			tags = bolt.getTag();
-			titre = bolt.getTitre();
+			title = bolt.getTitre();
 			break;
 
 		case 2:
-			nut.constructeur(tags, titre, numProduit);
+			nut.constructeur(tags, title, global_prdNbr);
 			tags = nut.getTag();
-			titre = nut.getTitre();
+			title = nut.getTitre();
 			break;
 
 		case 3:
-			washer.constructeur(tags, titre, numProduit);
+			washer.constructeur(tags, title, global_prdNbr);
 			tags = washer.getTag();
-			titre = washer.getTitre();
+			title = washer.getTitre();
 			break;
 
 		// PLUS D'EQUERRE POUR L'INSTANT
@@ -1789,16 +1777,15 @@ inline void TITRE::produit()
 		*/
 
 		case 5:
-			tige.constructeur(tags, titre, numProduit);
+			tige.constructeur(tags, title, global_prdNbr);
 			tags = tige.getTag();
-			titre = tige.getTitre();
+			title = tige.getTitre();
 			break;
 
 		case 6:
-			screw = new Vis(tags, titre);
-			tags = screw->getTag();
-			titre = screw->getTitre();
+			screw = new Vis();
+			tags = screw->getTags();
+			title = screw->getTitle();
 			break;
 	}
-	
 }

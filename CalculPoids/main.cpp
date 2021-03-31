@@ -7,6 +7,7 @@
 #include "PrdSpecsAndTitle.h"
 #include "Weight.h"
 #include "Body.h"
+#include "AutomatiseBaseFormat.cpp"
 
 // Declaring variables and functions from Global.h to make them accessible everywhere
 #pragma region Global variables
@@ -34,6 +35,8 @@ int global_diamNom;
 
 string global_splittedPrdNbr[3];
 string global_prdNbr;
+
+string global_picture;
 
 string comaToDot(string val) {
 	replace(val.begin(), val.end(), ',', '.');
@@ -66,6 +69,7 @@ string photo3;					// yet optional
 string photo4;					// yet optional
 int userInput_prdType;
 char userInput_action;
+Automatisation* automate;
 
 string _ratio(float prix1, float dernierCoutant, int reponse) {
 	string result = "";
@@ -106,7 +110,6 @@ string _ratio(float prix1, float dernierCoutant, int reponse) {
 	return result;
 }
 
-
 void ouverture()
 {
 	if (toupper(userInput_action) == 'D') int i = TabCategorie(100, "");
@@ -132,29 +135,20 @@ void ouverture()
 		string TexteATranscrire8[nbrOfHeaders]{ "","","","","","Color","Black Painted Head [100 units]","","","shopify","continue","manual","","VRAI","VRAI","","4","FAUX","lg","" }; //au 100 variante couleur blanche
 		string TexteATranscrire9[nbrOfHeaders]{ "","","","","","Color","Black Painted Head [1000 units]","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; //au 1000 variante couleur blanche
 
-		if (finish.is_open())
-		{
-
+		if (finish.is_open()) {
 			finish << "Handle;Title;Body (HTML);Tags;Published;Option1 Name;Option1 Value;Variant SKU;Variant Grams;Variant Inventory Tracker;Variant Inventory Policy;Variant Fulfillment Service;Variant Price;Variant Requires Shipping;Variant Taxable;Image Src;Image Position;Gift Card;Variant Weight Unit;Cost per item" << endl;
-
-			if (Product.is_open())
-			{
-				string productname[100] = { "" };
+			
+			if (Product.is_open()) {
+				string productname[1000] = { "" };
 				int cpt = 0;
 
-				while (!Product.eof())
-				{
+				while (!Product.eof()) {
 					string produit[65];
 					string produitCategorie[25];
 					string calculatedRatio = "";
 
-					if (toupper(userInput_action) == 'A' || toupper(userInput_action) == 'B' || toupper(userInput_action) == 'E')
-					{
-						for (int i = 0; i < 60; i++)
-						{
-							getline(Product, produit[i], ';');
-							//cout << i << " : " << produit[i] << endl;
-						}
+					if (toupper(userInput_action) == 'A' || toupper(userInput_action) == 'B' || toupper(userInput_action) == 'E') {
+						for (int i = 0; i < 60; i++) getline(Product, produit[i], ';');
 					}
 					/***************Si recherche de catégorie (option C) est sélectionnée on rempli une autre variable car il n'y a pas le même nombre de valeurs***************/
 					else
@@ -337,7 +331,6 @@ void ouverture()
 							calculatedRatio = _ratio(prix1, dernierCoutant, userInput_prdType);
 							cout << produit[0] << calculatedRatio << endl;
 
-							//CALCUL_POIDS* calcul;
 							WEIGHT* wgtCalc;
 							PRICE* prix;
 							string texte = produit[4];
@@ -386,14 +379,15 @@ void ouverture()
 							else if (diamNom == 7 || diamNom == 9 || diamNom == 11) { qtyOptBulk = -1; }
 
 #pragma region Prix par 1
-							TITRE title;
+							PRD_SPECS_AND_TITLE* title;
 
-							title.constructeur(userInput_prdType, tag);
-							texte = title.getTitre();
-							tag = title.getTag();
+							title = new PRD_SPECS_AND_TITLE(userInput_prdType);
+							texte = title->getTitle();
+							tag = title->getTags();
 
 							TexteATranscrire1[1] = "\"" + texte + "\"";
-							TexteATranscrire1[2] = body(produit[2], userInput_prdType, tag);
+							TexteATranscrire1[2] = "\"" + body(produit[2], userInput_prdType, tag) + "\"";
+							TexteATranscrire1[3] = "\"" + tag + "\"";
 
 							wgtCalc = new WEIGHT(userInput_prdType, 1);
 							unityWgt = wgtCalc->getWgt();
@@ -420,7 +414,7 @@ void ouverture()
 								prix = new PRICE(comaToDot(produit[29]), qtyOptSmall, "none");		// Prix #3
 
 								TexteATranscrire2[12] = dotToComa(prix->getPrice());
-								TexteATranscrire2[18] = produit[10];
+								TexteATranscrire2[19] = produit[10];
 #pragma endregion
 							}
 
@@ -435,7 +429,7 @@ void ouverture()
 								prix = new PRICE(comaToDot(produit[39]), qtyOptMedium, "none");		// Prix #4
 
 								TexteATranscrire3[12] = dotToComa(prix->getPrice());
-								TexteATranscrire3[18] = produit[10];
+								TexteATranscrire3[19] = produit[10];
 #pragma endregion
 							}
 
@@ -456,15 +450,11 @@ void ouverture()
 
 								TexteATranscrire4[12] = dotToComa(prix->getPrice());
 								TexteATranscrire4[16] = "1";
-								TexteATranscrire4[15] = photo;
-								TexteATranscrire4[18] = produit[10];
+								TexteATranscrire4[15] = global_picture;
+								TexteATranscrire4[19] = produit[10];
 #pragma endregion
 							}
-
-							tag += "\"";
-							TexteATranscrire1[3] = tag;
-							tag = "\"";
-							photo = "";
+							global_picture = "";
 
 							for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire1[j] << ";";
 							finish << endl;
@@ -480,8 +470,8 @@ void ouverture()
 							
 							if (TexteATranscrire5[15] != "") {
 								for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire5[j] << ";";
+								finish << endl;
 							}
-							finish << endl;
 						}
 
 						else {
@@ -497,12 +487,12 @@ void ouverture()
 							//calcul = new CALCUL_POIDS(produit[0], userInput_prdType, 1);
 							//texte = calcul->getWgt();
 
-							TITRE title;
+							PRD_SPECS_AND_TITLE* title;
 							string titre = "";
 							TexteATranscrire1[0] = produit[0];
-							title.constructeur(userInput_prdType, tag);
-							titre = title.getTitre();
-							tag = title.getTag();
+							title = new PRD_SPECS_AND_TITLE(userInput_prdType);
+							titre = title->getTitle();
+							tag = title->getTags();
 
 							TexteATranscrire1[1] = "\"" + titre + "\"";
 							TexteATranscrire1[2] = body(produit[2], userInput_prdType, tag);
@@ -629,8 +619,7 @@ void ouverture()
 						string filenameFormatted[5000] = { "" };
 
 						cpt = 0;
-						try
-						{
+						try {
 							for (auto& p : fs::directory_iterator(directoryName)) {
 								filename[cpt] = p.path().string();
 								filenameFormatted[cpt] = p.path().string();
@@ -729,16 +718,9 @@ void ouverture()
 					cout << endl;
 					#pragma endregion
 			}
-			else
-			{
-				cout << "ERREUR: Impossible d'ouvrir le fichier product." << endl;
-			}
-
+			else cout << "ERREUR: Impossible d'ouvrir le fichier product." << endl;
 		}
-		else
-		{
-			cout << "ERREUR: Impossible d'ouvrir le fichier finish." << endl;
-		}
+		else cout << "ERREUR: Impossible d'ouvrir le fichier finish." << endl;
 
 		Product.close();
 		finish.close();
@@ -753,8 +735,7 @@ void devAccel() {
 	userInput_prdType = 6;
 }
 
-int main()
-{
+int main() {
 	cout << "Faites un choix... " << endl << endl;
 
 	/* Activate only to accelerate development */
@@ -792,6 +773,17 @@ int main()
 	cout << endl << "En cours ..." << endl << endl;
 	ouverture();
 
+	cout << "Fin de la génération des produits." << endl;
 
-	cout << "Fin" << endl;
+	int choice = 0;
+	cout << endl << "Si vous ne souhaitez pas formatter, entrez 0" << endl;
+	do {
+		cout << "1) Format data from AcombaX \n2) Format data from McMaster \n3) Format like Google Sheet (to import Shopify) \n100) Test purposes (Dev. only)" << endl;
+		cout << "Votre choix : ";
+		cin >> choice;
+	} while (choice < 0 || choice > 3);
+
+	if (choice) {
+		automate = new Automatisation(choice);
+	}
 }
