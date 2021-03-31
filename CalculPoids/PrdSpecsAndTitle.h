@@ -1064,7 +1064,7 @@ inline void Vis::material() {
 	int matId = 0;
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
 		char materialsVp[4]{ '$', 'S', 'J', '3' };
-		string materialsVpTitles[4]{ "Black-Oxide Alloy Steel ", "A2 Stainless Steel[Imperial 304 SS] ", "Titanium ", "A4 Stainless Steel[Imperial 316 SS] " };
+		string materialsVpTitles[4]{ "Black-Oxide Alloy Steel ", "A2 Stainless Steel[Equivalent 304 SS] ", "Titanium ", "A4 Stainless Steel[Equivalent 316 SS] " };
 		string materialsVpTags[4]{ "black, black-oxide, black-oxide_alloy_steel,", "stainless_steel, 304_stainless_steel, a2, a2_stainless_steel,", "titanium,", "stainless_steel, 316_stainless_steel, a4, a4_stainless_steel," };
 
 		for (int i = 0; i < global_splittedPrdNbr[0].length(); i++) {
@@ -1273,7 +1273,7 @@ inline void Vis::grade() {
 		else if (text == grades[1].type) idx = 1;
 		else idx = 2;
 
-		if (global_splittedPrdNbr[0].find('S') != string::npos) {
+		if (global_splittedPrdNbr[0].find('S') == string::npos) {
 			tags += grades[idx].tags;
 			title += grades[idx].title;
 			global_grade = grades[idx].title;

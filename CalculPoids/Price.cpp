@@ -4,7 +4,7 @@
 
 PRICE::PRICE(string productPrice, int quantity, string info) {
 	finalPrice = 0;
-	this->prdPrice = stof(comaToDot(productPrice));
+	this->prdPrice = stof(dotToComa(productPrice));
 	this->info = info;
 	this->qty = quantity;
 	calculFinalPrice();
