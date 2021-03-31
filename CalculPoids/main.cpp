@@ -110,16 +110,15 @@ string _ratio(float prix1, float dernierCoutant, int reponse) {
 	return result;
 }
 
-void ouverture()
-{
+void ouverture() {
 	if (toupper(userInput_action) == 'D') int i = TabCategorie(100, "");
 	else {
-		string FILENAME = "produit.txt"; 
+		string FILENAME = "main_produit.txt"; 
 		fstream Product;
 		Product.open(FILENAME, ios::in);
 
 		fstream finish;
-		FILENAME = "finish.txt";
+		FILENAME = "main_finish.txt";
 		finish.open(FILENAME, ios::out | ios::trunc);
 		const int nbrOfHeaders = 20;
 		int m = 0;
@@ -749,12 +748,13 @@ int main() {
 	cout << "Faites un choix... " << endl << endl;
 
 	/* Activate only to accelerate development */
-	bool dev = true;
-	automate = new Automatisation(1);
+	bool dev = false;
 
-	if (dev) {
+	/* By default = true (May be useful while developing) */
+	bool autoOpenFile = true;
+
+	if (dev)
 		devAccel();
-	}
 	else {
 		do {
 			cout << "A) Calcul de ratio inferieur a 50% \nB) Importation \nC) Validation de categorie \nD) Listing des categories \nE) Importation et triage des dessins techniques \nChoix : ";
@@ -763,10 +763,16 @@ int main() {
 		} while (toupper(userInput_action) != 'A' && toupper(userInput_action) != 'B' && toupper(userInput_action) != 'C' && toupper(userInput_action) != 'D' && toupper(userInput_action) != 'E');
 
 		if (toupper(userInput_action) == 'B' || toupper(userInput_action) == 'E') {
+			cout << "+-ASTUCE------------------------------------------------------------------------------------------------------+" << endl;
+			cout << "|	Le programme considere recevoir un fichier texte non-formatte d'AcombaX." << setw(31) << "|" << endl;
+			cout << "|	Ce fichier sera formatter par le programme puis utilise." << setw(47) << "|" << endl;
+			cout << "|	Finalement, le resultat final et pret a etre importe se trouvera dans le fichier automate_result.csv  |" << endl;
+			cout << "+-------------------------------------------------------------------------------------------------------------+" << endl << endl;
 			do {
-				cout << "	1 - Boulon \n	2 - Ecrou \n	3 - Rondelle \n	4 - Equerre(NOT WORKING) \n	5 - Tige \n	6 - Vis \n	22 - Liste des produits	\n";
+				cout << "1 - Boulon \n2 - Ecrou \n3 - Rondelle \n4 - Equerre(NOT WORKING) \n5 - Tige \n6 - Vis \n22 - Liste des produits	\nChoix : ";
 				cin >> userInput_prdType;
 			} while (userInput_prdType < 1 || (userInput_prdType > 6 && userInput_prdType != 22));
+			automate = new Automatisation(1);		// Formats(the automatisation program) the text file from Acomba so the program(this program here) can read it
 		}
 
 		/// TODO NEED TO COMPLETE THE PATH
@@ -781,20 +787,15 @@ int main() {
 		if (toupper(userInput_action) == 'D') userInput_prdType = 100;
 	}
 
-	cout << endl << "En cours ..." << endl << endl;
+	cout << endl << "En cours de generation..." << endl << endl;
 	ouverture();
 
-	cout << "Fin de la génération des produits." << endl;
+	cout << "Fin de la generation des produits." << endl;
 
-	int choice = 0;
-	cout << endl << "Si vous ne souhaitez pas formatter, entrez 0" << endl;
-	do {
-		cout << "1) Format data from AcombaX \n2) Format data from McMaster \n3) Format like Google Sheet (to import Shopify) \n100) Test purposes (Dev. only)" << endl;
-		cout << "Votre choix : ";
-		cin >> choice;
-	} while (choice < 0 || choice > 3);
+	automate = new Automatisation(3);		// Formats(the automatisation program) the text file from the program(this program here) so it's ready to import in Shopify
 
-	if (choice) {
-		automate = new Automatisation(choice);
+	if (autoOpenFile) {
+		// Opens the file to see the result
+		system("automate_result.csv");
 	}
 }
