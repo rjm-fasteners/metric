@@ -1013,10 +1013,10 @@ Vis::Vis() {
 
 	pictures.insert(pair<string, string>("Standard|Black-Oxide Alloy Steel|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/screw_socket_head_PT_NR.PNG?v=1579188584"));
 	pictures.insert(pair<string, string>("Standard|Black-Oxide Alloy Steel|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_FT_NR.PNG?v=1579188584"));
-	pictures.insert(pair<string, string>("Standard|A2 Stainless Steel[Imperial 304 SS]|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_SS.PNG?v=1579188584"));
-	pictures.insert(pair<string, string>("Standard|A2 Stainless Steel[Imperial 304 SS]|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_SS.PNG?v=1579188584"));
-	pictures.insert(pair<string, string>("Standard|A4 Stainless Steel[Imperial 316 SS]|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_3SS.png?v=1588692308"));
-	pictures.insert(pair<string, string>("Standard|A4 Stainless Steel[Imperial 316 SS]|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_FT_3SS.png?v=1588785976"));
+	pictures.insert(pair<string, string>("Standard|A2 Stainless Steel[Equivalent 304 SS]|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_SS.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>("Standard|A2 Stainless Steel[Equivalent 304 SS]|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_SS.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>("Standard|A4 Stainless Steel[Equivalent 316 SS]|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_3SS.png?v=1588692308"));
+	pictures.insert(pair<string, string>("Standard|A4 Stainless Steel[Equivalent 316 SS]|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_FT_3SS.png?v=1588785976"));
 	pictures.insert(pair<string, string>("Low|Black-Oxide Alloy Steel|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_low_head_PT.PNG?v=1579188584"));
 	pictures.insert(pair<string, string>("Low|Black-Oxide Alloy Steel|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_low_head_FT.PNG?v=1579188584"));
 	pictures.insert(pair<string, string>("Standard|Titanium|Partial Thread|[Allen Key]", ""));
