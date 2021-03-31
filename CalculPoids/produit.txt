@@ -1,15 +1,1 @@
-Vis Mauricie inc.;;;;;;;;;;
-;;;;;;;;;;
-Analyse de l’inventaire;;;;;;;;;;
-Imprimé le :;2021-03-31;;;;Triée par Numéro de produit de VPCSHM-20120 à VPCSHM-20120;;;;;
-Analyse de l’inventaire;;;;;;;;;;
-N° produit;;Catégorie;Description;Clé de tri 2;;Liste de prix;Qté;;Prix;Dernier coûtant
-VPCSHM-20120;;VPCSHM20;VIS CYL. 6 PAN CREUX NR. M20 * 2.0 GR.12.9 [ÉPAULEMENT : DIAMETRE 24 MM * LONGUEUR 120 MM];;;1 – Régulier;0;;376,5389;52,6621
-;;;;;;2 – 0-500;0;;301,2311;
-;;;;;;3 – 500 a 2500;0;;211,6149;
-;;;;;;4 – 2500 a 5000;0;;150,7285;
-;;;;;;5 – 5000 a 7500;0;;114,6937;
-;;;;;;6 – 7500 et plus ;0;;96,4316;
-;;;;;;7 – Prix Quantité;0;;0,0000;
-;;;;;;;;;;
-;;;;;;;;Page 1 de 1;;
+VPCSHM-20120;;VPCSHM20;VIS CYL. 6 PAN CREUX NR. M20 * 2.0 GR.12.9 [Ã‰PAULEMENT : DIAMETRE 24 MM * LONGUEUR 120 MM];;;1 â€“ RÃ©gulier;0;;376,5389;52,6621;;;;;;2 â€“ 0-500;0;;301,2311;;;;;;;3 â€“ 500 a 2500;0;;211,6149;;;;;;;4 â€“ 2500 a 5000;0;;150,7285;;;;;;;5 â€“ 5000 a 7500;0;;114,6937;;;;;;;6 â€“ 7500 et plus ;0;;96,4316

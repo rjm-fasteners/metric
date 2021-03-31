@@ -1273,7 +1273,7 @@ inline void Vis::grade() {
 		else if (text == grades[1].type) idx = 1;
 		else idx = 2;
 
-		if (global_splittedPrdNbr[0][2] != 'S') {
+		if (global_splittedPrdNbr[0].find('S') != string::npos) {
 			tags += grades[idx].tags;
 			title += grades[idx].title;
 			global_grade = grades[idx].title;

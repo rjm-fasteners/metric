@@ -416,6 +416,7 @@ void ouverture()
 								TexteATranscrire2[12] = dotToComa(prix->getPrice());
 								TexteATranscrire2[19] = produit[10];
 #pragma endregion
+								qtyOptSmall = 1;		// For writting conditions at the bottom
 							}
 
 							if (qtyOptMedium) {
@@ -431,6 +432,7 @@ void ouverture()
 								TexteATranscrire3[12] = dotToComa(prix->getPrice());
 								TexteATranscrire3[19] = produit[10];
 #pragma endregion
+								qtyOptMedium = 1;		// For writting conditions at the bottom
 							}
 
 							if (qtyOptBulk != -1) {
@@ -453,20 +455,27 @@ void ouverture()
 								TexteATranscrire4[15] = global_picture;
 								TexteATranscrire4[19] = produit[10];
 #pragma endregion
+								qtyOptBulk = 1;		// For writting conditions at the bottom
 							}
 							global_picture = "";
 
 							for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire1[j] << ";";
 							finish << endl;
 							
-							for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire2[j] << ";";
-							finish << endl;
+							if (qtyOptSmall) {
+								for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire2[j] << ";";
+								finish << endl;
+							}
 
-							for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire3[j] << ";";
-							finish << endl;
+							if (qtyOptMedium) {
+								for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire3[j] << ";";
+								finish << endl;
+							}
 							
-							for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire4[j] << ";";
-							finish << endl;
+							if (qtyOptBulk) {
+								for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire4[j] << ";";
+								finish << endl;
+							}
 							
 							if (TexteATranscrire5[15] != "") {
 								for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire5[j] << ";";
@@ -736,10 +745,12 @@ void devAccel() {
 }
 
 int main() {
+	setlocale(LC_ALL, "");
 	cout << "Faites un choix... " << endl << endl;
 
 	/* Activate only to accelerate development */
 	bool dev = true;
+	automate = new Automatisation(1);
 
 	if (dev) {
 		devAccel();
