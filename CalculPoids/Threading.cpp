@@ -19,8 +19,8 @@ struct_KeyValues threads[100] = {
 	{"035",{ {"c", "0.6"},	{"f", "0.35"},	{"ff", "X"},	{"fff", "X"} } },
 	{"04", { {"c", "0.7"},	{"f", "0.5"},	{"ff", "X"},	{"fff", "X"} } },
 	{"05", { {"c", "0.8"},	{"f", "0.5"},	{"ff", "X"},	{"fff", "X"} } },
-	{"06", { {"c", "1.0"},	{"f", "0.75"},	{"ff", "X"},	{"fff", "X"} } },
-	{"07", { {"c", "1.0"},	{"f", "0.75"},	{"ff", "X"},	{"fff", "X"} } },
+	{"06", { {"c", "1"},	{"f", "0.75"},	{"ff", "X"},	{"fff", "X"} } },
+	{"07", { {"c", "1"},	{"f", "0.75"},	{"ff", "X"},	{"fff", "X"} } },
 	{"08", { {"c", "1.25"}, {"f", "1"},		{"ff", "0.75"},	{"fff", "X"} } },
 	{"09", { {"c", "1.25"}, {"f", "1"},		{"ff", "0.75"},	{"fff", "X"} } },
 	{"10", { {"c", "1.5"},	{"f", "1.25"},	{"ff", "1"},	{"fff", "0.75"} } },
@@ -106,9 +106,14 @@ void THREADING::threading() {
 					formatted += ".";
 					formatted += text[1];
 				}
+				formatted = text;
 			}
 			thrdTitle = "M" + formatted + " * " + k_v.values[thrdType] + " ";
 
+			// If condition for fitting tags with the filters on Shopify (Power Tools Filter)
+			if (k_v.values[thrdType].find('.') != string::npos) k_v.values[thrdType][k_v.values[thrdType].find('.')] = '-';
+
+			
 			tags += "thread_size_m" + formatted + "_" + k_v.values[thrdType] + ",";
 			break;
 		}

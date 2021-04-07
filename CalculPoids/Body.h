@@ -3225,7 +3225,7 @@ string bodyScrew(string categorie) {
 				"<tr><td style='text-indent: 25px'>Strength Grade/Class</td><td>" + global_grade + "</td></tr>" +
 				"<tr><td style='text-indent: 25px'>Tensile Strength | Hardness</td><td>" + global_tensStrength + "</td></tr>" +
 				"<tr><td style='text-indent: 25px'>Shear Strength</td><td>" + global_shearStrength + "</td></tr>" +
-				"<tr><td style='text-indent: 25px'>Classification</td><td>DIN 912</td></tr>" +
+				"<tr><td style='text-indent: 25px'>Classification</td><td>" + global_classification + "</td></tr>" +
 		"</tbody></table>"
 
 		"<br/>"

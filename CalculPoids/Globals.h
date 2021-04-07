@@ -45,6 +45,7 @@ extern string global_splittedPrdNbr[3];
 extern string global_prdNbr;
 
 extern string global_picture;
+extern string global_classification;
 
 extern string comaToDot(string val);
 extern string dotToComa(string val);

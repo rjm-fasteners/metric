@@ -7,7 +7,7 @@
 #include "PrdSpecsAndTitle.h"
 #include "Weight.h"
 #include "Body.h"
-#include "AutomatiseBaseFormat.cpp"
+#include "../../AutomateInternMain/AutomatiseBaseFormat/AutomatiseBaseFormat.cpp"
 
 // Declaring variables and functions from Global.h to make them accessible everywhere
 #pragma region Global variables
@@ -37,6 +37,7 @@ string global_splittedPrdNbr[3];
 string global_prdNbr;
 
 string global_picture;
+string global_classification;
 
 string comaToDot(string val) {
 	replace(val.begin(), val.end(), ',', '.');
@@ -67,9 +68,41 @@ string photo;
 string photo2;					// yet optional
 string photo3;					// yet optional
 string photo4;					// yet optional
+const int nbrProductCols = 20;
 int userInput_prdType;
 char userInput_action;
 Automatisation* automate;
+
+void initializeVariables() {
+#pragma region Global Variables
+	global_thrdSize = "";
+	global_thrdType = "";
+	global_threading = "";
+	global_thrdFit = "";
+	global_thrdDirection = "";
+	global_minThrdLength = "";
+	global_length = "";
+	global_grade = "";
+
+	global_tensStrength = "";
+	global_shearStrength = "";
+
+	global_driveStyle = "";
+	global_driveSize = "";
+	global_headDiam = "";
+	global_headHeight = "";
+	global_headProfile = "";
+	global_headType = "";
+
+	global_materialAndPlating = "";
+	global_diamNom = 0;
+
+	for (int i = 0; i < 3; i++) global_splittedPrdNbr[i].clear();
+	global_prdNbr = "";
+
+	global_picture = "";
+#pragma endregion
+}
 
 string _ratio(float prix1, float dernierCoutant, int reponse) {
 	string result = "";
@@ -113,35 +146,35 @@ string _ratio(float prix1, float dernierCoutant, int reponse) {
 void ouverture() {
 	if (toupper(userInput_action) == 'D') int i = TabCategorie(100, "");
 	else {
-		string FILENAME = "main_produit.txt"; 
+		string FILENAME = "main_produit.csv"; 
 		fstream Product;
 		Product.open(FILENAME, ios::in);
 
 		fstream finish;
 		FILENAME = "main_finish.txt";
 		finish.open(FILENAME, ios::out | ios::trunc);
-		const int nbrOfHeaders = 20;
-		int m = 0;
-
-		string TexteATranscrire1[nbrOfHeaders]{ "","","","","","Quantity","Unity","","","shopify","continue","manual","","VRAI","VRAI","","1","FAUX","lg","" }; // si on remet les bulk changer UNITY pour BULK
-		string TexteATranscrire2[nbrOfHeaders]{ "","","","","","","","","","","continue","manual","","VRAI","VRAI","","","","lg","" }; // Small quantity option
-		string TexteATranscrire3[nbrOfHeaders]{ "","","","","","","","","","","continue","manual","","VRAI","VRAI","","","","lg","" }; // Medium quantity option
-		string TexteATranscrire4[nbrOfHeaders]{ "","","","","","Quantity","manual","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; // si on remet les bulk changer UNITY pour BULK
-		string TexteATranscrire5[nbrOfHeaders]{ "","","","","","","","","","","","","","","","","2","","","" }; //2e image
-
-		string TexteATranscrire6[nbrOfHeaders]{ "","","","","","Color","White Painted Head [100 units]","","","shopify","continue","manual","","VRAI","VRAI","","3","FAUX","lg","" }; //au 100 variante couleur blanche
-		string TexteATranscrire7[nbrOfHeaders]{ "","","","","","Color","White Painted Head [1000 units]","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; //au 1000 variante couleur blanche
-		string TexteATranscrire8[nbrOfHeaders]{ "","","","","","Color","Black Painted Head [100 units]","","","shopify","continue","manual","","VRAI","VRAI","","4","FAUX","lg","" }; //au 100 variante couleur blanche
-		string TexteATranscrire9[nbrOfHeaders]{ "","","","","","Color","Black Painted Head [1000 units]","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; //au 1000 variante couleur blanche
 
 		if (finish.is_open()) {
 			finish << "Handle;Title;Body (HTML);Tags;Published;Option1 Name;Option1 Value;Variant SKU;Variant Grams;Variant Inventory Tracker;Variant Inventory Policy;Variant Fulfillment Service;Variant Price;Variant Requires Shipping;Variant Taxable;Image Src;Image Position;Gift Card;Variant Weight Unit;Cost per item" << endl;
 			
 			if (Product.is_open()) {
-				string productname[1000] = { "" };
-				int cpt = 0;
+				string productNames[1000] = { "" };
+				int cptProductNames = 0;
+				int cptInferiorPrice = 0;
 
 				while (!Product.eof()) {
+					initializeVariables();
+
+					string ProductLine1[nbrProductCols]{ "","","","","","Quantity","Unity","","","shopify","continue","manual","","VRAI","VRAI","","1","FAUX","lg","" }; // si on remet les bulk changer UNITY pour BULK
+					string ProductLine2[nbrProductCols]{ "","","","","","","","","","","continue","manual","","VRAI","VRAI","","","","lg","" }; // Small quantity option
+					string ProductLine3[nbrProductCols]{ "","","","","","","","","","","continue","manual","","VRAI","VRAI","","","","lg","" }; // Medium quantity option
+					string ProductLine4[nbrProductCols]{ "","","","","","Quantity","manual","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; // si on remet les bulk changer UNITY pour BULK
+					string ProductLine5[nbrProductCols]{ "","","","","","","","","","","","","","","","","2","","","" }; //2e image
+					string ProductLine6[nbrProductCols]{ "","","","","","Color","White Painted Head [100 units]","","","shopify","continue","manual","","VRAI","VRAI","","3","FAUX","lg","" }; //au 100 variante couleur blanche
+					string ProductLine7[nbrProductCols]{ "","","","","","Color","White Painted Head [1000 units]","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; //au 1000 variante couleur blanche
+					string ProductLine8[nbrProductCols]{ "","","","","","Color","Black Painted Head [100 units]","","","shopify","continue","manual","","VRAI","VRAI","","4","FAUX","lg","" }; //au 100 variante couleur blanche
+					string ProductLine9[nbrProductCols]{ "","","","","","Color","Black Painted Head [1000 units]","","","shopify","continue","manual","","VRAI","VRAI","","","FAUX","lg","" }; //au 1000 variante couleur blanche
+
 					string produit[65];
 					string produitCategorie[25];
 					string calculatedRatio = "";
@@ -166,8 +199,8 @@ void ouverture() {
 					/*************** Valide si le prix 4 est inférieure à 50% ***************/
 					if (toupper(userInput_action) == 'A') {
 						if (prix4 < dernierCoutant * 1.99) {
-							cout << m << " : " << produit[0] << " Prix 4 INFERIEUR a 50%" << endl;
-							m++;
+							cout << cptInferiorPrice << " : " << produit[0] << " Prix 4 INFERIEUR a 50%" << endl;
+							cptInferiorPrice++;
 						}
 					}
 
@@ -321,7 +354,7 @@ void ouverture() {
 						else if (userInput_prdType == 10)
 						{
 							// String variable isn't useful (creating a new string just for that wouldn't be good idea)
-							TexteATranscrire1[2] = body("0", 0, "0");
+							ProductLine1[2] = body("0", 0, "0");
 						}
 
 						/* Boulon, Ecrou, Rondelle, Vis pression */
@@ -330,7 +363,7 @@ void ouverture() {
 							calculatedRatio = _ratio(prix1, dernierCoutant, userInput_prdType);
 							cout << produit[0] << calculatedRatio << endl;
 
-							WEIGHT* wgtCalc;
+							WEIGHT_AND_BULK* wgtCalc;
 							PRICE* prix;
 							string texte = produit[4];
 							float unityWgt = 0;
@@ -370,12 +403,12 @@ void ouverture() {
 							/*		x1,		N/A,	N/A,	N/A
 									#5,		N/A,	N/A,	N/A			*/
 									/***** Si diamètre nominal >= M27 (plus grand que 1-1/16") */
-							else if (diamNom >= 27) { qtyOptBulk = -1; }
+							//else if (diamNom >= 27) { qtyOptBulk = -1; }
 
 							/*		x1,		N/A,	N/A,	N/A
 									#1,		N/A,	N/A,	N/A			*/
 							/***** Si diamètre nominal == M7 ou M9 ou M11 (0.276" ou 0.354" ou 0.433") */
-							else if (diamNom == 7 || diamNom == 9 || diamNom == 11) { qtyOptBulk = -1; }
+							//else if (diamNom == 7 || diamNom == 9 || diamNom == 11) { qtyOptBulk = -1; }
 
 #pragma region Prix par 1
 							PRD_SPECS_AND_TITLE* title;
@@ -383,103 +416,108 @@ void ouverture() {
 							title = new PRD_SPECS_AND_TITLE(userInput_prdType);
 							texte = title->getTitle();
 							tag = title->getTags();
+							
 
-							TexteATranscrire1[1] = "\"" + texte + "\"";
-							TexteATranscrire1[2] = "\"" + body(produit[2], userInput_prdType, tag) + "\"";
-							TexteATranscrire1[3] = "\"" + tag + "\"";
+							ProductLine1[1] = "\"" + texte + "\"";
+							ProductLine1[2] = "\"" + body(produit[2], userInput_prdType, tag) + "\"";
+							ProductLine1[3] = "\"" + tag + "\"";
 
-							wgtCalc = new WEIGHT(userInput_prdType, 1);
+							wgtCalc = new WEIGHT_AND_BULK(userInput_prdType, 1);
 							unityWgt = wgtCalc->getWgt();
 
-							TexteATranscrire1[0] = produit[0];
-							TexteATranscrire1[7] = produit[0];
-							TexteATranscrire1[8] = dotToComa(to_string(unityWgt));
-							if(diamNom >= 27) TexteATranscrire1[12] = produit[49];	// Prix #5
-							else if(diamNom >= 18 && diamNom <= 24) TexteATranscrire1[12] = produit[29];	// Prix #3
-							else if(diamNom == 12 || diamNom == 14 || diamNom == 16) TexteATranscrire1[12] = produit[19];	// Prix #2
-							else  TexteATranscrire1[12] = produit[9];	// Prix #1
-							TexteATranscrire1[19] = produit[10];
-							TexteATranscrire1[16] = "";
+							ProductLine1[0] = produit[0];
+							ProductLine1[7] = produit[0];
+							ProductLine1[8] = dotToComa(to_string(unityWgt));
+							if(diamNom >= 27) ProductLine1[12] = produit[49];	// Prix #5
+							else if(diamNom >= 18 && diamNom <= 24) ProductLine1[12] = produit[29];	// Prix #3
+							else if(diamNom == 12 || diamNom == 14 || diamNom == 16) ProductLine1[12] = produit[19];	// Prix #2
+							else  ProductLine1[12] = produit[9];	// Prix #1
+							ProductLine1[19] = produit[10];
+							ProductLine1[15] = global_picture;
+							ProductLine1[16] = "1";
 #pragma endregion
 
 							if (qtyOptSmall) {
 #pragma region Prix pour qtyOptSmall
-								TexteATranscrire2[0] = produit[0];
-								TexteATranscrire2[6] = to_string(qtyOptSmall);
-								TexteATranscrire2[7] = produit[0];
+								ProductLine2[0] = produit[0];
+								ProductLine2[6] = to_string(qtyOptSmall);
+								ProductLine2[7] = produit[0];
 								// Calculates the weight for the small quantity
-								TexteATranscrire2[8] = dotToComa(to_string(unityWgt * qtyOptSmall));
+								ProductLine2[8] = dotToComa(to_string(unityWgt * qtyOptSmall));
 
 								prix = new PRICE(comaToDot(produit[29]), qtyOptSmall, "none");		// Prix #3
 
-								TexteATranscrire2[12] = dotToComa(prix->getPrice());
-								TexteATranscrire2[19] = produit[10];
+								ProductLine2[12] = dotToComa(prix->getPrice());
+								ProductLine2[19] = produit[10];
 #pragma endregion
 								qtyOptSmall = 1;		// For writting conditions at the bottom
 							}
 
 							if (qtyOptMedium) {
 #pragma region Prix pour qtyOptMedium
-								TexteATranscrire3[0] = produit[0];
-								TexteATranscrire3[6] = to_string(qtyOptMedium);
-								TexteATranscrire3[7] = produit[0];
+								ProductLine3[0] = produit[0];
+								ProductLine3[6] = to_string(qtyOptMedium);
+								ProductLine3[7] = produit[0];
 								// Calculates the weight for the medium quantity
-								TexteATranscrire3[8] = dotToComa(to_string(unityWgt * qtyOptMedium));
+								ProductLine3[8] = dotToComa(to_string(unityWgt * qtyOptMedium));
 
 								prix = new PRICE(comaToDot(produit[39]), qtyOptMedium, "none");		// Prix #4
 
-								TexteATranscrire3[12] = dotToComa(prix->getPrice());
-								TexteATranscrire3[19] = produit[10];
+								ProductLine3[12] = dotToComa(prix->getPrice());
+								ProductLine3[19] = produit[10];
 #pragma endregion
 								qtyOptMedium = 1;		// For writting conditions at the bottom
 							}
 
-							if (qtyOptBulk != -1) {
+							// Because qtyOptBulk can be set to 0 for the program to calculate automatically the bulk according to the weight
+							if (qtyOptBulk) {
 #pragma region Prix par bulk
-								wgtCalc = new WEIGHT(userInput_prdType, qtyOptBulk);
+								wgtCalc = new WEIGHT_AND_BULK(userInput_prdType, qtyOptBulk);
 								unityWgt = wgtCalc->getWgt();
 								qtyOptBulk = wgtCalc->getBulk();
 
-								TexteATranscrire4[0] = produit[0];
-								TexteATranscrire4[6] = "Bulk [" + to_string(qtyOptBulk) + "]";
-								TexteATranscrire4[7] = produit[0];
+								ProductLine4[0] = produit[0];
+								ProductLine4[6] = "Bulk [" + to_string(qtyOptBulk) + "]";
+								ProductLine4[7] = produit[0];
 								// Calculates the weight for the bulk
-								TexteATranscrire4[8] = dotToComa(to_string(unityWgt * qtyOptBulk));
+								ProductLine4[8] = dotToComa(to_string(unityWgt * qtyOptBulk));
 
-								TexteATranscrire1[1] = "\"" + texte + "[Bulk Size: " + to_string(qtyOptBulk) + "]\"";		// Second part of the title, including the calculated bulk size
+								// Sets the title again but WITH the bulk size this time
+								ProductLine1[1] = "\"" + texte + "[Bulk Size: " + to_string(qtyOptBulk) + "]\"";		// Second part of the title, including the calculated bulk size
 								prix = new PRICE(produit[49], qtyOptBulk, "none");				// Prix #5
 
-								TexteATranscrire4[12] = dotToComa(prix->getPrice());
-								TexteATranscrire4[16] = "1";
-								TexteATranscrire4[15] = global_picture;
-								TexteATranscrire4[19] = produit[10];
+								ProductLine4[12] = dotToComa(prix->getPrice());
+								ProductLine4[15] = global_picture;
+								ProductLine4[16] = "1";
+								ProductLine4[19] = produit[10];
 #pragma endregion
 								qtyOptBulk = 1;		// For writting conditions at the bottom
 							}
-							global_picture = "";
 
-							for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire1[j] << ";";
+#pragma region Writting conditions (file write)
+							for (int j = 0; j < nbrProductCols; j++) finish << ProductLine1[j] << ";";
 							finish << endl;
 							
 							if (qtyOptSmall) {
-								for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire2[j] << ";";
+								for (int j = 0; j < nbrProductCols; j++) finish << ProductLine2[j] << ";";
 								finish << endl;
 							}
 
 							if (qtyOptMedium) {
-								for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire3[j] << ";";
+								for (int j = 0; j < nbrProductCols; j++) finish << ProductLine3[j] << ";";
 								finish << endl;
 							}
 							
 							if (qtyOptBulk) {
-								for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire4[j] << ";";
+								for (int j = 0; j < nbrProductCols; j++) finish << ProductLine4[j] << ";";
 								finish << endl;
 							}
 							
-							if (TexteATranscrire5[15] != "") {
-								for (int j = 0; j < nbrOfHeaders; j++) finish << TexteATranscrire5[j] << ";";
+							if (ProductLine5[15] != "") {
+								for (int j = 0; j < nbrProductCols; j++) finish << ProductLine5[j] << ";";
 								finish << endl;
 							}
+#pragma endregion
 						}
 
 						else {
@@ -497,28 +535,28 @@ void ouverture() {
 
 							PRD_SPECS_AND_TITLE* title;
 							string titre = "";
-							TexteATranscrire1[0] = produit[0];
+							ProductLine1[0] = produit[0];
 							title = new PRD_SPECS_AND_TITLE(userInput_prdType);
 							titre = title->getTitle();
 							tag = title->getTags();
 
-							TexteATranscrire1[1] = "\"" + titre + "\"";
-							TexteATranscrire1[2] = body(produit[2], userInput_prdType, tag);
-							TexteATranscrire1[7] = produit[0];
+							ProductLine1[1] = "\"" + titre + "\"";
+							ProductLine1[2] = body(produit[2], userInput_prdType, tag);
+							ProductLine1[7] = produit[0];
 
 							texte = dotToComa(texte);
 
-							TexteATranscrire1[8] = texte;
+							ProductLine1[8] = texte;
 
 							//prix.constructeur(produit[39], 'c', 1);
 
 							//texte = prix.getPrice();
 							texte = dotToComa(texte);
 
-							TexteATranscrire1[12] = texte;
+							ProductLine1[12] = texte;
 
-							TexteATranscrire1[15] = photo;
-							TexteATranscrire1[18] = produit[10];
+							ProductLine1[15] = photo;
+							ProductLine1[18] = produit[10];
 
 							/*****Petite quantité, 2e section de prix et quantité****/
 							//calcul = new CALCUL_POIDS(produit[0], bulk, 'b', reponse,rlg);
@@ -574,22 +612,22 @@ void ouverture() {
 
 
 							tag += "\"";
-							TexteATranscrire1[3] = tag;
+							ProductLine1[3] = tag;
 
 							tag = "\"";
 							photo = "";
 
 							if (produit[0][0] == 'E' && produit[0][1] == 'A' || ((produit[0][0] == 'T') && (produit[0][1] == 'I')))
 							{
-								TexteATranscrire1[5] = "Unity";
-								TexteATranscrire1[6] = "1";
-								TexteATranscrire1[12] = produit[9];
+								ProductLine1[5] = "Unity";
+								ProductLine1[6] = "1";
+								ProductLine1[12] = produit[9];
 
 								//TexteATranscrire1[8] = TexteATranscrire3[8];
 
 								for (int j = 0; j < 19; j++)
 								{
-									finish << TexteATranscrire1[j] << ";";
+									finish << ProductLine1[j] << ";";
 								}
 								finish << endl;
 							}
@@ -597,7 +635,7 @@ void ouverture() {
 							{
 								for (int j = 0; j < 19; j++)
 								{
-									finish << TexteATranscrire1[j] << ";";
+									finish << ProductLine1[j] << ";";
 								}
 								finish << endl;
 								for (int j = 0; j < 19; j++)
@@ -613,8 +651,8 @@ void ouverture() {
 							}
 						}
 
-						productname[cpt] = produit[0];
-						cpt++;
+						productNames[cptProductNames] = produit[0];
+						cptProductNames++;
 					}
 
 				}
@@ -626,14 +664,14 @@ void ouverture() {
 						string filename[5000] = { "" };
 						string filenameFormatted[5000] = { "" };
 
-						cpt = 0;
+						cptProductNames = 0;
 						try {
 							for (auto& p : fs::directory_iterator(directoryName)) {
-								filename[cpt] = p.path().string();
-								filenameFormatted[cpt] = p.path().string();
-								filenameFormatted[cpt].erase(0, filenameFormatted[cpt].find("\\") + 1);
-								filenameFormatted[cpt].erase(filenameFormatted[cpt].find("."));
-								cpt++;
+								filename[cptProductNames] = p.path().string();
+								filenameFormatted[cptProductNames] = p.path().string();
+								filenameFormatted[cptProductNames].erase(0, filenameFormatted[cptProductNames].find("\\") + 1);
+								filenameFormatted[cptProductNames].erase(filenameFormatted[cptProductNames].find("."));
+								cptProductNames++;
 							}
 						}
 						catch (const std::exception&) { }
@@ -657,11 +695,11 @@ void ouverture() {
 							a++;
 						}*/
 
-						int filesCount = cpt;
+						int filesCount = cptProductNames;
 
 					#pragma region Lowering all characters
 						/* Lowering product names */
-						for (std::string& s : productname)
+						for (std::string& s : productNames)
 							for (char& c : s)
 								c = std::tolower(static_cast<unsigned char>(c));
 
@@ -673,9 +711,9 @@ void ouverture() {
 
 						cout << endl;
 						bool found = false;
-						cpt = 0;
+						cptProductNames = 0;
 						int missingCount = 0;
-						for (string prd : productname) {
+						for (string prd : productNames) {
 							if (!prd.empty()) {
 								found = false;
 								for (string flnm : filenameFormatted) {
@@ -686,27 +724,27 @@ void ouverture() {
 									cout << "Missing files for " << prd << endl;
 									missingCount++;
 								}
-								cpt++;
+								cptProductNames++;
 							}
 						}
 
-						int productsCount = cpt;
+						int productsCount = cptProductNames;
 
 						found = false;
-						cpt = 0;
+						cptProductNames = 0;
 						int deletedCount = 0;
 						for (string flnm : filenameFormatted) {
 							if (!flnm.empty()) {
 								found = false;
-								for (string prd : productname) {
+								for (string prd : productNames) {
 									if (flnm == prd)
 										found = true;
 								}
 								if (!found) {
-									remove(filename[cpt].c_str());
+									remove(filename[cptProductNames].c_str());
 									deletedCount++;
 								}
-								cpt++;
+								cptProductNames++;
 							}
 						}
 
@@ -748,10 +786,10 @@ int main() {
 	cout << "Faites un choix... " << endl << endl;
 
 	/* Activate only to accelerate development */
-	bool dev = false;
+	bool dev = true;
 
 	/* By default = true (May be useful while developing) */
-	bool autoOpenFile = true;
+	bool autoOpenFile = false;
 
 	if (dev)
 		devAccel();

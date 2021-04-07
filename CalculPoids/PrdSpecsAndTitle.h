@@ -2,7 +2,7 @@
 #include "Threading.h"
 #include "Globals.h"
 
-string picturess[100] = {
+string picturess[10] = {
 	"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/screw_socket_head_PT_NR.PNG?v=1579188584",								// Socket Screw Partial Thread
 	"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_SS_f2f45a3f-8058-4b3c-a834-03eb6164f370.PNG?v=1600708638",	// Socket Screw Full Thread Stainless Steel
 	"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/noPictureImg.PNG?v=1609364630",											// Socket Screw Full Thread Titanium
@@ -1013,10 +1013,10 @@ Vis::Vis() {
 
 	pictures.insert(pair<string, string>("Standard|Black-Oxide Alloy Steel|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/screw_socket_head_PT_NR.PNG?v=1579188584"));
 	pictures.insert(pair<string, string>("Standard|Black-Oxide Alloy Steel|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_FT_NR.PNG?v=1579188584"));
-	pictures.insert(pair<string, string>("Standard|A2 Stainless Steel[Equivalent 304 SS]|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_SS.PNG?v=1579188584"));
-	pictures.insert(pair<string, string>("Standard|A2 Stainless Steel[Equivalent 304 SS]|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_SS.PNG?v=1579188584"));
-	pictures.insert(pair<string, string>("Standard|A4 Stainless Steel[Equivalent 316 SS]|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_3SS.png?v=1588692308"));
-	pictures.insert(pair<string, string>("Standard|A4 Stainless Steel[Equivalent 316 SS]|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_FT_3SS.png?v=1588785976"));
+	pictures.insert(pair<string, string>("Standard|A2 Stainless Steel [Equivalent 304 SS]|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_SS.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>("Standard|A2 Stainless Steel [Equivalent 304 SS]|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_SS.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>("Standard|A4 Stainless Steel [Equivalent 316 SS]|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_3SS.png?v=1588692308"));
+	pictures.insert(pair<string, string>("Standard|A4 Stainless Steel [Equivalent 316 SS]|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_FT_3SS.png?v=1588785976"));
 	pictures.insert(pair<string, string>("Low|Black-Oxide Alloy Steel|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_low_head_PT.PNG?v=1579188584"));
 	pictures.insert(pair<string, string>("Low|Black-Oxide Alloy Steel|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_low_head_FT.PNG?v=1579188584"));
 	pictures.insert(pair<string, string>("Standard|Titanium|Partial Thread|[Allen Key]", ""));
@@ -1045,6 +1045,11 @@ inline void Vis::productBase() {
 	title = "Metric Socket Head Cap Screw ";
 	tags = "metric, pressure_screw, socket_head_cap_screw,";
 	fineThread = 'c';
+
+	// The standard tag will depend on... 
+	// Head + Threading + DriveStyle 
+	// The image URL will depend on... 
+	// Head + MatAndPlating + Threading + DriveStyle 
 }
 
 inline void Vis::head() {
@@ -1057,6 +1062,7 @@ inline void Vis::head() {
 	else {
 		global_headProfile = "Standard";
 		pictureIndex = "Standard|";
+		tags += "standard,";
 	}
 }
 
@@ -1064,7 +1070,7 @@ inline void Vis::material() {
 	int matId = 0;
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
 		char materialsVp[4]{ '$', 'S', 'J', '3' };
-		string materialsVpTitles[4]{ "Black-Oxide Alloy Steel ", "A2 Stainless Steel[Equivalent 304 SS] ", "Titanium ", "A4 Stainless Steel[Equivalent 316 SS] " };
+		string materialsVpTitles[4]{ "Black-Oxide Alloy Steel ", "A2 Stainless Steel [Equivalent 304 SS] ", "Titanium ", "A4 Stainless Steel [Equivalent 316 SS] " };
 		string materialsVpTags[4]{ "black, black-oxide, black-oxide_alloy_steel,", "stainless_steel, 304_stainless_steel, a2, a2_stainless_steel,", "titanium,", "stainless_steel, 316_stainless_steel, a4, a4_stainless_steel," };
 
 		for (int i = 0; i < global_splittedPrdNbr[0].length(); i++) {
@@ -1162,12 +1168,12 @@ inline void Vis::threading() {
 
 		if (text.find('T') != string::npos) {
 			title += "Full Thread ";
-			tags += "full_thread,";
+			tags += "fully_threaded,";
 			pictureIndex += string("Full Thread") + "|";
 		}
 		else {
 			title += "Partial Thread ";
-			tags += "partial_thread,";
+			tags += "partially_threaded,";
 			pictureIndex += string("Partial Thread") + "|";
 		}
 
@@ -1252,15 +1258,15 @@ inline void Vis::grade() {
 		struct_TypeTitleTags grades[3];
 #pragma region grades
 		grades[0].type = "88";
-		grades[0].tags = "grade_8.8,";
+		grades[0].tags = "grade-8-8,";
 		grades[0].title = "Grade 8.8 ";
 
 		grades[1].type = "10";
-		grades[1].tags = "grade_10.9,";
+		grades[1].tags = "grade-10-9,";
 		grades[1].title = "Grade 10.9 ";
 
 		grades[2].type = "";
-		grades[2].tags = "grade_12.9,";
+		grades[2].tags = "grade-12-9,";
 		grades[2].title = "Grade 12.9 ";
 #pragma endregion
 
@@ -1278,6 +1284,8 @@ inline void Vis::grade() {
 			title += grades[idx].title;
 			global_grade = grades[idx].title;
 		}
+		else 
+			global_grade = global_materialAndPlating.substr(0,2);
 
 		global_tensStrength = strength("tensile", idx);
 		global_shearStrength = strength("shear", idx);
@@ -1350,6 +1358,7 @@ inline void Vis::otherSpecs() {
 			break;
 		}
 	}
+	global_picture = global_picture.length() > 1 ? global_picture : "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/noPictureImg.PNG?v=1615927708";
 
 	// Retrieves number(s) from after 'M' and until ' '(space)		# Nominal Diameter
 	global_diamNom = stoi(thread.substr(1, thread.find(' ')));

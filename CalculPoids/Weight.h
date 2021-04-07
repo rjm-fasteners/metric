@@ -1,10 +1,10 @@
 #pragma once
 
-class WEIGHT {
+class WEIGHT_AND_BULK {
 public:
-	WEIGHT(int userInput_prdType, int quantity);
-	WEIGHT();
-	~WEIGHT();
+	WEIGHT_AND_BULK(int userInput_prdType, int quantity);
+	WEIGHT_AND_BULK();
+	~WEIGHT_AND_BULK();
 	double getWgt();
 	int getBulk();
 
@@ -25,6 +25,6 @@ private:
 	double VTOT;		// Volume total
 
 	void choix();
+	void calculWeight();
 	void calculBulk();
-	void pressureScrew();
 };
