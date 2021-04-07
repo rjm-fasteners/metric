@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 15 for Windows Desktop
-VisualStudioVersion = 15.0.28307.757
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalculPoids", "CalculPoids\CalculPoids.vcxproj", "{3A395469-7147-4B15-B544-A556EE40FD57}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E1146553-D957-4AFF-85FC-E264FC4F9E84}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalculPoids_metrique", "CalculPoids\CalculPoids.vcxproj", "{3A395469-7147-4B15-B544-A556EE40FD57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

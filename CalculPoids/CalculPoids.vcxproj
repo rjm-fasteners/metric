@@ -76,6 +76,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <PublicIncludeDirectories>
+    </PublicIncludeDirectories>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -95,6 +97,7 @@
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile />
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\Users\Utilisateur\Desktop\alexisDocs\Automatisation\AutomatiseBaseFormat\AutomatiseBaseFormat</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -111,6 +114,7 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile />
+      <AdditionalIncludeDirectories>C:\Users\Utilisateur\Desktop\alexisDocs\Automatisation\AutomateInternMain\AutomatiseBaseFormat</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,17 +161,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="WeightCalculators.cpp" />
+    <ClCompile Include="Price.cpp" />
+    <ClCompile Include="Threading.cpp" />
+    <ClCompile Include="Weight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Body.h" />
-    <ClInclude Include="CalculPoids.h" />
     <ClInclude Include="Globals.h" />
-    <ClInclude Include="Poids.h" />
-    <ClInclude Include="Prix.h" />
+    <ClInclude Include="Price.h" />
     <ClInclude Include="Threading.h" />
     <ClInclude Include="PrdSpecsAndTitle.h" />
-    <ClInclude Include="WeightCalculators.h" />
+    <ClInclude Include="Weight.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

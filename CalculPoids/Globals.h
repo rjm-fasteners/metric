@@ -11,35 +11,54 @@
 #include <cstdlib>
 #include <algorithm>
 #include <filesystem>
+#include <map>
 using namespace std;
 
 # define M_PI 3.14159265358979323846		/* Pi */
 
-extern string title_thrdSize;
-extern string title_thrdType;
-extern string title_threading;
-extern string title_thrdFit;
-extern string title_thrdDirection;
-extern string title_minThrdLength;
-extern string title_length;
-extern string title_grade;
+extern string global_thrdSize;
+extern string global_thrdType;
+extern string global_threading;
+extern string global_thrdFit;
+extern string global_thrdDirection;
+extern string global_minThrdLength;
+extern string global_length;
+extern string global_grade;
 
-extern string title_tensStrength;
-extern string title_shearStrength;
+extern string global_tensStrength;
+extern string global_shearStrength;
 
-extern string title_driveStyle;
-extern string title_driveSize;
+extern string global_driveStyle;
+extern string global_driveSize;
 
-extern string title_headHeight;
-extern string title_headProfile;
-extern string title_headType;
+extern string global_headHeight;
+extern string global_headProfile;
+extern string global_headType;
 
-extern string title_materialAndPlating;
+extern string global_materialAndPlating;
 
-extern string title_headDiam;
+extern string global_headDiam;
 
-extern int title_diamNom;
+extern int global_diamNom;
 
-/*****Fonction qui change la virgule pour un point*****/
+extern string global_splittedPrdNbr[3];
+extern string global_prdNbr;
+
+extern string global_picture;
+extern string global_classification;
+
 extern string comaToDot(string val);
+extern string dotToComa(string val);
+extern float toFloat(string prix);
+
+struct struct_TypeTitleTags {
+	string type;
+	string title;
+	string tags;
+};
+
+struct struct_KeyValues {
+	string key;
+	map<string, string> values;
+};
 #endif

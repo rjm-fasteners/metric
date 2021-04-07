@@ -1,41 +1,30 @@
 #pragma once
-#include "Globals.h"
 
-#pragma region Calcul Poids
-class WEIGHT {
+class WEIGHT_AND_BULK {
 public:
-	WEIGHT(string productNumber, int userInput_prdType, int quantity);
-	WEIGHT();
-	~WEIGHT();
+	WEIGHT_AND_BULK(int userInput_prdType, int quantity);
+	WEIGHT_AND_BULK();
+	~WEIGHT_AND_BULK();
 	double getWgt();
 	int getBulk();
 
 private:
-	//PRESSURE_SCREW* pressScrew;
-
-	double number_wgt;
-	string string_wgt;
-	string prdNbr;
-	int prdType;
-	int qty;
-	int bulk;
-
-	void choix();
-
-
-
 	double headDiam;
 	double headHgt;
 	double diamNom;
 	double bodyLgt;
 	double weight;
-	//float bulk;
+	int prdType;
+	int qty;
+	int bulk;
 
 	// VARS FOR CALCUL
-	double RHO;
+	double RHO;			// Densité acier (kg/m³)
 	double VT;			// Volume tête
 	double VC;			// Volume corps
 	double VTOT;		// Volume total
 
+	void choix();
+	void calculWeight();
 	void calculBulk();
 };
