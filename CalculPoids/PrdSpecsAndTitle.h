@@ -2,13 +2,6 @@
 #include "Threading.h"
 #include "Globals.h"
 
-string picturess[10] = {
-	"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/screw_socket_head_PT_NR.PNG?v=1579188584",								// Socket Screw Partial Thread
-	"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_SS_f2f45a3f-8058-4b3c-a834-03eb6164f370.PNG?v=1600708638",	// Socket Screw Full Thread Stainless Steel
-	"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/noPictureImg.PNG?v=1609364630",											// Socket Screw Full Thread Titanium
-	"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_SS3.png?v=1607705430",										// Socket Screw Full Thread Stainless Steel A4 (316)
-};
-
 map<string, string> pictures;
 
 THREADING* threading_calc;
@@ -24,32 +17,20 @@ string gradesTags[4]{ "grade_5,", "grade_8,", "grade_9,", "grade_2" };
 
 #pragma region Pressure Screws Arrays
 // For all arrays, $ is considered as the default value
-//char materialVp[4]{ '$', 'S', 'J', '3' };
-//string materialVpTitles[4]{ "Black-Oxide Alloy Steel ", "A2 Stainless Steel [Equivalent 304 SS] ", "Titanium ", "A4 Stainless Steel [Equivalent 316 SS] " };
-//string materialVpTags[4]{ "black, black-oxide, black-oxide_alloy_steel,", "stainless_steel, 304_stainless_steel, a2, a2_stainless_steel,", "titanium,", "stainless_steel, 316_stainless_steel, a4, a4_stainless_steel," };
 struct_TypeTitleTags materialsVp[4] = {
 	{ "$", "Black-Oxide Alloy Steel ",					"black, black-oxide, black-oxide_alloy_steel," },
 	{ "S", "A2 Stainless Steel [Equivalent 304 SS] ",	"stainless_steel, 304_stainless_steel, a2, a2_stainless_steel," },
 	{ "3", "A4 Stainless Steel [Equivalent 316 SS] ",	"stainless_steel, 316_stainless_steel, a4, a4_stainless_steel," },
 	{ "J", "Titanium ",									"titanium," } };
-//
-//char platingVp[10]{ 'Z', 'Y' };
-//string platingVpTitles[10]{ "Zinc Plated ", "Yellow Zinc Plated " };
-//string platingVpTags[10]{ "zinc, zinc_plated,", "zinc, yellow_zinc, yellow_zinc_plated," };
+
 struct_TypeTitleTags platingsVp[2] = {
 	{ "Z", "Zinc Plated ",			"zinc, zinc_plated," },
 	{ "Y", "Yellow Zinc Plated ",	"zinc, yellow_zinc, yellow_zinc_plated," } };
 
-//char headVp[10]{ '$', 'I' };
-//string headVpTitles[10]{ "Standard ", "Low " };
-//string headVpTags[10]{ "standard,", "low_head," };
 struct_TypeTitleTags headsVp[2] = {
 	{ "$", "Standard ",	"standard," },
 	{ "I", "Low ",		"low_head," } };
 
-//char threadingVp[10]{ '$', 'T' };
-//string threadingVpTitles[10]{ "Partial Thread ", "Full Thread " };
-//string threadingVpTags[10]{ "partially_threaded,", "fully_threaded," };
 struct_TypeTitleTags threadingsVp[2] = {
 	{ "$", "Partial Thread ",	"partially_threaded," },
 	{ "T", "Full Thread ",		"fully_threaded," } };
@@ -1045,7 +1026,6 @@ private:
 	string thread;
 	map<string, string> pictureIndex;
 	bool found;
-	int cpt;
 
 	void productBase();
 	void head();
@@ -1063,7 +1043,6 @@ private:
 
 Vis::Vis() {
 	text = "";
-	cpt = 0;
 	found = false;
 	// Numbers needed in the map so they stay in the order (instead of alphabetic sorted)
 	pictureIndex = { { "1_head", "" }, { "2_materialAndPlating", "" }, { "3_threading", "" }, { "4_driveStyle", "" }, { "5_grade", "" }, { "6_threadDirection", "" } };
@@ -1149,16 +1128,14 @@ inline void Vis::head() {
 	}
 	else global_classification = "912";
 
-	cpt = 0;
 	for (auto& head : headsVp) {
 		if (text.find(head.type) != string::npos) {
-			global_headProfile = headsVp[cpt].title;
-			pictureIndex["1_head"] = headsVp[cpt].title;
-			tags += headsVp[cpt].tags;
+			global_headProfile = head.title;
+			pictureIndex["1_head"] = head.title;
+			tags += head.tags;
 			found = true;
 			break;
 		}
-		else cpt++;
 	}
 
 	if (!found) {
@@ -1173,19 +1150,25 @@ inline void Vis::material() {
 	int matId = 0;
 	text = global_splittedPrdNbr[0];
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
-		cpt = 0;
 		for (auto& mat : materialsVp) {
-			if (text.find(mat.type) != string::npos) {
-				if (!global_splittedPrdNbr[2][0]) {
-					tags += materialsVp[cpt].tags;
-					title += materialsVp[cpt].title;
-					global_materialAndPlating = materialsVp[cpt].title;
-					pictureIndex["2_materialAndPlating"] = materialsVp[cpt].title;
-				}
+			// If there is nothing at the end (like 'Y' for Yellow Zinc) then assign the material. Otherwise it'll be a plating
+			if (!global_splittedPrdNbr[2][0] && text.find(mat.type) != string::npos) {
+				tags += mat.tags;
+				title += mat.title;
+				global_materialAndPlating = mat.title;
+				pictureIndex["2_materialAndPlating"] = mat.title;
+				found = true;
 				break;
 			}
-			else cpt++;
 		}
+
+		if (!found) {
+			tags += materialsVp[0].tags;
+			title += materialsVp[0].title;
+			global_materialAndPlating = materialsVp[0].title;
+			pictureIndex["2_materialAndPlating"] = materialsVp[0].title;
+		}
+		else found = false;
 
 	}
 	else {
@@ -1205,16 +1188,14 @@ inline void Vis::material() {
 inline void Vis::plating() {
 	int platId = 0;
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
-		cpt = 0;
 		for (auto & plat : platingsVp) {
 			if (text.find(plat.type) != string::npos) {
-				tags += platingsVp[cpt].tags;
-				title += platingsVp[cpt].title;
-				global_materialAndPlating += platingsVp[cpt].title;
-				pictureIndex["2_materialAndPlating"] = platingsVp[cpt].title;
+				tags += plat.tags;
+				title += plat.title;
+				global_materialAndPlating += plat.title;
+				pictureIndex["2_materialAndPlating"] = plat.title;
 				break;
 			}
-			else cpt++;
 		}
 	}
 	else if(global_splittedPrdNbr[2][0]) {
@@ -1255,16 +1236,14 @@ inline void Vis::threading() {
 		}
 	}
 	else {
-		cpt = 0;
 		for (auto &thrd : threadingsVp) {
 			if (text.find(thrd.type) != string::npos) {
-				title += threadingsVp[cpt].title;
-				tags += threadingsVp[cpt].tags;
-				pictureIndex["3_threading"] = threadingsVp[cpt].title;
+				title += thrd.title;
+				tags += thrd.tags;
+				pictureIndex["3_threading"] = thrd.title;
 				found = true;
 				break;
 			}
-			else cpt++;
 		}
 
 		if (!found) {
@@ -1423,7 +1402,7 @@ inline void Vis::otherSpecs() {
 			break;
 		}
 	}
-	global_picture = global_picture.length() > 1 ? global_picture : "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/noPictureImg.PNG?v=1615927708";
+	global_picture = global_picture.length() > 1 ? global_picture : pictures["NO PICTURE"];
 
 	// Retrieves number(s) from after 'M' and until ' '(space)		# Nominal Diameter
 	//global_diamNom = stoi(thread.substr(1, thread.find(' ')));

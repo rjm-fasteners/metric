@@ -152,7 +152,7 @@ void ouverture() {
 		Product.open(FILENAME, ios::in);
 
 		fstream finish;
-		FILENAME = "main_finish.txt";
+		FILENAME = "main_finish.csv";
 		finish.open(FILENAME, ios::out | ios::trunc);
 
 		if (finish.is_open()) {
