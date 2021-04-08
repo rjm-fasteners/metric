@@ -52,10 +52,7 @@ struct_KeyValues threads[100] = {
 	{"100",{ {"c", "6"},	{"f", "4"},		{"ff", "3"},	{"fff", "2"} } },
 };
 
-THREADING::THREADING() { }
-
-THREADING::THREADING(string threadType) {
-	thrdType = threadType;
+THREADING::THREADING() {
 	thrdTitle = "";
 	threading();
 }
@@ -67,6 +64,33 @@ string THREADING::getTags() { return tags; }
 string THREADING::getThread() { return thrdTitle; }
 
 void THREADING::threading() {
+	text = global_splittedPrdNbr[0];
+	tags = "metric_";
+	int index = text.find('F') != string::npos ? text.find('F') : 0;
+	if (text[index] == 'F' && text[index + 1] && text[index + 1] == 'F' && text[index + 2] && text[index + 2] == 'F') {
+		thrdType = "fff";
+		global_thrdType = "ISO Metric Pitch | Extra-extra-fine";
+		thrdTitle += "Extra-Extra Fine Thread ";
+		tags += "extra-extra_fine,";
+	}
+	else if (text[index] == 'F' && text[index + 1] && text[index + 1] == 'F') {
+		thrdType = "ff";
+		global_thrdType = "ISO Metric Pitch | Extra-fine";
+		thrdTitle += "Extra Fine Thread ";
+		tags += "extra_fine,";
+	}
+	else if (text[index] == 'F') {
+		thrdType = "f";
+		global_thrdType = "ISO Metric Pitch | Fine";
+		thrdTitle += "Fine Thread ";
+		tags += "fine,";
+	}
+	else {
+		thrdType = "c";
+		global_thrdType = "ISO Metric Pitch | Coarse";
+		tags += "coarse,";
+	}
+
 	if (global_splittedPrdNbr[1][0] == '0' && global_splittedPrdNbr[1][1] < 4 && global_splittedPrdNbr[1][2] != '0' && global_splittedPrdNbr[1][2] != '1') {
 		text = global_splittedPrdNbr[1][0];
 		text += global_splittedPrdNbr[1][1];
@@ -75,25 +99,6 @@ void THREADING::threading() {
 	else {
 		text = global_splittedPrdNbr[1][0];
 		text += global_splittedPrdNbr[1][1];
-	}
-
-	tags = "metric_";
-
-	if (thrdType == "c") {
-		global_thrdType = "ISO Metric Pitch | Coarse";
-		tags += "coarse,";
-	}
-	else if (thrdType == "f") {
-		global_thrdType = "ISO Metric Pitch | Fine";
-		tags += "fine,";
-	}
-	else if (thrdType == "ff") {
-		global_thrdType = "ISO Metric Pitch | Extra-fine";
-		tags += "extra-fine,";
-	}
-	else if (thrdType == "fff") {
-		global_thrdType = "ISO Metric Pitch | Extra-extra-fine";
-		tags += "extra-extra-fine,";
 	}
 
 	for (struct_KeyValues k_v : threads) {
@@ -108,7 +113,8 @@ void THREADING::threading() {
 				}
 				formatted = text;
 			}
-			thrdTitle = "M" + formatted + " * " + k_v.values[thrdType] + " ";
+			thrdTitle += "M" + formatted + " * " + k_v.values[thrdType] + " ";
+			global_diamNom = stoi(formatted);
 
 			// If condition for fitting tags with the filters on Shopify (Power Tools Filter)
 			if (k_v.values[thrdType].find('.') != string::npos) k_v.values[thrdType][k_v.values[thrdType].find('.')] = '-';

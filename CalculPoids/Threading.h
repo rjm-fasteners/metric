@@ -2,7 +2,6 @@
 
 class THREADING {
 public:
-	THREADING(string threadType);
 	THREADING();
 	~THREADING();
 	string getTags();

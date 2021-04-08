@@ -101,6 +101,7 @@ void initializeVariables() {
 	global_prdNbr = "";
 
 	global_picture = "";
+	global_classification = "";
 #pragma endregion
 }
 
@@ -791,8 +792,10 @@ int main() {
 	/* By default = true (May be useful while developing) */
 	bool autoOpenFile = false;
 
-	if (dev)
+	if (dev) {
 		devAccel();
+		automate = new Automatisation(1);
+	}
 	else {
 		do {
 			cout << "A) Calcul de ratio inferieur a 50% \nB) Importation \nC) Validation de categorie \nD) Listing des categories \nE) Importation et triage des dessins techniques \nChoix : ";

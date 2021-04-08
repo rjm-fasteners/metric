@@ -3225,7 +3225,7 @@ string bodyScrew(string categorie) {
 				"<tr><td style='text-indent: 25px'>Strength Grade/Class</td><td>" + global_grade + "</td></tr>" +
 				"<tr><td style='text-indent: 25px'>Tensile Strength | Hardness</td><td>" + global_tensStrength + "</td></tr>" +
 				"<tr><td style='text-indent: 25px'>Shear Strength</td><td>" + global_shearStrength + "</td></tr>" +
-				"<tr><td style='text-indent: 25px'>Classification</td><td>" + global_classification + "</td></tr>" +
+				"<tr><td style='text-indent: 25px'>Classification</td><td>DIN " + global_classification + "</td></tr>" +
 		"</tbody></table>"
 
 		"<br/>"
@@ -3233,7 +3233,7 @@ string bodyScrew(string categorie) {
 		"<div>"
 			"<p>This socket head cap screw has a length of " + global_length + " with a threading of " + global_thrdSize + " [" + global_threading + "]. It is made of " + global_materialAndPlating + ", " + corrResistance + ".</p>"
 			"<p>The cup point" + (global_grade != "" ? (" and the " + global_grade) : ("")) + " increases its strength against the pressure and has a tensile strength and hardness of " + global_tensStrength + ". Furthermore, it features a shear strenght of " + global_shearStrength + ".</p>"
-			"<p>"+ global_thrdType +" threads are an industry standard. These screws are classified as DIN 912 and comply with dimensional standards.</p>"
+			"<p>"+ global_thrdType +" threads are an industry standard. These screws are classified as DIN " + global_classification + " and comply with dimensional standards.</p>"
 		"</div>";
 
 	return tableHTML;

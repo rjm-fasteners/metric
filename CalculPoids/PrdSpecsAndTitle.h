@@ -21,6 +21,59 @@ char grades[4]{ '5', '8', '9', '2' };
 string gradesTitles[4]{ "Grade 5 ", "Grade 8 ", "Grade 9 ", "Grade 2 " };
 string gradesTags[4]{ "grade_5,", "grade_8,", "grade_9,", "grade_2" };
 
+
+#pragma region Pressure Screws Arrays
+// For all arrays, $ is considered as the default value
+//char materialVp[4]{ '$', 'S', 'J', '3' };
+//string materialVpTitles[4]{ "Black-Oxide Alloy Steel ", "A2 Stainless Steel [Equivalent 304 SS] ", "Titanium ", "A4 Stainless Steel [Equivalent 316 SS] " };
+//string materialVpTags[4]{ "black, black-oxide, black-oxide_alloy_steel,", "stainless_steel, 304_stainless_steel, a2, a2_stainless_steel,", "titanium,", "stainless_steel, 316_stainless_steel, a4, a4_stainless_steel," };
+struct_TypeTitleTags materialsVp[4] = {
+	{ "$", "Black-Oxide Alloy Steel ",					"black, black-oxide, black-oxide_alloy_steel," },
+	{ "S", "A2 Stainless Steel [Equivalent 304 SS] ",	"stainless_steel, 304_stainless_steel, a2, a2_stainless_steel," },
+	{ "3", "A4 Stainless Steel [Equivalent 316 SS] ",	"stainless_steel, 316_stainless_steel, a4, a4_stainless_steel," },
+	{ "J", "Titanium ",									"titanium," } };
+//
+//char platingVp[10]{ 'Z', 'Y' };
+//string platingVpTitles[10]{ "Zinc Plated ", "Yellow Zinc Plated " };
+//string platingVpTags[10]{ "zinc, zinc_plated,", "zinc, yellow_zinc, yellow_zinc_plated," };
+struct_TypeTitleTags platingsVp[2] = {
+	{ "Z", "Zinc Plated ",			"zinc, zinc_plated," },
+	{ "Y", "Yellow Zinc Plated ",	"zinc, yellow_zinc, yellow_zinc_plated," } };
+
+//char headVp[10]{ '$', 'I' };
+//string headVpTitles[10]{ "Standard ", "Low " };
+//string headVpTags[10]{ "standard,", "low_head," };
+struct_TypeTitleTags headsVp[2] = {
+	{ "$", "Standard ",	"standard," },
+	{ "I", "Low ",		"low_head," } };
+
+//char threadingVp[10]{ '$', 'T' };
+//string threadingVpTitles[10]{ "Partial Thread ", "Full Thread " };
+//string threadingVpTags[10]{ "partially_threaded,", "fully_threaded," };
+struct_TypeTitleTags threadingsVp[2] = {
+	{ "$", "Partial Thread ",	"partially_threaded," },
+	{ "T", "Full Thread ",		"fully_threaded," } };
+
+struct_TypeTitleTags threadDirectionsVp[2] = {
+	{ "$", "Right Hand ",	"right_handed, right_thread," },
+	{ "H", "Left Hand ",	"left_handed, left_thread," } };
+
+struct_TypeTitleTags drivesVp[6] = {
+	{ "$", "[Phillips Drive] ",	"phillips," },
+	{ "S", "[Slotted Drive] ",	"slotted," },
+	{ "T", "[Torx Pin] ",		"torx_pin," },
+	{ "A", "[Allen Key] ",		"allen_key," },
+	{ "C", "[Square Drive] ",	"square," },
+	{ "Q", "[Quadrex Drive] ",	"quadrex," } };
+
+struct_TypeTitleTags gradesVp[5] = { 
+	{ "$",	"Grade 12.9 ",	"grade-12-9,"},
+	{ "88", "Grade 8.8 ",	"grade-8-8,"}, 
+	{ "10", "Grade 10.9 ",	"grade-10-9,"},
+	{ "A2", "A2 ",			"a2,"},
+	{ "A4", "A4 ",			"a4,"} };
+#pragma endregion
+
 #pragma region Boulon
 
 class Boulon
@@ -989,9 +1042,10 @@ private:
 	string text;
 	string title;
 	string tags;
-	string fineThread;
 	string thread;
-	string pictureIndex;
+	map<string, string> pictureIndex;
+	bool found;
+	int cpt;
 
 	void productBase();
 	void head();
@@ -1009,18 +1063,56 @@ private:
 
 Vis::Vis() {
 	text = "";
-	pictureIndex = "";
+	cpt = 0;
+	found = false;
+	// Numbers needed in the map so they stay in the order (instead of alphabetic sorted)
+	pictureIndex = { { "1_head", "" }, { "2_materialAndPlating", "" }, { "3_threading", "" }, { "4_driveStyle", "" }, { "5_grade", "" }, { "6_threadDirection", "" } };
 
-	pictures.insert(pair<string, string>("Standard|Black-Oxide Alloy Steel|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/screw_socket_head_PT_NR.PNG?v=1579188584"));
-	pictures.insert(pair<string, string>("Standard|Black-Oxide Alloy Steel|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_FT_NR.PNG?v=1579188584"));
-	pictures.insert(pair<string, string>("Standard|A2 Stainless Steel [Equivalent 304 SS]|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_SS.PNG?v=1579188584"));
-	pictures.insert(pair<string, string>("Standard|A2 Stainless Steel [Equivalent 304 SS]|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_SS.PNG?v=1579188584"));
-	pictures.insert(pair<string, string>("Standard|A4 Stainless Steel [Equivalent 316 SS]|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_3SS.png?v=1588692308"));
-	pictures.insert(pair<string, string>("Standard|A4 Stainless Steel [Equivalent 316 SS]|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_FT_3SS.png?v=1588785976"));
-	pictures.insert(pair<string, string>("Low|Black-Oxide Alloy Steel|Partial Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_low_head_PT.PNG?v=1579188584"));
-	pictures.insert(pair<string, string>("Low|Black-Oxide Alloy Steel|Full Thread|[Allen Key]", "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_low_head_FT.PNG?v=1579188584"));
-	pictures.insert(pair<string, string>("Standard|Titanium|Partial Thread|[Allen Key]", ""));
-	pictures.insert(pair<string, string>("Standard|Titanium|Full Thread|[Allen Key]", ""));
+	// Head + MaterialAndPlating + Threading + DriveStyle + Grade + ThreadDirection
+	pictures.insert(pair<string, string>(
+		// Standard Black-Oxide Alloy Steel Partial Thread [Allen Key] Grade 12.9 Right Hand 
+		headsVp[0].title + materialsVp[0].title + threadingsVp[0].title + 
+		drivesVp[3].title + gradesVp[0].title + threadDirectionsVp[0].title, 
+		"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/screw_socket_head_PT_NR.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>(
+		// Standard Black-Oxide Alloy Steel Full Thread [Allen Key] Grade 12.9 Right Hand
+		headsVp[0].title + materialsVp[0].title + threadingsVp[1].title +
+		drivesVp[3].title + gradesVp[0].title + threadDirectionsVp[0].title,
+		"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_FT_NR.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>(
+		// Standard A2 Stainless Steel [Equivalent 304 SS] Partial Thread [Allen Key] A2 Right Hand
+		headsVp[0].title + materialsVp[1].title + threadingsVp[0].title +
+		drivesVp[3].title + gradesVp[3].title + threadDirectionsVp[0].title,
+		"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_SS.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>(
+		// Standard A2 Stainless Steel [Equivalent 304 SS] Full Thread [Allen Key] A2 Right Hand
+		headsVp[0].title + materialsVp[1].title + threadingsVp[1].title +
+		drivesVp[3].title + gradesVp[3].title + threadDirectionsVp[0].title,
+		"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_SS.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>(
+		// Standard A4 Stainless Steel [Equivalent 316 SS] Partial Thread [Allen Key] A4 Right Hand
+		headsVp[0].title + materialsVp[2].title + threadingsVp[0].title +
+		drivesVp[3].title + gradesVp[4].title + threadDirectionsVp[0].title,
+		"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_PT_3SS.png?v=1588692308"));
+	pictures.insert(pair<string, string>(
+		// Standard A4 Stainless Steel [Equivalent 316 SS] Full Thread [Allen Key] A4 Right Hand
+		headsVp[0].title + materialsVp[2].title + threadingsVp[1].title +
+		drivesVp[3].title + gradesVp[4].title + threadDirectionsVp[0].title,
+		"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_head_FT_3SS.png?v=1588785976"));
+	pictures.insert(pair<string, string>(
+		// Low Black-Oxide Alloy Steel Partial Thread [Allen Key] Grade 12.9 Right Hand
+		headsVp[0].title + materialsVp[0].title + threadingsVp[0].title +
+		drivesVp[3].title + gradesVp[0].title + threadDirectionsVp[0].title,
+		"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_low_head_PT.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>(
+		// Low Black-Oxide Alloy Steel Full Thread [Allen Key] Grade 12.9 Right Hand
+		headsVp[0].title + materialsVp[0].title + threadingsVp[1].title +
+		drivesVp[3].title + gradesVp[0].title + threadDirectionsVp[0].title,
+		"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/socket_low_head_FT.PNG?v=1579188584"));
+	pictures.insert(pair<string, string>(
+		// NO PICTURE
+		"NO PICTURE",
+		"https://cdn.shopify.com/s/files/1/0025/7674/4483/files/noPictureImg.PNG?v=1615927708"));
 
 	productBase();
 	head();
@@ -1040,11 +1132,8 @@ inline string Vis::getTags() { return tags; }
 inline string Vis::getTitle() { return title; }
 
 inline void Vis::productBase() {
-	text = global_splittedPrdNbr[0];
-
 	title = "Metric Socket Head Cap Screw ";
 	tags = "metric, pressure_screw, socket_head_cap_screw,";
-	fineThread = 'c';
 
 	// The standard tag will depend on... 
 	// Head + Threading + DriveStyle 
@@ -1053,45 +1142,51 @@ inline void Vis::productBase() {
 }
 
 inline void Vis::head() {
+	text = global_splittedPrdNbr[0];
 	if (text.find('I') != string::npos) {
-		global_headProfile = "Low";
-		pictureIndex = "Low|";
 		title += "Low Head ";
-		tags += "low_head,";
+		global_classification = "7984";
 	}
-	else {
-		global_headProfile = "Standard";
-		pictureIndex = "Standard|";
-		tags += "standard,";
+	else global_classification = "912";
+
+	cpt = 0;
+	for (auto& head : headsVp) {
+		if (text.find(head.type) != string::npos) {
+			global_headProfile = headsVp[cpt].title;
+			pictureIndex["1_head"] = headsVp[cpt].title;
+			tags += headsVp[cpt].tags;
+			found = true;
+			break;
+		}
+		else cpt++;
 	}
+
+	if (!found) {
+		global_headProfile = headsVp[0].title;
+		pictureIndex["1_head"] = headsVp[0].title;
+		tags += headsVp[0].tags;
+	}
+	else found = false;
 }
 
 inline void Vis::material() {
 	int matId = 0;
+	text = global_splittedPrdNbr[0];
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
-		char materialsVp[4]{ '$', 'S', 'J', '3' };
-		string materialsVpTitles[4]{ "Black-Oxide Alloy Steel ", "A2 Stainless Steel [Equivalent 304 SS] ", "Titanium ", "A4 Stainless Steel [Equivalent 316 SS] " };
-		string materialsVpTags[4]{ "black, black-oxide, black-oxide_alloy_steel,", "stainless_steel, 304_stainless_steel, a2, a2_stainless_steel,", "titanium,", "stainless_steel, 316_stainless_steel, a4, a4_stainless_steel," };
-
-		for (int i = 0; i < global_splittedPrdNbr[0].length(); i++) {
-			int cpt = 0;
-			for (char mat : materialsVp) {
-				if (global_splittedPrdNbr[0][i] == mat) {
-					matId = cpt;
-					break;
+		cpt = 0;
+		for (auto& mat : materialsVp) {
+			if (text.find(mat.type) != string::npos) {
+				if (!global_splittedPrdNbr[2][0]) {
+					tags += materialsVp[cpt].tags;
+					title += materialsVp[cpt].title;
+					global_materialAndPlating = materialsVp[cpt].title;
+					pictureIndex["2_materialAndPlating"] = materialsVp[cpt].title;
 				}
-				cpt++;
+				break;
 			}
+			else cpt++;
 		}
 
-		if (!global_splittedPrdNbr[2][0]) {
-			tags += materialsVpTags[matId];
-			title += materialsVpTitles[matId];
-			global_materialAndPlating = materialsVpTitles[matId];
-
-			materialsVpTitles[matId].pop_back();	// Removing last unecessary space for the picture index
-			pictureIndex += materialsVpTitles[matId] + "|";
-		}
 	}
 	else {
 		for (int i = 0; i < global_splittedPrdNbr[0].length(); i++) {
@@ -1110,21 +1205,16 @@ inline void Vis::material() {
 inline void Vis::plating() {
 	int platId = 0;
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
-		char platingsVp[10]{ 'Z', 'Y' };
-		string platingsVpTitles[10]{ "Zinc Plated ", "Yellow Zinc Plated " };
-		string platingsVpTags[10]{ "zinc, zinc_plated,", "zinc, yellow_zinc, yellow_zinc_plated," };
-
-		int cpt = 0;
-		for (char plat : platingsVp) {
-			if (plat == '\0') break;
-			if (global_splittedPrdNbr[2][0] == plat) {
-				tags += platingsVpTags[cpt];
-				title += platingsVpTitles[cpt];
-				global_materialAndPlating += platingsVpTitles[cpt];
-				pictureIndex += platingsVpTitles[cpt] + "|";
+		cpt = 0;
+		for (auto & plat : platingsVp) {
+			if (text.find(plat.type) != string::npos) {
+				tags += platingsVp[cpt].tags;
+				title += platingsVp[cpt].title;
+				global_materialAndPlating += platingsVp[cpt].title;
+				pictureIndex["2_materialAndPlating"] = platingsVp[cpt].title;
 				break;
 			}
-			cpt++;
+			else cpt++;
 		}
 	}
 	else if(global_splittedPrdNbr[2][0]) {
@@ -1141,7 +1231,8 @@ inline void Vis::plating() {
 }
 
 inline void Vis::threading() {
-	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'M' && global_splittedPrdNbr[0][2] == 'E') {
+	text = global_splittedPrdNbr[0];
+	if (text[0] == 'V' && text[1] == 'M' && text[2] == 'E') {
 		tags += "unc,";
 
 		if (global_splittedPrdNbr[1][0] == '0') {
@@ -1164,29 +1255,34 @@ inline void Vis::threading() {
 		}
 	}
 	else {
-		text = global_splittedPrdNbr[0];
-
-		if (text.find('T') != string::npos) {
-			title += "Full Thread ";
-			tags += "fully_threaded,";
-			pictureIndex += string("Full Thread") + "|";
+		cpt = 0;
+		for (auto &thrd : threadingsVp) {
+			if (text.find(thrd.type) != string::npos) {
+				title += threadingsVp[cpt].title;
+				tags += threadingsVp[cpt].tags;
+				pictureIndex["3_threading"] = threadingsVp[cpt].title;
+				found = true;
+				break;
+			}
+			else cpt++;
 		}
-		else {
-			title += "Partial Thread ";
-			tags += "partially_threaded,";
-			pictureIndex += string("Partial Thread") + "|";
+
+		if (!found) {
+			title += threadingsVp[0].title;
+			tags += threadingsVp[0].tags;
+			pictureIndex["3_threading"] = threadingsVp[0].title;
 		}
+		else found = false;
 
-		if (text.find('F') != string::npos)
-			fineThread = "f";
-		else if (text.find('FF') != string::npos)
-			fineThread = "ff";
-		else if (text.find('FFF') != string::npos)
-			fineThread = "fff";
-
+		if (text.find('H') != string::npos) 
+			global_thrdDirection = "Left Hand";
+		else 
+			global_thrdDirection = "Right Hand";
+		
 		global_thrdDirection = text.find('H') != string::npos ? "Left Hand" : "Right Hand";
+		pictureIndex["6_threadDirection"] = global_thrdDirection;
 
-		threading_calc = new THREADING(fineThread);
+		threading_calc = new THREADING();
 		tags += threading_calc->getTags();
 		title += threading_calc->getThread();
 		thread = threading_calc->getThread();
@@ -1255,37 +1351,26 @@ inline string Vis::strength(string type, int i) {
 inline void Vis::grade() {
 	int idx = 0;
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
-		struct_TypeTitleTags grades[3];
-#pragma region grades
-		grades[0].type = "88";
-		grades[0].tags = "grade-8-8,";
-		grades[0].title = "Grade 8.8 ";
-
-		grades[1].type = "10";
-		grades[1].tags = "grade-10-9,";
-		grades[1].title = "Grade 10.9 ";
-
-		grades[2].type = "";
-		grades[2].tags = "grade-12-9,";
-		grades[2].title = "Grade 12.9 ";
-#pragma endregion
 
 		// Created int lgt for readability sakes
 		// Retrieving last 2 chars of global_splittedPrdNbr[0] to see if there's a grade specified
 		int lgt = global_splittedPrdNbr[0].length();
 		text = global_splittedPrdNbr[0].substr(lgt - 2, lgt);
 
-		if (text == grades[0].type) idx = 0;
-		else if (text == grades[1].type) idx = 1;
-		else idx = 2;
+		if (text == gradesVp[1].type) idx = 1;
+		else if (text == gradesVp[2].type) idx = 2;
 
+		// If it isn't stainless (since stainless doesn't have a grade)
 		if (global_splittedPrdNbr[0].find('S') == string::npos) {
-			tags += grades[idx].tags;
-			title += grades[idx].title;
-			global_grade = grades[idx].title;
+			tags += gradesVp[idx].tags;
+			title += gradesVp[idx].title;
+			global_grade = gradesVp[idx].title;
+			pictureIndex["5_grade"] = global_grade;
 		}
-		else 
-			global_grade = global_materialAndPlating.substr(0,2);
+		else {
+			global_grade = global_materialAndPlating.substr(0, 2);
+			pictureIndex["5_grade"] = global_grade == gradesVp[3].type ? gradesVp[3].type : gradesVp[4].type;
+		}
 
 		global_tensStrength = strength("tensile", idx);
 		global_shearStrength = strength("shear", idx);
@@ -1305,55 +1390,35 @@ inline void Vis::grade() {
 
 inline void Vis::drive() {
 	int idx = 0;
-	struct_TypeTitleTags drives[6];
-	#pragma region drives
-	drives[0].type = "S";
-	drives[0].tags = "slotted,";
-	drives[0].title = "[Slotted Drive] ";
 
-	drives[1].type = "T";
-	drives[1].tags = "torx_pin,";
-	drives[1].title = "[Torx Pin] ";
-
-	drives[2].type = "A";
-	drives[2].tags = "allen_key,";
-	drives[2].title = "[Allen Key] ";
-
-	drives[3].type = "C";
-	drives[3].tags = "square,";
-	drives[3].title = "[Square Drive] ";
-
-	drives[4].type = "Q";
-	drives[4].tags = "quadrex,";
-	drives[4].title = "[Quadrex Drive] ";
-
-	drives[5].type = "DEFAULT";
-	drives[5].tags = "phillips,";
-	drives[5].title = "[Phillips Drive] ";
-	#pragma endregion
-
-	if (global_splittedPrdNbr[2][0] == 'S') idx = 0;
-	else if (global_splittedPrdNbr[2][0] == 'T') idx = 1;
-	else if (global_splittedPrdNbr[2][0] == 'A') idx = 2;
-	else if (global_splittedPrdNbr[2][0] == 'C' && global_splittedPrdNbr[0] != "VPSRF") idx = 3;
-	else if (global_splittedPrdNbr[2][0] == 'Q') idx = 4;
-	else idx = 5;
+	if (global_splittedPrdNbr[2][0] == 'S') idx = 1;
+	else if (global_splittedPrdNbr[2][0] == 'T') idx = 2;
+	else if (global_splittedPrdNbr[2][0] == 'A') idx = 3;
+	else if (global_splittedPrdNbr[2][0] == 'C' && global_splittedPrdNbr[0] != "VPSRF") idx = 4;
+	else if (global_splittedPrdNbr[2][0] == 'Q') idx = 5;
 
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
-		if (global_splittedPrdNbr[0] == "VPSCA") idx = 3;
-		else idx = 2;
+		if (global_splittedPrdNbr[0] == "VPSCA") idx = 4;
+		else idx = 3;
 	}
 
-	pictureIndex += drives[idx].title.substr(0, (drives[idx].title.length() - 1));	// Removing last unecessary space for the picture index
+	pictureIndex["4_driveStyle"] = drivesVp[idx].title;
 
-	tags += drives[idx].tags;
-	title += drives[idx].title;
-	global_driveStyle = (drives[idx].title.erase(0, 1).erase(drives[idx].title.size() - 2));		// Removes square brackets
+	tags += drivesVp[idx].tags;
+	title += drivesVp[idx].title;
+	global_driveStyle = (drivesVp[idx].title.substr(1, drivesVp[idx].title.length() - 2));		// Removes square brackets
+	global_driveStyle = global_driveStyle.substr(0, global_driveStyle.length() - 1);		// Removes square brackets
 }
 
 inline void Vis::otherSpecs() {
-	for (pair<string,string> p : pictures) {
-		if (p.first.find(pictureIndex) != string::npos) {
+	// Picture 
+	string concat = "";
+	for (pair<string, string> idx : pictureIndex) {
+		concat += idx.second;
+	}
+
+	for (pair<string, string> p : pictures) {
+		if (p.first.find(concat) != string::npos) {
 			global_picture = p.second;
 			break;
 		}
@@ -1361,7 +1426,7 @@ inline void Vis::otherSpecs() {
 	global_picture = global_picture.length() > 1 ? global_picture : "https://cdn.shopify.com/s/files/1/0025/7674/4483/files/noPictureImg.PNG?v=1615927708";
 
 	// Retrieves number(s) from after 'M' and until ' '(space)		# Nominal Diameter
-	global_diamNom = stoi(thread.substr(1, thread.find(' ')));
+	//global_diamNom = stoi(thread.substr(1, thread.find(' ')));
 
 	// Head Diameter equals 1.5 times the nominal diameter			# Head Diameter
 	global_headDiam = to_string(int(global_diamNom * 1.5));
