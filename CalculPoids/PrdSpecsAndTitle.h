@@ -55,7 +55,7 @@ struct_TypeTitleTags gradesVp[5] = {
 	{ "A4", "A4 ",			"a4,"} };
 #pragma endregion
 
-#pragma region Boulon
+#pragma region Boulon OBSOLETE
 
 class Boulon
 {
@@ -466,7 +466,7 @@ inline void Boulon::grade()
 
 #pragma endregion
 
-#pragma region Ecrou
+#pragma region Ecrou OBSOLETE
 class Ecrou
 {
 public:
@@ -703,7 +703,7 @@ inline void Ecrou::grade()
 
 #pragma endregion
 
-#pragma region Washer
+#pragma region Washer OBSOLETE
 class Washer
 {
 public:
@@ -1458,7 +1458,7 @@ inline void Vis::otherSpecs() {
 
 #pragma endregion
 
-#pragma region Tige filté
+#pragma region Tige filté OBSOLETE
 class Tige_Filte
 {
 public:
