@@ -1152,7 +1152,7 @@ inline void Vis::material() {
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
 		for (auto& mat : materialsVp) {
 			// If there is nothing at the end (like 'Y' for Yellow Zinc) then assign the material. Otherwise it'll be a plating
-			if (!global_splittedPrdNbr[2][0] && text.find(mat.type) != string::npos) {
+			if (!global_splittedPrdNbr[2].size() && text.find(mat.type) != string::npos) {
 				tags += mat.tags;
 				title += mat.title;
 				global_materialAndPlating = mat.title;
@@ -1162,13 +1162,15 @@ inline void Vis::material() {
 			}
 		}
 
-		if (!found) {
+		if (!found && global_splittedPrdNbr[2].size() != 0) {
 			tags += materialsVp[0].tags;
 			title += materialsVp[0].title;
 			global_materialAndPlating = materialsVp[0].title;
 			pictureIndex["2_materialAndPlating"] = materialsVp[0].title;
 		}
-		else found = false;
+		else {
+			found = false;
+		} 
 
 	}
 	else {
@@ -1187,6 +1189,7 @@ inline void Vis::material() {
 
 inline void Vis::plating() {
 	int platId = 0;
+	text = global_splittedPrdNbr[2][0];
 	if (global_splittedPrdNbr[0][0] == 'V' && global_splittedPrdNbr[0][1] == 'P') {
 		for (auto & plat : platingsVp) {
 			if (text.find(plat.type) != string::npos) {
@@ -1198,7 +1201,7 @@ inline void Vis::plating() {
 			}
 		}
 	}
-	else if(global_splittedPrdNbr[2][0]) {
+	else if(text.size() > 0) {
 		if (global_splittedPrdNbr[2][0] == 'Y')
 			platId = 1;
 		else if (global_splittedPrdNbr[2][0] == 'N')
