@@ -1162,7 +1162,7 @@ inline void Vis::material() {
 			}
 		}
 
-		if (!found && global_splittedPrdNbr[2].size() != 0) {
+		if (!found && !global_splittedPrdNbr[2].size()) {
 			tags += materialsVp[0].tags;
 			title += materialsVp[0].title;
 			global_materialAndPlating = materialsVp[0].title;
